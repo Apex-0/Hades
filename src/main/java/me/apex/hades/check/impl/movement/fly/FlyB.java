@@ -20,7 +20,9 @@ public class FlyB extends Check {
             		&& !PlayerUtils.isClimbableBlock(user.getLocation().getBlock())
             		&& !PlayerUtils.isClimbableBlock(user.getLocation().subtract(0,1,0).getBlock())
             		&& !PlayerUtils.isInWeb(user.getPlayer())
-            		&& !PlayerUtils.isInLiquid(user.getPlayer())) {
+            		&& !PlayerUtils.isInLiquid(user.getPlayer())
+                    && !PlayerUtils.isOnGround(user.getPlayer())
+                    && !user.getPlayer().isInsideVehicle()){
                 if (dist >= 0.0D) {
                 	if(vl++ > 10) {
                 		flag(user, "dist = " + dist);

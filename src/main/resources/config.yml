@@ -42,10 +42,10 @@ anti-vpn:
 #Check Configuration
 #NOTE: Experimental checks are preset to not punish players
 checks:
-  punish-command: 'ban %player% %prefix%Cheating'
   broadcast-punishments: true
   detections:
     aim:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: true
         punishable: true
@@ -75,6 +75,7 @@ checks:
         punishable: true
         max-vl: 5
     aura:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: true
         punishable: true
@@ -108,11 +109,13 @@ checks:
         punishable: true
         max-vl: 10
     criticals:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: true
         punishable: true
         max-vl: 10
     autoclicker:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: true
         punishable: true
@@ -130,16 +133,19 @@ checks:
         punishable: false
         max-vl: 10
     reach:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: true
         punishable: true
         max-vl: 10
     velocity:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: false
         punishable: false
         max-vl: 10
     fly:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: true
         punishable: true
@@ -153,11 +159,13 @@ checks:
         punishable: true
         max-vl: 20
     motion:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: true
         punishable: true
         max-vl: 10
     scaffold:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: true
         punishable: true
@@ -167,6 +175,7 @@ checks:
         punishable: true
         max-vl: 10
     speed:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: true
         punishable: true
@@ -188,11 +197,13 @@ checks:
         punishable: true
         max-vl: 20
     smallhop:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: true
         punishable: true
         max-vl: 10
     badpackets:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: true
         punishable: true
@@ -226,11 +237,13 @@ checks:
         punishable: true
         max-vl: 10
     nofall:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: true
         punishable: true
         max-vl: 10
     timer:
+      punish-command: 'ban %player% %prefix%Cheating'
       a:
         enabled: true
         punishable: true

@@ -24,7 +24,7 @@ public class User {
     private boolean alerts, lagging, digging, flyAFix;
     private double deltaY, lastDeltaY, deltaXZ, lastDeltaXZ, lastVelX, lastVelY, lastVelZ, optifineTicks, iceTicks, hitTicks, slimeTicks, velocityTicks, teleportTicks, airTicks, groundTicks, clientGroundTicks;
     private float deltaYaw, lastDeltaYaw, deltaPitch, lastDeltaPitch, lastYawDiff, lastPitchDiff;
-    private long lastKeepAlive, lastServerKeepAlive, lastJoin, lastPacket, lastLagPacket, lastLagSet, lastVelocity;
+    private long lastKeepAlive, lastServerKeepAlive, lastJoin, lastPacket, lastLagPacket, lastLagSet, lastVelocity, lastServerPosition;
     private String address;
     private int ping, flagDelay;
     private LogUtils.TextFile logFile;
@@ -88,6 +88,10 @@ public class User {
     public void setFlyAFix(boolean flyAFix) { this.flyAFix = flyAFix; }
 
     public boolean getFlyAFix() { return flyAFix; }
+
+    public long getLastServerPosition() { return lastServerPosition; }
+
+    public void setLastServerPosition(long lastServerPosition){ this.lastServerPosition = lastServerPosition; }
 
     public boolean isDigging() {
     	return digging;

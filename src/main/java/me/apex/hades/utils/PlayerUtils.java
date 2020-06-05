@@ -31,6 +31,13 @@ public class PlayerUtils {
         return false;
     }
 
+    public static boolean isOnGround(Player player) {
+        Object box = ReflectionUtils.modifyBoundingBox(ReflectionUtils.getBoundingBox(player), 0, -0.1, 0,0,0,0);
+
+        return ReflectionUtils.getCollidingBlocks(player, box).size() > 0;
+    }
+
+
     public static boolean blockNearHead(Player player) {
         double expand = 0.3;
         for (double x = -expand; x <= expand; x += expand) {

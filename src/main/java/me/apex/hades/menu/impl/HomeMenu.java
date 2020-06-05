@@ -12,7 +12,7 @@ import me.apex.hades.utils.ChatUtils;
 public class HomeMenu extends Gui {
 
     public HomeMenu() {
-        super(Hades.getInstance().getConfig().getString("lang.base-message-color") + "Anticheat Panel", 27);
+        super(Hades.getInstance().getConfig().getString("lang.base-message-color") + "Hades Panel", 27);
         ItemBuilder one = new ItemBuilder(Hades.getInstance().getConfig().getString("lang.base-message-color") + "View Logs", Material.BOOK_AND_QUILL);
         one.addLore("&7Click to view player logs.");
         ItemBuilder two = new ItemBuilder(Hades.getInstance().getConfig().getString("lang.base-message-color") + "Anticheat Information", Material.SIGN);

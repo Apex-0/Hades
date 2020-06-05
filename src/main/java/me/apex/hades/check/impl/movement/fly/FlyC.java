@@ -25,7 +25,7 @@ public class FlyC extends Check {
 
 	@Override
 	public void onPacket(PacketReceiveEvent e, User user) {
-		if(PacketUtils.isFlyingPacket(e.getPacketName()) && !PlayerUtils.isClimbableBlock(user.getLocation().getBlock())) {
+		if(PacketUtils.isFlyingPacket(e.getPacketName())) {
 			distList.add(user.getDeltaY());
 
             if (distList.size() == 10) {
@@ -33,7 +33,7 @@ public class FlyC extends Check {
                 double lastDeviation = this.lastDeviation;
                 this.lastDeviation = deviation;
                 
-                if(!user.onGround()) {
+                if(!user.onGround() && !PlayerUtils.isClimbableBlock(user.getLocation().getBlock()) && !PlayerUtils.isOnGround(user.getPlayer()) && !user.getPlayer().isFlying() && !user.getPlayer().isInsideVehicle()) {
                 	if(deviation == 0.0D) {
                 		flag(user, "deviation = " + deviation);
                 	}

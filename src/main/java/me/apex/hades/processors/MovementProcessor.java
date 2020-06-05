@@ -111,6 +111,8 @@ public enum MovementProcessor implements Listener {
                     || packet.getDigType() == PlayerDigType.ABORT_DESTROY_BLOCK) {
                 user.setDigging(false);
             }
+        }else if (e.getPacketName().equalsIgnoreCase(Packet.Server.POSITION)){
+            user.setLastServerPosition(System.currentTimeMillis());
         }
     }
 }

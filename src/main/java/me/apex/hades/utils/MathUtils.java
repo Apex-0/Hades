@@ -1,12 +1,12 @@
 package me.apex.hades.utils;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.List;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
 
 public class MathUtils {
 
@@ -29,6 +29,8 @@ public class MathUtils {
     public static boolean isRoughlyEqual(double d1, double d2, double seperator) {
         return Math.abs(d1 - d2) < seperator; //0.001, 0.125, 0.35
     }
+
+    public static long elapsed(long num){ return System.currentTimeMillis() - num; }
 
     private static long absGCD(long a, long b) {
         while (b > 0) {
