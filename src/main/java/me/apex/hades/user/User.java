@@ -1,5 +1,6 @@
 package me.apex.hades.user;
 
+import com.google.common.collect.EvictingQueue;
 import lombok.Getter;
 import lombok.Setter;
 import me.apex.hades.HadesConfig;
@@ -7,6 +8,7 @@ import me.apex.hades.HadesPlugin;
 import me.apex.hades.check.Check;
 import me.apex.hades.check.CheckManager;
 import me.apex.hades.util.PlayerUtil;
+import me.apex.hades.util.ReachUtil;
 import me.apex.hades.util.reflection.ReflectionUtil;
 import me.apex.hades.util.text.ChatUtil;
 import me.apex.hades.util.text.LogUtils;
@@ -17,6 +19,7 @@ import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -35,6 +38,9 @@ public class User {
     private boolean alerts, usingLunarClient, onGround, collidedGround, digging, isSprinting, isSneaking, chunkLoaded, verifyingVelocity;
     //Location
     private Location location, lastLocation, lastOnGroundLocation;
+    //Reach
+    public final Queue<ReachUtil> reachQueue = EvictingQueue.create(10);
+    private ReachUtil reachLoc, lastReachLoc;
     //Ticks
     private int flagDelay, tick, digTick, iceTick, iceTicks, slimeTick, slimeTicks, velocityTick, lastVelocityId, underBlockTick, teleportTick, liquidTick, liquidTicks, airTick, airTicks, groundTick, groundTicks, totalBlockUpdates, solidLiquidTicks, climbableTick, climbableTicks, serverGroundTick, optifineTick, flyingTick, sprintingTicks = 0;
     //Deltas
