@@ -36,7 +36,6 @@ public class NetworkListener implements PacketListener {
 
     @PacketHandler
     public void onInject(PlayerInjectEvent e) {
-        Bukkit.getLogger().info("Inject!");
         User user = new User(e.getPlayer());
         UserManager.users.add(user);
 

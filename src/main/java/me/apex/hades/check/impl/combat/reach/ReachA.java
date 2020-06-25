@@ -14,10 +14,6 @@ import me.apex.hades.util.boundingbox.Ray;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
-
 @CheckInfo(name = "Reach", type = "A")
 public class ReachA extends Check {
 
@@ -56,12 +52,11 @@ public class ReachA extends Check {
                     return Math.sqrt(distanceX * distanceX + distanceZ * distanceZ);
                 }).min().orElse(0.0);
 
-                    if (range >= HadesPlugin.getInstance().getConfig().getDouble("Max-Reach") && dist > 2.9) {
-                        if (++preVL > 1) {
-                            flag(user, "hitting farther than possbile. r: " + range + ", d: " + dist);
-                        }
-                    } else preVL = 0;
-                }
+                if (range >= HadesPlugin.getInstance().getConfig().getDouble("Max-Reach") && dist > 2.9) {
+                    if (++preVL > 1) {
+                        flag(user, "hitting farther than possbile. r: " + range + ", d: " + dist);
+                    }
+                } else preVL = 0;
             }
         }
     }
