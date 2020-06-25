@@ -92,6 +92,13 @@ public class NetworkListener implements PacketListener {
                 WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(e.getPacket());
                 if (packet.getAction() == EntityUseAction.ATTACK) {
                     callEvent = new AttackEvent(packet.getEntityId(), packet.getEntity());
+                    user.setLastAttackPacket(e.getTimestamp());
+                    if (packet.getEntity() instanceof Player) {
+                        Player target = (Player) packet.getEntity();
+                        user.setLastTarget(target);
+                    } else {
+                        user.setLastTarget(null);
+                    }
                 } else if (packet.getAction() == EntityUseAction.INTERACT
                         || packet.getAction() == EntityUseAction.INTERACT_AT) {
                     callEvent = new EntityInteractEvent(packet.getEntityId(), packet.getEntity());
