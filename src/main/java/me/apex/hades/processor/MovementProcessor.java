@@ -2,6 +2,7 @@ package me.apex.hades.processor;
 
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent;
 import io.github.retrooper.packetevents.packet.Packet;
+import io.github.retrooper.packetevents.packet.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.in.flying.WrappedPacketInFlying;
 import me.apex.hades.user.User;
 import me.apex.hades.util.PacketUtil;
@@ -15,8 +16,6 @@ public class MovementProcessor {
         if (PacketUtil.isPositionPacket(e.getPacketName())) {
             WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getPacket());
             user.setOnGround(packet.isOnGround());
-
-            user.reachQueue.add(new ReachUtil(packet.getX(), packet.getY(), packet.getZ()));
 
             Location location = new Location(user.getPlayer().getWorld(), packet.getX(), packet.getY(), packet.getZ(), packet.getYaw(), packet.getPitch());
             Location lastLocation = user.getLocation() != null ? user.getLocation() : location;
@@ -69,6 +68,7 @@ public class MovementProcessor {
 
             user.setLastLocation(lastLocation);
             user.setLocation(location);
+
 
             double lastDeltaY = user.getDeltaY();
             double deltaY = location.getY() - lastLocation.getY();
@@ -163,6 +163,18 @@ public class MovementProcessor {
                 user.getLocations().remove(0);
             }
             user.getLocations().add(user.getLocation());
+        } else if(PacketType.Util.isInstanceOfFlyingPacket(e.getNMSPacket())) {
+            WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
+            ReachUtil lastReachloc = user.getReachLoc();
+            if(packet.isPosition()) {
+                user.reachQueue.add(new ReachUtil(packet.getX(), packet.getY(), packet.getZ()));
+                user.setReachLoc(new ReachUtil(packet.getX(), packet.getY(), packet.getZ()));
+            }
+            if(packet.isLook()) {
+                user.setLastReachLoc(lastReachloc);
+            }
+
         }
     }
+
 }
