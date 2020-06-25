@@ -5,6 +5,7 @@ import io.github.retrooper.packetevents.packet.Packet;
 import io.github.retrooper.packetevents.packetwrappers.in.flying.WrappedPacketInFlying;
 import me.apex.hades.user.User;
 import me.apex.hades.util.PacketUtil;
+import me.apex.hades.util.ReachUtil;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -14,6 +15,8 @@ public class MovementProcessor {
         if (PacketUtil.isPositionPacket(e.getPacketName())) {
             WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getPacket());
             user.setOnGround(packet.isOnGround());
+
+            user.reachQueue.add(new ReachUtil(packet.getX(), packet.getY(), packet.getZ()));
 
             Location location = new Location(user.getPlayer().getWorld(), packet.getX(), packet.getY(), packet.getZ(), packet.getYaw(), packet.getPitch());
             Location lastLocation = user.getLocation() != null ? user.getLocation() : location;
@@ -162,5 +165,4 @@ public class MovementProcessor {
             user.getLocations().add(user.getLocation());
         }
     }
-
 }
