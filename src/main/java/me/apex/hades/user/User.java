@@ -41,6 +41,8 @@ public class User {
     //Reach
     public final Queue<ReachUtil> reachQueue = EvictingQueue.create(10);
     private ReachUtil reachLoc, lastReachLoc;
+    private Player lastTarget;
+    private long lastAttackPacket;
     //Ticks
     private int flagDelay, tick, digTick, iceTick, iceTicks, slimeTick, slimeTicks, velocityTick, lastVelocityId, underBlockTick, teleportTick, liquidTick, liquidTicks, airTick, airTicks, groundTick, groundTicks, totalBlockUpdates, solidLiquidTicks, climbableTick, climbableTicks, serverGroundTick, optifineTick, flyingTick, sprintingTicks = 0;
     //Deltas
