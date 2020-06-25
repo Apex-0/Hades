@@ -4,12 +4,14 @@ import me.apex.hades.check.CheckManager;
 import me.apex.hades.command.CommandManager;
 import me.apex.hades.command.impl.AlertCommand;
 import me.apex.hades.util.text.ChatUtil;
-import org.bukkit.Bukkit;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class HadesConfig {
+
+    //Test Mode
+    public static boolean TEST_MODE;
 
     //Language Settings
     public static String PREFIX;
@@ -45,6 +47,8 @@ public class HadesConfig {
 
     public static void updateSettings() {
         try{
+            TEST_MODE = HadesPlugin.getInstance().getConfig().getBoolean("test-mode");
+
             PREFIX = ChatUtil.color(HadesPlugin.getInstance().getConfig().getString("lang.prefix"));
             NO_PERMISSION = ChatUtil.color(HadesPlugin.getInstance().getConfig().getString("lang.no-permission"));
             BASE_MESSAGE_COLOR = ChatUtil.color(HadesPlugin.getInstance().getConfig().getString("lang.base-message-color"));
@@ -81,8 +85,6 @@ public class HadesConfig {
                 boolean punishable = HadesPlugin.getInstance().getConfig().getBoolean("checks.detections." + checkName.toLowerCase() + "." + checkType.toLowerCase() + ".punishable");
                 int maxVL = HadesPlugin.getInstance().getConfig().getInt("checks.detections." + checkName.toLowerCase() + "." + checkType.toLowerCase() + ".max-violations");
                 String punishCommand = HadesPlugin.getInstance().getConfig().getString("checks.detections." + checkName.toLowerCase() + "." + checkType.toLowerCase() + ".punish-command");
-
-                Bukkit.getLogger().info("checks.detections." + checkName.toLowerCase() + "." + checkType.toLowerCase() + ".enabled");
 
                 ENABLED_CHECKS.put(check.getSimpleName(), enabled);
                 PUNISHABLE_CHECKS.put(check.getSimpleName(), punishable);

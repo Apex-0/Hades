@@ -5,6 +5,7 @@ import me.apex.hades.util.reflection.ReflectionUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -58,45 +59,10 @@ public class PlayerUtil {
     }
 
     public static boolean isInWeb(Player player) {
-        Object box = ReflectionUtil.getBoundingBox(player);
-
-        double minX = (double) ReflectionUtil.getInvokedField(ReflectionUtil.getField(box.getClass(), "a"), box);
-        double minY = (double) ReflectionUtil.getInvokedField(ReflectionUtil.getField(box.getClass(), "b"), box);
-        double minZ = (double) ReflectionUtil.getInvokedField(ReflectionUtil.getField(box.getClass(), "c"), box);
-        double maxX = (double) ReflectionUtil.getInvokedField(ReflectionUtil.getField(box.getClass(), "d"), box);
-        double maxY = (double) ReflectionUtil.getInvokedField(ReflectionUtil.getField(box.getClass(), "e"), box);
-        double maxZ = (double) ReflectionUtil.getInvokedField(ReflectionUtil.getField(box.getClass(), "f"), box);
-
-        for (double x = minX; x < maxX; x++) {
-            for (double y = minY; y < maxY; y++) {
-                for (double z = minZ; z < maxZ; z++) {
-                    Block block = new Location(player.getWorld(), x, y, z).getBlock();
-                    if (block.getType() == Material.WEB) return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public static boolean isOnClimbable(Player player) {
-        Object box = ReflectionUtil.getBoundingBox(player);
-
-        double minX = (double) ReflectionUtil.getInvokedField(ReflectionUtil.getField(box.getClass(), "a"), box);
-        double minY = (double) ReflectionUtil.getInvokedField(ReflectionUtil.getField(box.getClass(), "b"), box);
-        double minZ = (double) ReflectionUtil.getInvokedField(ReflectionUtil.getField(box.getClass(), "c"), box);
-        double maxX = (double) ReflectionUtil.getInvokedField(ReflectionUtil.getField(box.getClass(), "d"), box);
-        double maxY = (double) ReflectionUtil.getInvokedField(ReflectionUtil.getField(box.getClass(), "e"), box);
-        double maxZ = (double) ReflectionUtil.getInvokedField(ReflectionUtil.getField(box.getClass(), "f"), box);
-
-        for (double x = minX; x < maxX; x++) {
-            for (double y = minY; y < maxY; y++) {
-                for (double z = minZ; z < maxZ; z++) {
-                    Block block = new Location(player.getWorld(), x, y, z).getBlock();
-                    if (PlayerUtil.isClimbableBlock(block)) return true;
-                }
-            }
-        }
-        return false;
+        return player.getLocation().getBlock().getType() == Material.WEB
+                || player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.WEB
+                || player.getEyeLocation().getBlock().getType() == Material.WEB
+                || player.getEyeLocation().getBlock().getRelative(BlockFace.UP).getType() == Material.AIR;
     }
 
     //Credits to funkemunky :)
@@ -320,8 +286,8 @@ public class PlayerUtil {
     }
 
     //Credits to funkemunky :)
-    public static boolean isClimbableBlock(Block block) {
-        return block.getType().toString().contains("LADDER") || block.getType().toString().contains("VINE");
+    public static boolean isOnClimbable(Player player) {
+        return player.getLocation().getBlock().getType() == Material.LADDER || player.getLocation().getBlock().getType() == Material.VINE;
     }
 
     //Credits to funkemunky :)

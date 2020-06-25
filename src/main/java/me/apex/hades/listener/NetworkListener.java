@@ -8,6 +8,8 @@ import io.github.retrooper.packetevents.event.PacketEvent;
 import io.github.retrooper.packetevents.event.PacketListener;
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent;
 import io.github.retrooper.packetevents.event.impl.PacketSendEvent;
+import io.github.retrooper.packetevents.event.impl.PlayerInjectEvent;
+import io.github.retrooper.packetevents.event.impl.PlayerUninjectEvent;
 import io.github.retrooper.packetevents.packet.Packet;
 import io.github.retrooper.packetevents.packetwrappers.in.blockdig.WrappedPacketInBlockDig;
 import io.github.retrooper.packetevents.packetwrappers.in.blockplace.WrappedPacketInBlockPlace;
@@ -23,10 +25,41 @@ import me.apex.hades.processor.MovementProcessor;
 import me.apex.hades.user.User;
 import me.apex.hades.user.UserManager;
 import me.apex.hades.util.PacketUtil;
+import me.apex.hades.util.TaskUtil;
+import me.apex.hades.util.text.ChatUtil;
+import me.apex.hades.util.vpn.VPNChecker;
+import org.bukkit.Bukkit;
 
 import java.util.Random;
 
 public class NetworkListener implements PacketListener {
+
+    @PacketHandler
+    public void onInject(PlayerInjectEvent e) {
+        Bukkit.getLogger().info("Inject!");
+        User user = new User(e.getPlayer());
+        UserManager.users.add(user);
+
+        //Check for VPN
+        if (VPNChecker.INSTANCE.checkUser(user)) {
+            TaskUtil.task(() -> {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtil.color(HadesPlugin.getInstance().getConfig().getString("anti-vpn.punish-command")));
+            });
+        }
+
+        //Check for Lunar Client
+        HadesPlugin.getInstance().getLunarClientAPI().getUserManager().setPlayerData(e.getPlayer().getUniqueId(), new net.mineaus.lunar.api.user.User(e.getPlayer().getUniqueId(), e.getPlayer().getName()));
+        TaskUtil.taskLater(() -> {
+            UserManager.getUser(e.getPlayer()).setUsingLunarClient(HadesPlugin.getInstance().getLunarClientAPI().getUserManager().getPlayerData(e.getPlayer().getUniqueId()).isLunarClient()
+                    && HadesPlugin.getInstance().getLunarClientAPI().isAuthenticated(e.getPlayer()));
+        }, HadesPlugin.getInstance(), 40L);
+    }
+
+    @PacketHandler
+    public void onUninject(PlayerUninjectEvent e) {
+        UserManager.users.remove(UserManager.getUser(e.getPlayer()));
+        HadesPlugin.getInstance().getLunarClientAPI().getUserManager().removePlayerData(e.getPlayer().getUniqueId());
+    }
 
     @PacketHandler
     public void onPacketReceive(PacketReceiveEvent e) {

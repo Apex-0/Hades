@@ -5,19 +5,29 @@ import me.apex.hades.check.Check;
 import me.apex.hades.check.CheckInfo;
 import me.apex.hades.event.impl.packetevents.PlaceEvent;
 import me.apex.hades.user.User;
-import org.bukkit.Bukkit;
+import org.bukkit.block.BlockFace;
 import org.bukkit.util.Vector;
 
 @CheckInfo(name = "Scaffold", type = "B")
 public class ScaffoldB extends Check {
+
+    @Override
+    public void init() {
+        dev = true;
+    }
+
     @Override
     public void onHandle(PacketEvent e, User user) {
         if(e instanceof PlaceEvent) {
-            Vector pos = new Vector(((PlaceEvent) e).getBlockPos().x, ((PlaceEvent) e).getBlockPos().y, ((PlaceEvent) e).getBlockPos().z);
-            Vector vec = pos.clone().setY(0.0).subtract(user.getPlayer().getEyeLocation().clone().toVector().setY(0.0));
-            float angle = user.getPlayer().getEyeLocation().getDirection().angle(vec);
+            Vector block = new Vector(((PlaceEvent) e).getBlockPos().x, ((PlaceEvent) e).getBlockPos().y, ((PlaceEvent) e).getBlockPos().z);
+            double dist = user.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toVector().distance(block);
+            double diff = Math.abs(user.getDeltaYaw() - user.getLastDeltaYaw());
 
-            Bukkit.broadcastMessage("" + angle);
+            if(diff > 100.0 && dist <= 2.0) {
+                if(++preVL > 1) {
+                    flag(user, "suspicious rotations, r: " + diff + ", d: " + dist);
+                }
+            }else preVL = 0;
         }
     }
 }

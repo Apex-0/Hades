@@ -2,7 +2,7 @@ package io.github.retrooper.packetevents.packetwrappers.out.transaction;
 
 import io.github.retrooper.packetevents.packetwrappers.Sendable;
 import io.github.retrooper.packetevents.packetwrappers.api.WrappedPacket;
-import io.github.retrooper.packetevents.tinyprotocol.Reflection;
+import io.github.retrooper.packetevents.reflectionutils.Reflection;
 import io.github.retrooper.packetevents.utils.NMSUtils;
 
 import java.lang.reflect.Constructor;
@@ -12,7 +12,6 @@ public class WrappedPacketOutTransaction extends WrappedPacket implements Sendab
     private int windowId;
     private short actionNumber;
     private boolean accepted;
-
     public WrappedPacketOutTransaction(final Object packet) {
         super(packet);
     }
@@ -23,7 +22,6 @@ public class WrappedPacketOutTransaction extends WrappedPacket implements Sendab
         this.actionNumber = actionNumber;
         this.accepted = accepted;
     }
-
     @Override
     protected void setup() {
         this.windowId = windowIdAccessor.get(packet);
@@ -76,7 +74,7 @@ public class WrappedPacketOutTransaction extends WrappedPacket implements Sendab
 
         windowIdAccessor = Reflection.getField(packetClass, int.class, 0);
         actionNumberAccessor = Reflection.getField(packetClass, short.class, 0);
-        acceptedAccessor = Reflection.getField(packetClass, boolean.class, 0);
+        acceptedAccessor= Reflection.getField(packetClass, boolean.class, 0);
     }
 
 }

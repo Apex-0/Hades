@@ -1,4 +1,4 @@
-package io.github.retrooper.packetevents.tinyprotocol;
+package io.github.retrooper.packetevents.reflectionutils;
 
 import org.bukkit.Bukkit;
 
@@ -21,7 +21,6 @@ public final class Reflection {
     private static final String VERSION = OBC_PREFIX.replace("org.bukkit.craftbukkit", "").replace(".", "");
     // Variable replacement
     private static final Pattern MATCH_VARIABLE = Pattern.compile("\\{([^\\}]+)\\}");
-
     private Reflection() {
         // Seal class
     }

@@ -7,43 +7,17 @@ import me.apex.hades.user.User;
 import me.apex.hades.user.UserManager;
 import me.apex.hades.util.TaskUtil;
 import me.apex.hades.util.reflection.ReflectionUtil;
-import me.apex.hades.util.text.ChatUtil;
-import me.apex.hades.util.vpn.VPNChecker;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerRegisterChannelEvent;
+import org.bukkit.event.player.PlayerUnregisterChannelEvent;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 public class BukkitListener implements Listener {
-
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        User user = new User(e.getPlayer());
-        UserManager.users.add(user);
-
-        //Check for VPN
-        if (VPNChecker.INSTANCE.checkUser(user)) {
-            TaskUtil.task(() -> {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), ChatUtil.color(HadesPlugin.getInstance().getConfig().getString("anti-vpn.punish-command")));
-            });
-        }
-
-        //Check for Lunar Client
-        HadesPlugin.getInstance().getLunarClientAPI().getUserManager().setPlayerData(e.getPlayer().getUniqueId(), new net.mineaus.lunar.api.user.User(e.getPlayer().getUniqueId(), e.getPlayer().getName()));
-        TaskUtil.taskLater(() -> {
-            UserManager.getUser(e.getPlayer()).setUsingLunarClient(HadesPlugin.getInstance().getLunarClientAPI().getUserManager().getPlayerData(e.getPlayer().getUniqueId()).isLunarClient()
-                    && HadesPlugin.getInstance().getLunarClientAPI().isAuthenticated(e.getPlayer()));
-        }, HadesPlugin.getInstance(), 40L);
-    }
-
-    @EventHandler
-    public void onQuit(PlayerQuitEvent e) {
-        UserManager.users.remove(UserManager.getUser(e.getPlayer()));
-        HadesPlugin.getInstance().getLunarClientAPI().getUserManager().removePlayerData(e.getPlayer().getUniqueId());
-    }
 
     @EventHandler
     public void onRegister(PlayerRegisterChannelEvent e) {

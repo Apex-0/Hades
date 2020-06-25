@@ -43,7 +43,7 @@ public class BlockProcessor {
                 user.setLiquidTick(user.getTick());
                 user.setLiquidTicks(user.getLiquidTicks() + 1);
             } else user.setLiquidTicks(0);
-            if (user.isOnClimbableBlock()) {
+            if (user.isOnClimbableBlock() || user.isInWeb()) {
                 user.setClimbableTick(user.getTick());
                 user.setClimbableTicks(user.getClimbableTicks() + 1);
             } else {

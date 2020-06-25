@@ -3,7 +3,8 @@ package io.github.retrooper.packetevents.packet;
 import io.github.retrooper.packetevents.enums.ServerVersion;
 import io.github.retrooper.packetevents.utils.NMSUtils;
 
-public abstract class Packet {
+@Deprecated
+public final class Packet {
 
     private static Class<?> packetPlayInFlying, packetPlayInPosition, packetPlayInPositionLook, packetPlayInLook;
 
@@ -11,14 +12,14 @@ public abstract class Packet {
         try {
             packetPlayInFlying = NMSUtils.getNMSClass(Client.FLYING);
         } catch (ClassNotFoundException e) {
-            //That is fine, they are on 1.9+ so we just initiate the rest of the variables
-            try {
-                packetPlayInPosition = NMSUtils.getNMSClass(Client.POSITION);
-                packetPlayInPositionLook = NMSUtils.getNMSClass(Client.POSITION_LOOK);
-                packetPlayInLook = NMSUtils.getNMSClass(Client.LOOK);
-            } catch (ClassNotFoundException e2) {
-                e2.printStackTrace();
-            }
+            //That is fine, they are on 1.9+
+        }
+        try {
+            packetPlayInPosition = NMSUtils.getNMSClass(Client.POSITION);
+            packetPlayInPositionLook = NMSUtils.getNMSClass(Client.POSITION_LOOK);
+            packetPlayInLook = NMSUtils.getNMSClass(Client.LOOK);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -42,20 +43,18 @@ public abstract class Packet {
     }
 
     /**
-     * Use isInstanceOfFlyingPacket(nmsPacketObject) instead of this, as the flying packet is the only packet that has subclasses (in 1.8 atleast).
-     * Will be removed in newer versions of PacketEvents!
-     *
-     * @param fatherPacket
-     * @param childPacket
-     * @return isInstanceOf
+     * Is this NMS Packet an instanceof the "PacketPlayInPosition" or "PacketPlayInPositionLook"
+     * @param nmsPacket
+     * @return
      */
-    @Deprecated
-    public static boolean isInstanceOf(String fatherPacket, String childPacket) {
-        if (fatherPacket.equals(Client.FLYING) && childPacket.equals(Client.POSITION) || childPacket.equals(Client.POSITION_LOOK) || childPacket.equals(Client.LOOK)) {
-            return true;
-        }
-        return fatherPacket.equals(childPacket);
+    public static boolean isInstanceOfPositionOrPositionLook(final Object nmsPacket) {
+        return packetPlayInPosition.isInstance(nmsPacket) || packetPlayInPositionLook.isInstance(nmsPacket);
     }
+
+    public static boolean isInstanceOfLook(final Object nmsPacket) {
+        return packetPlayInLook.isInstance(nmsPacket);
+    }
+
 
     public static class Client {
         private static final String c = "PacketPlayIn";

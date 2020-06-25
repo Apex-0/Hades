@@ -12,6 +12,11 @@ import org.bukkit.util.Vector;
 @CheckInfo(name = "Angle", type = "B")
 public class AngleB extends Check {
 
+    @Override
+    public void init() {
+        dev = true;
+    }
+
     private float angle;
     private double dist;
     private boolean swung;
@@ -24,6 +29,7 @@ public class AngleB extends Check {
             Entity entity = ((AttackEvent) e).getEntity();
             lastEntity = entity;
         }else if(e instanceof SwingEvent) {
+            if(lastEntity == null) return;
             Vector vec = lastEntity.getLocation().clone().toVector().setY(0.0).subtract(user.getPlayer().getEyeLocation().clone().toVector().setY(0.0));
             float angle = user.getPlayer().getEyeLocation().getDirection().angle(vec);
             double dist = user.getPlayer().getLocation().toVector().setY(0.0).distance(lastEntity.getLocation().toVector().setY(0.0));

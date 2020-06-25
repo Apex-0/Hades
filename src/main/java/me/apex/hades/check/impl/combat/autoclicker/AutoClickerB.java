@@ -10,6 +10,11 @@ import me.apex.hades.user.User;
 @CheckInfo(name = "AutoClicker", type = "B")
 public class AutoClickerB extends Check {
 
+    @Override
+    public void init() {
+        dev = true;
+    }
+
     private int ticks;
     private double clicksPerSecond;
 

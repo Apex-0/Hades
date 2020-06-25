@@ -13,6 +13,11 @@ import java.util.LinkedList;
 @CheckInfo(name = "AutoClicker", type = "A")
 public class AutoClickerA extends Check {
 
+    @Override
+    public void init() {
+        dev = true;
+    }
+
     private final Deque<Long> ticks = new LinkedList<>();
     private double lastDeviation;
 

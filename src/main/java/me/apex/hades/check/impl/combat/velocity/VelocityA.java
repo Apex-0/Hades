@@ -11,6 +11,11 @@ import me.apex.hades.user.User;
 public class VelocityA extends Check {
 
     @Override
+    public void init() {
+        dev = true;
+    }
+
+    @Override
     public void onHandle(PacketEvent e, User user) {
         if(e instanceof FlyingEvent) {
             if(elapsed(user.getTick(), user.getVelocityTick()) < 1) {

@@ -27,11 +27,12 @@ public final class WrappedPacketInBlockPlace extends WrappedPacket {
                 final Block block = blockPlace_1_9.getBlock();
                 position = new Vector3i(block.getX(), block.getY(), block.getZ());
                 itemStack = new ItemStack(block.getType());
-            } else if (version.isHigherThan(ServerVersion.v_1_7_10)) {
+            } else if(version.isHigherThan(ServerVersion.v_1_7_10)){
                 final WrappedPacketInBlockPlace_1_8 blockPlace_1_8 = new WrappedPacketInBlockPlace_1_8(packet);
                 position = blockPlace_1_8.getBlockPosition();
                 itemStack = blockPlace_1_8.getItemStack();
-            } else {
+            }
+            else {
                 final WrappedPacketInBlockPlace_1_7_10 blockPlace_1_7_10 = new WrappedPacketInBlockPlace_1_7_10(getPlayer(), packet);
                 position = blockPlace_1_7_10.getBlockPosition();
                 this.itemStack = blockPlace_1_7_10.getItemStack();

@@ -1,0 +1,61 @@
+package io.github.retrooper.packetevents.handler;
+
+import io.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.enums.ServerVersion;
+import io.github.retrooper.packetevents.event.impl.*;
+import org.bukkit.entity.Player;
+
+import java.util.concurrent.Future;
+
+public class NettyPacketHandler {
+    public static final String handlerName = "PacketListener";
+    private static final ServerVersion version = PacketEvents.getServerVersion();
+
+    public static void injectPlayer(final Player player) {
+        final PlayerInjectEvent injectEvent = new PlayerInjectEvent(player);
+        PacketEvents.getEventManager().callEvent(injectEvent);
+        if (!injectEvent.isCancelled()) {
+            if (version.isLowerThan(ServerVersion.v_1_8)) {
+                NettyPacketHandler_7.injectPlayer(player);
+            } else {
+                NettyPacketHandler_8.injectPlayer(player);
+            }
+            PacketEvents.getEventManager().callEvent(new PostPlayerInjectEvent(player));
+        }
+    }
+
+    public static Future<?> uninjectPlayer(final Player player) {
+        final PlayerUninjectEvent uninjectEvent = new PlayerUninjectEvent(player);
+        PacketEvents.getEventManager().callEvent(uninjectEvent);
+        if (!uninjectEvent.isCancelled()) {
+            if (version.isLowerThan(ServerVersion.v_1_8)) {
+                return NettyPacketHandler_7.uninjectPlayer(player);
+            } else {
+                return NettyPacketHandler_8.uninjectPlayer(player);
+            }
+        }
+        return null;
+    }
+
+    public static Object read(final Player receiver, final Object packet) {
+        final String packetName = packet.getClass().getSimpleName();
+        final PacketSendEvent packetSendEvent = new PacketSendEvent(receiver, packetName, packet);
+        PacketEvents.getEventManager().callEvent(packetSendEvent);
+        if (!packetSendEvent.isCancelled()) {
+            return packet;
+        }
+        return null;
+    }
+
+    public static Object write(final Player sender, final Object packet) {
+        final String packetName = packet.getClass().getSimpleName();
+        final PacketReceiveEvent packetReceiveEvent = new PacketReceiveEvent(sender, packetName, packet);
+        PacketEvents.getEventManager().callEvent(packetReceiveEvent);
+        if (!packetReceiveEvent.isCancelled()) {
+            return packet;
+        }
+        return null;
+    }
+
+
+}

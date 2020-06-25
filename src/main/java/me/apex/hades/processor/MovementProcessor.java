@@ -46,7 +46,7 @@ public class MovementProcessor {
             user.setDeltaPitch(deltaPitch);
 
             //Update Flying
-            if (user.getPlayer().isFlying()) user.setFlyingTick(user.getTick());
+            if (user.getPlayer().getAllowFlight()) user.setFlyingTick(user.getTick());
 
             //Update Block Check
             BlockProcessor.process(user);

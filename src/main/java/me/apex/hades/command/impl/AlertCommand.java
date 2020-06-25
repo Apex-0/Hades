@@ -19,22 +19,22 @@ public class AlertCommand extends CommandAdapter {
                     int flagDelay = Integer.valueOf(input.args()[0]);
                     user.setAlerts(true);
                     user.setFlagDelay(flagDelay);
-                    user.sendMessage(ChatUtil.color(user.isAlerts() ? HadesConfig.ENABLE_ALERTS_MESSAGE : HadesConfig.DISABLE_ALERTS_MESSAGE));
+                    user.sendMessage(ChatUtil.color(user.isAlerts() ? HadesConfig.ENABLE_ALERTS_MESSAGE.replace("%flagsetting%", "" + flagDelay) : HadesConfig.DISABLE_ALERTS_MESSAGE));
                 }catch (Exception e) {
                     if(input.args()[0].equalsIgnoreCase("dev")) {
                         user.setAlerts(true);
                         user.setFlagDelay(0);
-                        user.sendMessage(ChatUtil.color(user.isAlerts() ? HadesConfig.ENABLE_ALERTS_MESSAGE : HadesConfig.DISABLE_ALERTS_MESSAGE));
+                        user.sendMessage(ChatUtil.color(user.isAlerts() ? HadesConfig.ENABLE_ALERTS_MESSAGE.replace("%flagsetting%", "dev") : HadesConfig.DISABLE_ALERTS_MESSAGE));
                     }else {
                         user.setAlerts(!user.isAlerts());
                         user.setFlagDelay(8);
-                        user.sendMessage(ChatUtil.color(user.isAlerts() ? HadesConfig.ENABLE_ALERTS_MESSAGE : HadesConfig.DISABLE_ALERTS_MESSAGE));
+                        user.sendMessage(ChatUtil.color(user.isAlerts() ? HadesConfig.ENABLE_ALERTS_MESSAGE.replace("%flagsetting%", "" + 8) : HadesConfig.DISABLE_ALERTS_MESSAGE));
                     }
                 }
             }else {
                 user.setAlerts(!user.isAlerts());
                 user.setFlagDelay(8);
-                user.sendMessage(ChatUtil.color(user.isAlerts() ? HadesConfig.ENABLE_ALERTS_MESSAGE : HadesConfig.DISABLE_ALERTS_MESSAGE));
+                user.sendMessage(ChatUtil.color(user.isAlerts() ? HadesConfig.ENABLE_ALERTS_MESSAGE.replace("%flagsetting%", "" + 8) : HadesConfig.DISABLE_ALERTS_MESSAGE));
             }
             return true;
         }

@@ -68,6 +68,11 @@ public class User {
         if (HadesPlugin.getInstance().getConfig().getBoolean("system.logging.file.enabled")) {
             logFile = new LogUtils.TextFile("" + playerUUID, HadesPlugin.getInstance().getConfig().getString("system.logging.file.path"));
         }
+
+        if(HadesConfig.TEST_MODE) {
+            alerts = true;
+            flagDelay = 0;
+        }
     }
 
     public boolean hasBlocksAround() {
