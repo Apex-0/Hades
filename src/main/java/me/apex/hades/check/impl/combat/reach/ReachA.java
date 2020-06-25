@@ -14,6 +14,10 @@ import me.apex.hades.util.boundingbox.Ray;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+
 @CheckInfo(name = "Reach", type = "A")
 public class ReachA extends Check {
 
@@ -22,41 +26,41 @@ public class ReachA extends Check {
         dev = true;
     }
 
-    boolean attacked = false;
-    Entity entity;
-
     //idea from sim0n
     //improved by LIWK / Johannes
     //Raytrace by Tecnio / undersquire
 
     @Override
     public void onHandle(PacketEvent e, User user) {
-        if (e instanceof AttackEvent) {
-            attacked = true;
-            entity = ((AttackEvent) e).getEntity();
-        } else if (e instanceof FlyingEvent) {
-            if (attacked) {
-                attacked = false;
-                Ray ray = Ray.from(user);
-                double dist = AABB.from(entity).collidesD(ray, 0, 10);
-                if (dist == -1) {
-                    return;
-                }
-                ReachUtil currentLocation = user.getReachLoc();
-                ReachUtil previousLocation = user.getLastReachLoc();
+        if (e instanceof FlyingEvent) {
+            if(System.currentTimeMillis() - user.getLastAttackPacket() < 3L &&
+            user.getLastTarget() != null) {
 
-                double range = UserManager.getUser((Player) entity).reachQueue.stream().mapToDouble(loc -> {
-                    double distanceX = Math.min(Math.min(Math.abs(currentLocation.getX() - loc.getMinX()), Math.abs(currentLocation.getX() - loc.getMaxX())), Math.min(Math.abs(previousLocation.getX() - loc.getMinX()), Math.abs(previousLocation.getX() - loc.getMaxX())));
-                    double distanceZ = Math.min(Math.min(Math.abs(currentLocation.getZ() - loc.getMinZ()), Math.abs(currentLocation.getZ() - loc.getMaxZ())), Math.min(Math.abs(previousLocation.getZ() - loc.getMinZ()), Math.abs(previousLocation.getZ() - loc.getMaxZ())));
+                Player target = user.getLastTarget();
+                if(UserManager.getUser(target).getLastReachLoc() != null) {
 
-                    return Math.sqrt(distanceX * distanceX + distanceZ * distanceZ);
-                }).min().orElse(0.0);
-
-                if (range >= HadesPlugin.getInstance().getConfig().getDouble("Max-Reach") && dist > 2.9) {
-                    if (++preVL > 1) {
-                        flag(user, "hitting farther than possbile. r: " + range + ", d: " + dist);
+                    Ray ray = Ray.from(user);
+                    double dist = AABB.from(target).collidesD(ray, 0, 10);
+                    if (dist == -1) {
+                        return;
                     }
-                } else preVL = 0;
+
+                    ReachUtil currentLocation = user.getReachLoc();
+                    ReachUtil previousLocation = user.getLastReachLoc();
+
+                    double range = UserManager.getUser(target).reachQueue.stream().mapToDouble(loc -> {
+                        double distanceX = Math.min(Math.min(Math.abs(currentLocation.getX() - loc.getMinX()), Math.abs(currentLocation.getX() - loc.getMaxX())), Math.min(Math.abs(previousLocation.getX() - loc.getMinX()), Math.abs(previousLocation.getX() - loc.getMaxX())));
+                        double distanceZ = Math.min(Math.min(Math.abs(currentLocation.getZ() - loc.getMinZ()), Math.abs(currentLocation.getZ() - loc.getMaxZ())), Math.min(Math.abs(previousLocation.getZ() - loc.getMinZ()), Math.abs(previousLocation.getZ() - loc.getMaxZ())));
+
+                        return Math.sqrt(distanceX * distanceX + distanceZ * distanceZ);
+                    }).min().orElse(0.0);
+
+                    if (range >= HadesPlugin.getInstance().getConfig().getDouble("Max-Reach") && dist > 2.9) {
+                        if (++preVL > 1) {
+                            flag(user, "hitting farther than possbile. r: " + range + ", d: " + dist);
+                        }
+                    } else preVL = 0;
+                }
             }
         }
     }
