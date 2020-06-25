@@ -29,6 +29,7 @@ import me.apex.hades.util.TaskUtil;
 import me.apex.hades.util.text.ChatUtil;
 import me.apex.hades.util.vpn.VPNChecker;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.Random;
 

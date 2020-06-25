@@ -24,7 +24,7 @@ public class SpeedC extends Check {
                     && elapsed(user.getTick(), user.getLiquidTick()) > 20
                     && elapsed(user.getTick(), user.getClimbableTick()) > 20
                     && elapsed(user.getTick(), user.getFlyingTick()) > 40) {
-                if (++preVL > 0) {
+                if (++preVL > 2) {
                     flag(user, "invalid predicted dist, d: " + diff);
                 }
             } else preVL *= 0.75;
