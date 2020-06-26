@@ -21,7 +21,7 @@ public class FastLadderA extends Check {
                     || user.getDeltaY() != user.getLastDeltaY()) {
                 return;
             }
-            if (Math.abs(user.getLocation().getY() - user.getLastLocation().getY()) >= 0.13) {
+            if (Math.abs(user.getLocation().getY() - user.getLastLocation().getY()) >= 0.12) {
                 if (++preVL > 3) {
                     flag(user, "going up a ladder faster than possible. s: " + user.getDeltaY());
                 }

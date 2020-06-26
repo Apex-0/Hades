@@ -3,11 +3,8 @@ package me.apex.hades.check.impl.combat.angle;
 import io.github.retrooper.packetevents.event.PacketEvent;
 import me.apex.hades.check.Check;
 import me.apex.hades.check.CheckInfo;
-import me.apex.hades.event.impl.packetevents.AttackEvent;
-import me.apex.hades.event.impl.packetevents.SwingEvent;
 import me.apex.hades.user.User;
 import org.bukkit.entity.Entity;
-import org.bukkit.util.Vector;
 
 @CheckInfo(name = "Angle", type = "B")
 public class AngleB extends Check {
@@ -24,7 +21,7 @@ public class AngleB extends Check {
 
     @Override
     public void onHandle(PacketEvent e, User user) {
-        if (e instanceof AttackEvent) {
+        /*if (e instanceof AttackEvent) {
             swung = false;
             Entity entity = ((AttackEvent) e).getEntity();
             lastEntity = entity;
@@ -44,7 +41,7 @@ public class AngleB extends Check {
                 this.dist = dist;
                 this.angle = angle;
             }
-        }
+        }*/
     }
 
 }
