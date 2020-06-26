@@ -139,18 +139,13 @@ checks:
         punishable: false
         max-violations: 20
         punish-command: 'ban %player% %prefix% Unfair Advantage'
-    fly:
+    fastladder:
       a:
         enabled: true
         punishable: true
         max-violations: 20
-        punish-command: 'ban %player% %prefix% Unfair Advantage'
-      b:
-        enabled: true
-        punishable: true
-        max-violations: 20
-        punish-command: 'ban %player% %prefix% Unfair Advantage'
-    motion:
+        punish-command: 'ban %player% %prefix Unfair Advantage'
+    fly:
       a:
         enabled: true
         punishable: true
@@ -166,6 +161,12 @@ checks:
         enabled: true
         punishable: true
         max-violations: 20
+        punish-command: 'ban %player% %prefix% Unfair Avantage'
+    motion:
+      a:
+        enabled: true
+        punishable: true
+        max-violations: 20
         punish-command: 'ban %player% %prefix% Unfair Advantage'
       b:
         enabled: true
@@ -176,17 +177,7 @@ checks:
         enabled: true
         punishable: true
         max-violations: 20
-        punish-command: 'ban %player% %prefix% Unfair Advantage'
-      d:
-        enabled: true
-        punishable: true
-        max-violations: 20
-        punish-command: 'ban %player% %prefix% Unfair Advantage'
-      e:
-        enabled: true
-        punishable: true
-        max-violations: 20
-        punish-command: 'ban %player% %prefix% Unfair Advantage'
+        punish-command: 'ban %player% %prefix Unfair Advantage'
     noslow:
       a:
         enabled: true
@@ -231,19 +222,25 @@ checks:
         punishable: true
         max-violations: 20
         punish-command: 'ban %player% %prefix% Unfair Advantage'
-    fastladder:
+    client:
+      a:
+        enabled: true
+        punishable: true
+        max-violations: 1
+        punish-command: 'ban %player% %prefix% Hacked Client'
+    fastuse:
+      a:
+        enabled: true
+        punishable: true
+        max-violations: 20
+        punish-command: 'ban %player% %prefix% Unfair Advantage'
+    interactreach:
       a:
         enabled: true
         punishable: true
         max-violations: 20
         punish-command: 'ban %player% %prefix% Unfair Advantage'
     invmove:
-      a:
-        enabled: true
-        punishable: true
-        max-violations: 20
-        punish-command: 'ban %player% %prefix% Unfair Advantage'
-    fastuse:
       a:
         enabled: true
         punishable: true
@@ -260,21 +257,4 @@ checks:
         enabled: true
         punishable: true
         max-violations: 20
-        punish-command: 'ban %player% %prefix% Unfair Advantage'
-      b:
-        enabled: true
-        punishable: true
-        max-violations: 20
-        punish-command: 'ban %player% %prefix% Unfair Advantage'
-    interactreach:
-      a:
-        enabled: true
-        punishable: true
-        max-violations: 20
-        punish-command: 'ban %player% %prefix% Unfair Advantage'
-    vape:
-      a:
-        enabled: true
-        punishable: true
-        max-violations: 1
         punish-command: 'ban %player% %prefix% Unfair Advantage'

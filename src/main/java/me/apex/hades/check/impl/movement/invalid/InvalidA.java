@@ -1,4 +1,4 @@
-package me.apex.hades.check.impl.other.invalid;
+package me.apex.hades.check.impl.movement.invalid;
 
 import io.github.retrooper.packetevents.event.PacketEvent;
 import me.apex.hades.check.Check;

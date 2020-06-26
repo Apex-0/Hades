@@ -19,6 +19,7 @@ import me.apex.hades.check.impl.combat.velocity.VelocityA;
 import me.apex.hades.check.impl.movement.fastladder.FastLadderA;
 import me.apex.hades.check.impl.movement.fly.FlyA;
 import me.apex.hades.check.impl.movement.fly.FlyB;
+import me.apex.hades.check.impl.movement.motion.MotionC;
 import me.apex.hades.check.impl.movement.motion.MotionA;
 import me.apex.hades.check.impl.movement.motion.MotionB;
 import me.apex.hades.check.impl.movement.noslow.NoSlowA;
@@ -29,8 +30,8 @@ import me.apex.hades.check.impl.movement.speed.SpeedB;
 import me.apex.hades.check.impl.movement.speed.SpeedC;
 import me.apex.hades.check.impl.movement.speed.SpeedD;
 import me.apex.hades.check.impl.movement.sprint.SprintA;
-import me.apex.hades.check.impl.other.invalid.*;
-import me.apex.hades.check.impl.other.vape.VapeA;
+import me.apex.hades.check.impl.movement.invalid.*;
+import me.apex.hades.check.impl.other.client.ClientA;
 import me.apex.hades.check.impl.player.fastuse.FastUseA;
 import me.apex.hades.check.impl.player.interactreach.InteractReachA;
 import me.apex.hades.check.impl.player.invmove.InvMoveA;
@@ -59,15 +60,13 @@ public class CheckManager {
             NoSwingA.class,
             ReachA.class,
             VelocityA.class,
+            FastLadderA.class,
             FlyA.class,
             FlyB.class,
+            InvalidA.class,
             MotionA.class,
             MotionB.class,
-            InvalidA.class,
-            InvalidB.class,
-            InvalidC.class,
-            InvalidD.class,
-            InvalidE.class,
+            MotionC.class,
             NoSlowA.class,
             ScaffoldA.class,
             ScaffoldB.class,
@@ -76,13 +75,12 @@ public class CheckManager {
             SpeedC.class,
             SpeedD.class,
             SprintA.class,
-            FastLadderA.class,
+            ClientA.class,
+            FastUseA.class,
+            InteractReachA.class,
             InvMoveA.class,
             NoFallA.class,
             TimerA.class,
-            InteractReachA.class,
-            FastUseA.class,
-            VapeA.class
     };
 
     public static List<Check> loadChecks() {

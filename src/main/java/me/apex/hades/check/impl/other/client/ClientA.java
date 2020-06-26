@@ -1,4 +1,4 @@
-package me.apex.hades.check.impl.other.vape;
+package me.apex.hades.check.impl.other.client;
 
 import io.github.retrooper.packetevents.event.PacketEvent;
 import me.apex.hades.HadesPlugin;
@@ -13,10 +13,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
-@CheckInfo(name = "Vape", type = "A")
-public class VapeA extends Check implements Listener, PluginMessageListener {
+@CheckInfo(name = "Client", type = "A")
+public class ClientA extends Check implements Listener, PluginMessageListener {
 
-    public VapeA() {
+    public ClientA() {
         Bukkit.getServer().getPluginManager().registerEvents(this, HadesPlugin.getInstance());
     }
 
