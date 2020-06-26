@@ -12,17 +12,7 @@ public class NoSlowA extends Check {
     @Override
     public void onHandle(PacketEvent e, User user) {
         if (e instanceof FlyingEvent) {
-            /*if (PacketEvents.getClientVersion(user.getPlayer()) == ClientVersion.v_1_8) {
-                if (user.isSprinting() && user.getPlayer().isBlocking()) {
-                    if (++preVL >= 3) flag(user, "not slowing down while blocking sword.");
-                } else preVL = 0;
-            }*/
-            //You cant sprint while sneaking on old versions.
-            /*if (PacketEvents.getClientVersion(user.getPlayer()) == ClientVersion.v_1_8) {
-                if (user.isSprinting() && user.isSneaking()) {
-                    flag(user, "is sprinting while sneaking.");
-                }
-            }*/
+
         }
     }
 }

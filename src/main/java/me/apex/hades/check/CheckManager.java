@@ -25,6 +25,7 @@ import me.apex.hades.check.impl.movement.motion.MotionB;
 import me.apex.hades.check.impl.movement.noslow.NoSlowA;
 import me.apex.hades.check.impl.movement.scaffold.ScaffoldA;
 import me.apex.hades.check.impl.movement.scaffold.ScaffoldB;
+import me.apex.hades.check.impl.movement.scaffold.ScaffoldC;
 import me.apex.hades.check.impl.movement.speed.SpeedA;
 import me.apex.hades.check.impl.movement.speed.SpeedB;
 import me.apex.hades.check.impl.movement.speed.SpeedC;
@@ -70,6 +71,7 @@ public class CheckManager {
             NoSlowA.class,
             ScaffoldA.class,
             ScaffoldB.class,
+            ScaffoldC.class,
             SpeedA.class,
             SpeedB.class,
             SpeedC.class,

@@ -146,7 +146,7 @@ public final class PacketEvents implements PacketListener, Listener {
     }
 
     /**
-     * When to use this(nano / 1 million) over {@link System#currentTimeMillis()}
+     * When to use this(nano / 1 million) vs {@link System#currentTimeMillis()}
      * This is preciser than System.currentTimeMillis(), System.currentTimeMillis() can be up to 50ms off on some operating systems, but using this isn't cheap.
      * Java documentation recommend using nano time if you are measuring elapsed time.
      * In this function nanoTime is divided by 1 million giving us milliseconds.
@@ -155,15 +155,6 @@ public final class PacketEvents implements PacketListener, Listener {
      * @return nanoTime / 1 million
      */
     public static long highlyPreciseMillis() {
-        return System.nanoTime() / 1000000;
-    }
-
-
-    /**
-     * This is deprecated, use {@link #highlyPreciseMillis()} as they do the same thing, I just renamed the method.
-     */
-    @Deprecated
-    public static long currentCalculatedMS() {
         return System.nanoTime() / 1000000;
     }
 
@@ -224,20 +215,11 @@ public final class PacketEvents implements PacketListener, Listener {
      */
     @PacketHandler
     public void onInject(final PlayerInjectEvent e) {
+        clientVersionsMap.put(e.getPlayer().getUniqueId(), e.getClientVersion());
     }
 
     @PacketHandler
     public void onReceive(final PacketReceiveEvent e) {
-    }
-
-    /**
-     * Deprecated, please do not use this anymore
-     *
-     * @param e
-     */
-    @PacketHandler
-    public void onPostInject(final PostPlayerInjectEvent e) {
-
     }
 
     @EventHandler

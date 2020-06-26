@@ -1,6 +1,6 @@
 package me.apex.hades.event.impl.packetevents;
 
-import io.github.retrooper.packetevents.enums.PlayerAction;
+import io.github.retrooper.packetevents.enums.minecraft.PlayerAction;
 import lombok.Getter;
 import me.apex.hades.event.Event;
 import org.bukkit.entity.Entity;

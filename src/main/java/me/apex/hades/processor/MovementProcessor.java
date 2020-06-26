@@ -1,7 +1,6 @@
 package me.apex.hades.processor;
 
 import io.github.retrooper.packetevents.event.impl.PacketReceiveEvent;
-import io.github.retrooper.packetevents.packet.Packet;
 import io.github.retrooper.packetevents.packet.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.in.flying.WrappedPacketInFlying;
 import me.apex.hades.user.User;
@@ -14,7 +13,7 @@ public class MovementProcessor {
 
     public static void process(User user, PacketReceiveEvent e) {
         if (PacketUtil.isPositionPacket(e.getPacketName())) {
-            WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getPacket());
+            WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
             user.setOnGround(packet.isOnGround());
 
             Location location = new Location(user.getPlayer().getWorld(), packet.getX(), packet.getY(), packet.getZ(), packet.getYaw(), packet.getPitch());
@@ -60,7 +59,7 @@ public class MovementProcessor {
 
             user.setDirection(new Vector(-Math.sin(user.getPlayer().getEyeLocation().getYaw() * 3.1415927F / 180.0F) * (float) 1 * 0.5F, 0, Math.cos(user.getPlayer().getEyeLocation().getYaw() * 3.1415927F / 180.0F) * (float) 1 * 0.5F));
         } else if (PacketUtil.isRotationPacket(e.getPacketName())) {
-            WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getPacket());
+            WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
             user.setOnGround(packet.isOnGround());
 
             Location location = new Location(user.getPlayer().getWorld(), user.getLocation().getX(), user.getLocation().getY(), user.getLocation().getZ(), packet.getYaw(), packet.getPitch());
@@ -106,8 +105,8 @@ public class MovementProcessor {
             user.setDeltaAngle(Math.abs(user.getDeltaYaw()) + Math.abs(user.getDeltaPitch()));
 
             user.setDirection(new Vector(-Math.sin(user.getPlayer().getEyeLocation().getYaw() * 3.1415927F / 180.0F) * (float) 1 * 0.5F, 0, Math.cos(user.getPlayer().getEyeLocation().getYaw() * 3.1415927F / 180.0F) * (float) 1 * 0.5F));
-        } else if (e.getPacketName().equalsIgnoreCase(Packet.Client.FLYING)) {
-            WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getPacket());
+        } else if (e.getPacketName().equalsIgnoreCase(PacketType.Client.FLYING)) {
+            WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
             user.setOnGround(packet.isOnGround());
 
             Location location = new Location(user.getPlayer().getWorld(), user.getLocation().getX(), user.getLocation().getY(), user.getLocation().getZ(), user.getLocation().getYaw(), user.getLocation().getPitch());

@@ -28,6 +28,7 @@ public class ScaffoldB extends Check {
             double dist = user.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toVector().distance(blockVec);
             double diff = Math.abs(user.getDeltaYaw() - user.getLastDeltaYaw());
             TaskUtil.task(() -> block = new Location(user.getLocation().getWorld(), ((PlaceEvent) e).getBlockPos().x, ((PlaceEvent) e).getBlockPos().y, ((PlaceEvent) e).getBlockPos().z).getBlock());
+            if (block == null)return;
 
             if(diff > 100.0 && dist <= 2.0 && block.getType().isSolid()) {
                 if(++preVL > 1) {

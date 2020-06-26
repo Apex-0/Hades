@@ -1,6 +1,6 @@
 package me.apex.hades.util;
 
-import io.github.retrooper.packetevents.packet.Packet;
+import io.github.retrooper.packetevents.packet.PacketType;
 import me.apex.hades.user.User;
 import org.bukkit.Bukkit;
 
@@ -9,15 +9,15 @@ import java.lang.reflect.Constructor;
 public class PacketUtil {
 
     public static boolean isFlyingPacket(String packetName) {
-        return packetName.equalsIgnoreCase(Packet.Client.LOOK) || packetName.equalsIgnoreCase(Packet.Client.FLYING) || packetName.equalsIgnoreCase(Packet.Client.POSITION) || packetName.equalsIgnoreCase(Packet.Client.POSITION_LOOK);
+        return packetName.equalsIgnoreCase(PacketType.Client.LOOK) || packetName.equalsIgnoreCase(PacketType.Client.FLYING) || packetName.equalsIgnoreCase(PacketType.Client.POSITION) || packetName.equalsIgnoreCase(PacketType.Client.POSITION_LOOK);
     }
 
     public static boolean isPositionPacket(String packetName) {
-        return packetName.equalsIgnoreCase(Packet.Client.POSITION) || packetName.equalsIgnoreCase(Packet.Client.POSITION_LOOK);
+        return packetName.equalsIgnoreCase(PacketType.Client.POSITION) || packetName.equalsIgnoreCase(PacketType.Client.POSITION_LOOK);
     }
 
     public static boolean isRotationPacket(String packetName) {
-        return packetName.equalsIgnoreCase(Packet.Client.LOOK);
+        return packetName.equalsIgnoreCase(PacketType.Client.LOOK);
     }
 
     public static boolean isBlockPacket(String type) {
