@@ -71,17 +71,19 @@ public class NetworkListener implements PacketListener {
             //Player Vars
             if (e.getPacketName().equalsIgnoreCase(PacketType.Client.ENTITY_ACTION)) {
                 WrappedPacketInEntityAction packet = new WrappedPacketInEntityAction(e.getNMSPacket());
-                if (packet.getAction().equals(PlayerAction.START_SPRINTING)) {
-                    user.setSprinting(true);
-                }
-                if (packet.getAction().equals(PlayerAction.STOP_SPRINTING)) {
-                    user.setSprinting(false);
-                }
-                if (packet.getAction().equals(PlayerAction.START_SNEAKING)) {
-                    user.setSneaking(true);
-                }
-                if (packet.getAction().equals(PlayerAction.STOP_SNEAKING)) {
-                    user.setSneaking(false);
+                if (packet.getAction() != null){
+                    if (packet.getAction().equals(PlayerAction.START_SPRINTING)) {
+                        user.setSprinting(true);
+                    }
+                    if (packet.getAction().equals(PlayerAction.STOP_SPRINTING)) {
+                        user.setSprinting(false);
+                    }
+                    if (packet.getAction().equals(PlayerAction.START_SNEAKING)) {
+                        user.setSneaking(true);
+                    }
+                    if (packet.getAction().equals(PlayerAction.STOP_SNEAKING)) {
+                        user.setSneaking(false);
+                    }
                 }
             }
 

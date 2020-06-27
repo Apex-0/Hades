@@ -38,7 +38,7 @@ anti-vpn:
   punish-command: 'kick %player% &cVPNs are not allowed on this server!'
 
 #Combat Patch Values
-Max-CPS: 15
+Max-CPS: 18
 Max-Reach: 3.2
 
 #Check Configuration

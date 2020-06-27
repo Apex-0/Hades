@@ -12,9 +12,6 @@ public final class WrappedPacketInEntityAction extends WrappedPacket {
     private static Class<?> entityActionClass;
     @Nullable
     private static Class<?> enumPlayerActionClass;
-    @Nullable
-    private static Object[] enumPlayerActionConstants;
-
     static {
         try {
             entityActionClass = NMSUtils.getNMSClass("PacketPlayInEntityAction");
@@ -25,7 +22,10 @@ public final class WrappedPacketInEntityAction extends WrappedPacket {
                         break;
                     }
                 }
-            }
+            } 
+            else {
+               enumPlayerActionClass = NMSUtils.getNMSClass("EnumPlayerAction");
+            } 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -44,7 +44,13 @@ public final class WrappedPacketInEntityAction extends WrappedPacket {
     protected void setup() {
         try {
             final int entityId = Reflection.getField(entityActionClass, int.class, 0).getInt(packet);
-            final int jumpBoost = Reflection.getField(entityActionClass, int.class, 2).getInt(packet);
+            final int jumpBoost;
+            if(version.isLowerThan(ServerVersion.v_1_8)) {
+                jumpBoost = Reflection.getField(entityActionClass, int.class, 2).getInt(packet);
+            }
+            else {
+                jumpBoost = Reflection.getField(entityActionClass, int.class, 1).getInt(packet);
+            }
 
             int animationIndex = -1;
 
@@ -52,24 +58,17 @@ public final class WrappedPacketInEntityAction extends WrappedPacket {
             if (version.isLowerThan(ServerVersion.v_1_8)) {
                 animationIndex = Reflection.getField(entityActionClass, int.class, 1).getInt(packet);
             } else {
-                final Object enumObj = Reflection.getField(entityActionClass, enumPlayerActionClass, 0);
-
-                final Object[] enumValues = enumPlayerActionConstants;
-                final int len = enumValues.length;
-                for (int i = 0; i < len; i++) {
-                    final Object val = enumValues[i];
-                    if (val.toString().equals(enumObj.toString())) {
-                        animationIndex = i;
-                        break;
-                    }
-                }
+                final Object enumObj = Reflection.getField(entityActionClass, enumPlayerActionClass, 0).get(packet);
+                 
+                this.action = PlayerAction.valueOf(enumObj.toString());
             }
 
 
             this.entityId = entityId;
             this.jumpBoost = jumpBoost;
-            this.action = PlayerAction.get(animationIndex);
-
+            if(animationIndex != -1) {
+                this.action = PlayerAction.get(animationIndex);
+            }
             this.entity = NMSUtils.getEntityById(this.entityId);
         } catch (IllegalAccessException e) {
             e.printStackTrace();

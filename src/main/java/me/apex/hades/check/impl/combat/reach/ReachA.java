@@ -33,7 +33,6 @@ public class ReachA extends Check {
                 Ray ray = Ray.from(user);
                 double dist = AABB.from(target).collidesD(ray, 0, 10);
                 if (dist == -1) {
-                    Bukkit.broadcastMessage("Returned because dist is == -1");
                     return;
                 }
 
