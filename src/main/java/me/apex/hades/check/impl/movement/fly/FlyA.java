@@ -17,6 +17,7 @@ public class FlyA extends Check {
                     && elapsed(user.getTick(), user.getFlyingTick()) > 40
                     && elapsed(user.getTick(), user.getLiquidTick()) > 20
                     && elapsed(user.getTick(), user.getClimbableTick()) > 20
+                    && elapsed(user.getTick(), user.getVelocityTick()) > 100
                     && user.getPlayer().getVehicle() == null) {
                 flag(user, "y motion higher than 0, m: " + user.getDeltaY() + ", " + user.getPlayer().getLocation().getBlock().getType().toString());
             }

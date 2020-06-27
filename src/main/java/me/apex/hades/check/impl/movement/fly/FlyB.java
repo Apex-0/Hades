@@ -19,6 +19,7 @@ public class FlyB extends Check {
                     && elapsed(user.getTick(), user.getFlyingTick()) > 40
                     && elapsed(user.getTick(), user.getLiquidTick()) > 20
                     && elapsed(user.getTick(), user.getClimbableTick()) > 20
+                    && elapsed(user.getTick(), user.getVelocityTick()) > 100
                     && user.getPlayer().getVehicle() == null) {
                 if(!MathUtil.isRoughlyEqual(user.getDeltaY(), prediction, 0.001)) {
                     flag(user, "invalid vertical motion, m: " + user.getDeltaY() + ", p: " + prediction);
