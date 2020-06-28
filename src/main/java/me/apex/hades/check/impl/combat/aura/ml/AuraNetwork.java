@@ -9,7 +9,7 @@ import me.apex.hades.user.User;
 import java.util.ArrayList;
 import java.util.List;
 
-@CheckInfo(name = "Aura", type = "ML")
+@CheckInfo(name = "Aura")
 public class AuraNetwork extends Check {
 
     private final List<Float> angles = new ArrayList<>();

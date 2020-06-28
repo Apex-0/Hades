@@ -8,7 +8,7 @@ import me.apex.hades.user.User;
 import me.apex.hades.util.MathUtil;
 import org.bukkit.entity.Entity;
 
-@CheckInfo(name = "Aura", type = "D")
+@CheckInfo(name = "Aura")
 public class AuraD extends Check {
     @Override
     public void onHandle(PacketEvent e, User user) {
@@ -23,7 +23,7 @@ public class AuraD extends Check {
 
             if (dist < 0.7 && rotation > 2) {
                 if (vl++ > 1)
-                    flag(user, "angle = " + dist + ", rotation = " + rotation);
+                    flag(user, "Lockview","angle = " + dist + ", rotation = " + rotation);
             } else vl = 0;
         }
     }

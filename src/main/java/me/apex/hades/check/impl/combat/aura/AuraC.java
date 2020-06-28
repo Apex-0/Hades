@@ -8,7 +8,7 @@ import me.apex.hades.event.impl.packetevents.FlyingEvent;
 import me.apex.hades.user.User;
 import org.bukkit.entity.Entity;
 
-@CheckInfo(name = "Aura", type = "C")
+@CheckInfo(name = "Aura")
 public class AuraC extends Check {
 
     private int ticks;
@@ -24,7 +24,7 @@ public class AuraC extends Check {
             if (target != lastTarget) {
                 if (ticks < 2) {
                     if (++preVL > 2) {
-                        flag(user, "switch aura, t: " + ticks);
+                        flag(user, "Switch","invalid attack pattern, t: " + ticks);
                     }
                 } else preVL *= 0.75;
             }

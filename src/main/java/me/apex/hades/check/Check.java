@@ -18,7 +18,6 @@ import org.bukkit.event.Listener;
 public abstract class Check implements Listener {
 
     //Check Data
-    public double preVL;
     public long lastFlag;
     public double vl, maxVL;
     public boolean enabled, punishable, dev;

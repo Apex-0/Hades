@@ -7,7 +7,7 @@ import me.apex.hades.event.impl.packetevents.AttackEvent;
 import me.apex.hades.event.impl.packetevents.FlyingEvent;
 import me.apex.hades.user.User;
 
-@CheckInfo(name = "Aura", type = "B")
+@CheckInfo(name = "Aura")
 public class AuraB extends Check {
 
     private int ticks;
@@ -16,7 +16,7 @@ public class AuraB extends Check {
     public void onHandle(PacketEvent e, User user) {
         if (e instanceof AttackEvent) {
             if (ticks++ > 1) {
-                flag(user, "multiaura, t: " + ticks);
+                flag(user, "Multi","too many attacks in tick, t: " + ticks);
             }
         } else if (e instanceof FlyingEvent) {
             ticks = 0;
