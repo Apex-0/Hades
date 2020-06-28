@@ -6,7 +6,7 @@ import me.apex.hades.check.CheckInfo;
 import me.apex.hades.user.User;
 import org.bukkit.entity.Entity;
 
-@CheckInfo(name = "Angle", type = "B")
+@CheckInfo(name = "Angle")
 public class AngleB extends Check {
 
     @Override
