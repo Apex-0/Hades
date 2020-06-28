@@ -1,4 +1,4 @@
-package me.apex.hades.check.impl.combat.aura.ml.model;
+package me.apex.hades.check.impl.combat.ml.model;
 
 //Credits to Nova41
 public class LabeledData implements Cloneable {

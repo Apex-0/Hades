@@ -73,10 +73,9 @@ public class User {
         this.checks = CheckManager.loadChecks();
         this.timeStamp = System.currentTimeMillis();
         this.executorService = Executors.newSingleThreadExecutor();
-        if (HadesPlugin.getInstance().getConfig().getBoolean("system.logging.file.enabled")) {
+        if (HadesConfig.LOG_TO_FILE) {
             logFile = new LogUtils.TextFile("" + playerUUID, HadesPlugin.getInstance().getConfig().getString("system.logging.file.path"));
         }
-
         if(HadesConfig.TEST_MODE) {
             alerts = true;
             flagDelay = 0;

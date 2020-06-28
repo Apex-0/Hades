@@ -1,4 +1,4 @@
-package me.apex.hades.check.impl.combat.aura.ml.model;
+package me.apex.hades.check.impl.combat.ml.model;
 
 import java.util.ArrayList;
 import java.util.List;

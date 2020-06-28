@@ -1,7 +1,7 @@
 package me.apex.hades.check;
 
 import me.apex.hades.check.impl.combat.Angle;
-import me.apex.hades.check.impl.combat.aura.AuraA;
+import me.apex.hades.check.impl.combat.Killaura;
 import me.apex.hades.check.impl.combat.aura.AuraB;
 import me.apex.hades.check.impl.combat.aura.AuraC;
 import me.apex.hades.check.impl.combat.aura.AuraD;
@@ -46,7 +46,7 @@ public class CheckManager {
 
     public static final Class[] CHECKS = new Class[]{
             Angle.class,
-            AuraA.class,
+            Killaura.class,
             AuraB.class,
             AuraC.class,
             AuraD.class,
