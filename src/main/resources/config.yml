@@ -77,6 +77,11 @@ checks:
         punishable: true
         max-violations: 20
         punish-command: 'ban %player% %prefix% Unfair Advantage'
+      d:
+        enabled: true
+        punishable: true
+        max-violations: 20
+        punish-command: 'ban %player% %prefix% Unfair Advantage'
     autoblock:
       a:
         enabled: true

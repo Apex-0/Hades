@@ -5,6 +5,7 @@ import me.apex.hades.check.impl.combat.angle.AngleB;
 import me.apex.hades.check.impl.combat.aura.AuraA;
 import me.apex.hades.check.impl.combat.aura.AuraB;
 import me.apex.hades.check.impl.combat.aura.AuraC;
+import me.apex.hades.check.impl.combat.aura.AuraD;
 import me.apex.hades.check.impl.combat.autoblock.AutoBlockA;
 import me.apex.hades.check.impl.combat.autoblock.AutoBlockB;
 import me.apex.hades.check.impl.combat.autoclicker.AutoClickerA;
@@ -19,9 +20,10 @@ import me.apex.hades.check.impl.combat.velocity.VelocityA;
 import me.apex.hades.check.impl.movement.fastladder.FastLadderA;
 import me.apex.hades.check.impl.movement.fly.FlyA;
 import me.apex.hades.check.impl.movement.fly.FlyB;
-import me.apex.hades.check.impl.movement.motion.MotionC;
+import me.apex.hades.check.impl.movement.invalid.InvalidA;
 import me.apex.hades.check.impl.movement.motion.MotionA;
 import me.apex.hades.check.impl.movement.motion.MotionB;
+import me.apex.hades.check.impl.movement.motion.MotionC;
 import me.apex.hades.check.impl.movement.noslow.NoSlowA;
 import me.apex.hades.check.impl.movement.scaffold.ScaffoldA;
 import me.apex.hades.check.impl.movement.scaffold.ScaffoldB;
@@ -31,7 +33,6 @@ import me.apex.hades.check.impl.movement.speed.SpeedB;
 import me.apex.hades.check.impl.movement.speed.SpeedC;
 import me.apex.hades.check.impl.movement.speed.SpeedD;
 import me.apex.hades.check.impl.movement.sprint.SprintA;
-import me.apex.hades.check.impl.movement.invalid.*;
 import me.apex.hades.check.impl.other.client.ClientA;
 import me.apex.hades.check.impl.player.fastuse.FastUseA;
 import me.apex.hades.check.impl.player.interactreach.InteractReachA;
@@ -50,6 +51,7 @@ public class CheckManager {
             AuraA.class,
             AuraB.class,
             AuraC.class,
+            AuraD.class,
             AutoBlockA.class,
             AutoBlockB.class,
             AutoClickerA.class,

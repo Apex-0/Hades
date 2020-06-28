@@ -49,7 +49,7 @@ public class ReachA extends Check {
                     }).min().orElse(0.0);
 
                     Bukkit.broadcastMessage(user.getPlayer().getName() + " > range=§c" + range + " §f> dist=§c" + dist);
-                    if (range >= HadesPlugin.getInstance().getConfig().getDouble("Max-Reach") && dist > 2.9) {
+                    if (range >= HadesPlugin.getInstance().getConfig().getDouble("Max-Reach")) {
                         if (++preVL > 2) {
                             flag(user, "hitting farther than possible. r: " + range + ", d: " + dist);
                         }

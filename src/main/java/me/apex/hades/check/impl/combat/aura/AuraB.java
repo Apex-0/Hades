@@ -15,7 +15,7 @@ public class AuraB extends Check {
     @Override
     public void onHandle(PacketEvent e, User user) {
         if (e instanceof AttackEvent) {
-            if (++ticks < 1) {
+            if (ticks++ > 1) {
                 flag(user, "multiaura, t: " + ticks);
             }
         } else if (e instanceof FlyingEvent) {
