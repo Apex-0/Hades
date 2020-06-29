@@ -1,6 +1,5 @@
 package me.apex.hades.listener;
 
-import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.annotations.PacketHandler;
 import io.github.retrooper.packetevents.enums.minecraft.EntityUseAction;
 import io.github.retrooper.packetevents.enums.minecraft.PlayerAction;
@@ -20,7 +19,6 @@ import io.github.retrooper.packetevents.packetwrappers.in.flying.WrappedPacketIn
 import io.github.retrooper.packetevents.packetwrappers.in.keepalive.WrappedPacketInKeepAlive;
 import io.github.retrooper.packetevents.packetwrappers.in.useentity.WrappedPacketInUseEntity;
 import io.github.retrooper.packetevents.packetwrappers.out.entityvelocity.WrappedPacketOutEntityVelocity;
-import io.github.retrooper.packetevents.packetwrappers.out.transaction.WrappedPacketOutTransaction;
 import me.apex.hades.HadesConfig;
 import me.apex.hades.HadesPlugin;
 import me.apex.hades.event.impl.packetevents.*;
@@ -32,7 +30,6 @@ import me.apex.hades.util.TaskUtil;
 import me.apex.hades.util.text.ChatUtil;
 import me.apex.hades.util.vpn.VPNChecker;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.Random;
@@ -80,13 +77,6 @@ public class NetworkListener implements PacketListener {
                 WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(e.getNMSPacket());
                 if (packet.getAction() == EntityUseAction.ATTACK) {
                     callEvent = new AttackEvent(packet.getEntityId(), packet.getEntity());
-                    user.setLastAttackPacket(e.getTimestamp());
-                    if (packet.getEntity() instanceof Player) {
-                        Player target = (Player) packet.getEntity();
-                        user.setLastTarget(target);
-                    } else {
-                        user.setLastTarget(null);
-                    }
                 } else if (packet.getAction() == EntityUseAction.INTERACT
                         || packet.getAction() == EntityUseAction.INTERACT_AT) {
                     callEvent = new EntityInteractEvent(packet.getEntityId(), packet.getEntity());
@@ -132,15 +122,13 @@ public class NetworkListener implements PacketListener {
                         user.setVerifyingVelocity(false);
                         user.setVelocityTick(user.getTick() + 1);
                         user.setVelocityVerifications(user.getVelocityVerifications() + 1);
-                        user.setMaxVelocityTicks((int)(user.getLocation().clone().toVector().distance(new Vector(user.getLocation().getX() + user.getVelocityX(), user.getLocation().getY() + user.getVelocityY(), user.getLocation().getZ() + user.getVelocityZ())) * 10));
+                        user.setMaxVelocityTicks((int)(user.getLocation().clone().toVector().distance(new Vector(user.getLocation().getX() + user.getVelocityX(), user.getLocation().getY() + user.getVelocityY(), user.getLocation().getZ() + user.getVelocityZ())) * 20));
                     }
                 }
                 callEvent = new PingEvent();
             } else if (e.getPacketName().equalsIgnoreCase(PacketType.Client.BLOCK_PLACE)) {
                 WrappedPacketInBlockPlace packet = new WrappedPacketInBlockPlace(e.getPlayer(), e.getNMSPacket());
                 callEvent = new PlaceEvent(packet.getBlockPosition(), packet.getItemStack());
-            }else if(e.getPacketName().equalsIgnoreCase(PacketType.Client.TRANSACTION)) {
-                Bukkit.broadcastMessage("transaction?");
             }
             PacketEvent finalCallEvent = callEvent;
             if (!HadesPlugin.getInstance().getConfig().getBoolean("checks.exempt-players") || !user.getPlayer().hasPermission(HadesConfig.BASE_PERMISSION + ".exempt.checks"))
@@ -166,7 +154,6 @@ public class NetworkListener implements PacketListener {
                     user.setVelocityY(packet.getVelocityY());
                     user.setVelocityZ(packet.getVelocityZ());
                     PacketUtil.sendKeepAlive(user, user.getVelocityId());
-                    PacketEvents.getAPI().getPlayerUtilities().sendPacket(user.getPlayer(), new WrappedPacketOutTransaction(user.getVelocityId(), (short)0, false));
                     if (!HadesPlugin.getInstance().getConfig().getBoolean("checks.exempt-players") || !user.getPlayer().hasPermission(HadesConfig.BASE_PERMISSION + ".exempt.checks"))
                         user.getExecutorService().execute(() -> user.getChecks().stream().filter(check -> check.enabled).forEach(check -> check.onHandle(new VelocityEvent(packet.getEntityId(), packet.getVelocityX(), packet.getVelocityY(), packet.getVelocityZ()), user)));
                 }

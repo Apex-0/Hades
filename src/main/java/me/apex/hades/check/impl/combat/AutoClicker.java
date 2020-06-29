@@ -46,7 +46,7 @@ public class AutoClicker extends Check {
             if(user.isDigging() || flyingTicks > 10) {
                 flyingTicks = 0;
             }else {
-                double speed = 1000 / ((flyingTicks * 50.0) > 0 ? (flyingTicks * 50.0) : 1);
+                double speed = 1000 / ((flyingTicks * 50.0) > 0 ? (flyingTicks * 50.0) : 50);
                 clicksPerSecond = ((clicksPerSecond * 19) + speed) / 20;
 
                 if(clicksPerSecond > HadesConfig.MAX_CPS) {
