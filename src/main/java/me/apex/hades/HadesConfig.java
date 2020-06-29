@@ -2,7 +2,7 @@ package me.apex.hades;
 
 import me.apex.hades.check.CheckManager;
 import me.apex.hades.command.CommandManager;
-import me.apex.hades.command.impl.AlertCommand;
+import me.apex.hades.command.impl.HadesCommand;
 import me.apex.hades.util.text.ChatUtil;
 
 import java.util.HashMap;
@@ -55,7 +55,7 @@ public class HadesConfig {
             ENABLE_ALERTS_MESSAGE = ChatUtil.color(HadesPlugin.getInstance().getConfig().getString("lang.enable-alerts-message"));
             DISABLE_ALERTS_MESSAGE = ChatUtil.color(HadesPlugin.getInstance().getConfig().getString("lang.disable-alerts-message"));
 
-            BASE_PERMISSION = HadesPlugin.getInstance().getConfig().getString("system.base-permission");
+            BASE_PERMISSION = "hades";
             LOG_FORMAT = HadesPlugin.getInstance().getConfig().getString("system.logging.log-format");
             LOG_TO_FILE = HadesPlugin.getInstance().getConfig().getBoolean("system.logging.log-to-file");
             LOG_TO_CONSOLE = HadesPlugin.getInstance().getConfig().getBoolean("system.logging.log-to-console");
@@ -78,12 +78,13 @@ public class HadesConfig {
             PUNISH_COMMANDS.clear();
 
             for(Class check : CheckManager.CHECKS) {
-                String checkName = check.getSimpleName();
+                String checkName = check.getSimpleName().substring(0, check.getSimpleName().length() - 1);
+                String checkType = String.valueOf(check.getSimpleName().toCharArray()[check.getSimpleName().length() - 1]);
 
-                boolean enabled = HadesPlugin.getInstance().getConfig().getBoolean("checks.detections." + checkName.toLowerCase() + ".enabled");
-                boolean punishable = HadesPlugin.getInstance().getConfig().getBoolean("checks.detections." + checkName.toLowerCase() + ".punishable");
-                int maxVL = HadesPlugin.getInstance().getConfig().getInt("checks.detections." + checkName.toLowerCase() + ".max-violations");
-                String punishCommand = HadesPlugin.getInstance().getConfig().getString("checks.detections." + checkName.toLowerCase() + ".punish-command");
+                boolean enabled = HadesPlugin.getInstance().getConfig().getBoolean("checks.detections." + checkName.toLowerCase() + "." + checkType.toLowerCase() + ".enabled");
+                boolean punishable = HadesPlugin.getInstance().getConfig().getBoolean("checks.detections." + checkName.toLowerCase() + "." + checkType.toLowerCase() + ".punishable");
+                int maxVL = HadesPlugin.getInstance().getConfig().getInt("checks.detections." + checkName.toLowerCase() + "." + checkType.toLowerCase() + ".max-violations");
+                String punishCommand = HadesPlugin.getInstance().getConfig().getString("checks.detections." + checkName.toLowerCase() + "." + checkType.toLowerCase() + ".punish-command");
 
                 ENABLED_CHECKS.put(check.getSimpleName(), enabled);
                 PUNISHABLE_CHECKS.put(check.getSimpleName(), punishable);
@@ -92,7 +93,7 @@ public class HadesConfig {
             }
 
             CommandManager.getAdapters().clear();
-            CommandManager.register(new AlertCommand());
+            CommandManager.register(new HadesCommand());
         }catch (Exception e) {
             e.printStackTrace();
         }

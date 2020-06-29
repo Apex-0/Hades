@@ -217,6 +217,7 @@ public final class PacketEvents implements PacketListener, Listener {
      */
     @PacketHandler
     public void onInject(final PlayerInjectEvent e) {
+        clientVersionsMap.put(e.getPlayer().getUniqueId(), e.getClientVersion());
     }
 
     @PacketHandler

@@ -1,6 +1,6 @@
 package me.apex.hades.util;
 
-import me.apex.hades.check.impl.combat.ml.model.LabeledData;
+import me.apex.hades.check.impl.combat.aura.ml.model.LabeledData;
 import net.minecraft.util.org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;

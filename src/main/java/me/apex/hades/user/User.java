@@ -4,6 +4,7 @@ import com.google.common.collect.EvictingQueue;
 import lombok.Getter;
 import lombok.Setter;
 import me.apex.hades.HadesConfig;
+import me.apex.hades.HadesPlugin;
 import me.apex.hades.check.Check;
 import me.apex.hades.check.CheckManager;
 import me.apex.hades.util.PlayerUtil;
@@ -71,10 +72,11 @@ public class User {
         this.playerUUID = player.getUniqueId();
         this.checks = CheckManager.loadChecks();
         this.timeStamp = System.currentTimeMillis();
-        this.executorService = Executors.newSingleThreadExecutor();
-        if (HadesConfig.LOG_TO_FILE) {
-            logFile = new LogUtils.TextFile("" + playerUUID, "\\\\logs");
+        this.executorService = Executors.newCachedThreadPool();
+        if (HadesPlugin.getInstance().getConfig().getBoolean("system.logging.file.enabled")) {
+            logFile = new LogUtils.TextFile("" + playerUUID, HadesPlugin.getInstance().getConfig().getString("system.logging.file.path"));
         }
+
         if(HadesConfig.TEST_MODE) {
             alerts = true;
             flagDelay = 0;

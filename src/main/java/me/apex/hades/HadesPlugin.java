@@ -31,7 +31,7 @@ public class HadesPlugin extends JavaPlugin {
 
     private LunarClientAPI lunarClientAPI;
 
-    private String basePermission;
+    private String basePermission = HadesConfig.BASE_PERMISSION;
 
     @Override
     public void onEnable() {
@@ -95,5 +95,16 @@ public class HadesPlugin extends JavaPlugin {
     public void onDisable() {
         PacketEvents.stop();
         executorService.shutdownNow();
+    }
+
+    public boolean reloadPlugin(){
+        try {
+            reloadConfig();
+            HadesConfig.updateSettings();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 }
