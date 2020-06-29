@@ -36,20 +36,7 @@ public class Angle extends Check {
             lastEntity = ((AttackEvent) e).getEntity();
         }else if(e instanceof SwingEvent) {
             if(lastEntity == null) return;
-            Vector vec = lastEntity.getLocation().clone().toVector().setY(0.0).subtract(user.getPlayer().getEyeLocation().clone().toVector().setY(0.0));
-            float angle = user.getPlayer().getEyeLocation().getDirection().angle(vec);
-            double dist = user.getPlayer().getLocation().toVector().setY(0.0).distance(lastEntity.getLocation().toVector().setY(0.0));
 
-            if(swung) {
-                swung = false;
-                flag(user, "Miss-hit","swung at entity without attacking, a: " + this.angle + ", d: " + this.dist);
-            }
-
-            if(angle < 0.5 && dist <= 2.0) {
-                swung = true;
-                this.dist = dist;
-                this.angle = angle;
-            }
         }
     }
 }

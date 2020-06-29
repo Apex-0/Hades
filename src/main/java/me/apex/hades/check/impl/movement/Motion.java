@@ -7,6 +7,7 @@ import me.apex.hades.event.impl.packetevents.AttackEvent;
 import me.apex.hades.event.impl.packetevents.FlyingEvent;
 import me.apex.hades.user.User;
 import me.apex.hades.util.PlayerUtil;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
@@ -36,10 +37,10 @@ public class Motion extends Check {
                 } else preVLB = 0;
             }
 
-            if (!user.isUnderBlock()) {
+            if (!user.isUnderBlock() && !user.getLocation().clone().subtract(0,0.2,0).getBlock().getType().equals(Material.SLIME_BLOCK)) {
                 if (user.getDeltaY() == -user.getLastDeltaY() && user.getDeltaY() != 0 && elapsed(user.getTick(), user.getTeleportTick()) > 0) {
                     if (++preVLB > 1) {
-                        flag(user, "FastPort","repetitive vertical motions, m: " + user.getDeltaY());
+                        flag(user, "SmallHop","repetitive vertical motions, m: " + user.getDeltaY());
                     }
                 } else preVLB = 0;
             }
