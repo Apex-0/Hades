@@ -18,7 +18,7 @@ public class Flight extends Check {
                     && elapsed(user.getTick(), user.getFlyingTick()) > 40
                     && elapsed(user.getTick(), user.getLiquidTick()) > 20
                     && elapsed(user.getTick(), user.getClimbableTick()) > 20
-                    && elapsed(user.getTick(), user.getVelocityTick()) > 100
+                    && elapsed(user.getTick(), user.getVelocityTick()) > user.getMaxVelocityTicks()
                     && user.getPlayer().getVehicle() == null) {
                 flag(user, "Ascension","y motion higher than 0, m: " + user.getDeltaY() + ", " + user.getPlayer().getLocation().getBlock().getType().toString(), false);
             }
@@ -30,7 +30,7 @@ public class Flight extends Check {
                     && elapsed(user.getTick(), user.getFlyingTick()) > 40
                     && elapsed(user.getTick(), user.getLiquidTick()) > 20
                     && elapsed(user.getTick(), user.getClimbableTick()) > 20
-                    && elapsed(user.getTick(), user.getVelocityTick()) > 100
+                    && elapsed(user.getTick(), user.getVelocityTick()) > user.getMaxVelocityTicks()
                     && user.getPlayer().getVehicle() == null) {
                 if(!MathUtil.isRoughlyEqual(user.getDeltaY(), prediction, 0.001)) {
                     flag(user, "Prediction","invalid vertical motion, m: " + user.getDeltaY() + ", p: " + prediction, false);

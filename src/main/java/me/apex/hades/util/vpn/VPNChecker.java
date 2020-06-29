@@ -18,12 +18,12 @@ public enum VPNChecker {
     public boolean checkUser(User user) {
         if (!HadesPlugin.getInstance().getConfig().getBoolean("anti-vpn.enabled") || user.getPlayer().hasPermission(HadesConfig.BASE_PERMISSION + ".exempt.antivpn"))
             return false;
-        if (ips.containsKey(user.address())) {
-            return ips.get(user.address());
+        if (ips.containsKey(user.getPlayer().getAddress().getAddress().toString().replace("/", ""))) {
+            return ips.get(user.getPlayer().getAddress().getAddress().toString().replace("/", ""));
         } else {
             user.getExecutorService().execute(() -> {
                 try {
-                    checkAddress(user.address());
+                    checkAddress(user.getPlayer().getAddress().getAddress().toString().replace("/", ""));
                 } catch (Exception ex) {
 
                 }

@@ -1,5 +1,6 @@
 package me.apex.hades.listener;
 
+import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.annotations.PacketHandler;
 import io.github.retrooper.packetevents.enums.minecraft.EntityUseAction;
 import io.github.retrooper.packetevents.enums.minecraft.PlayerAction;
@@ -19,6 +20,7 @@ import io.github.retrooper.packetevents.packetwrappers.in.flying.WrappedPacketIn
 import io.github.retrooper.packetevents.packetwrappers.in.keepalive.WrappedPacketInKeepAlive;
 import io.github.retrooper.packetevents.packetwrappers.in.useentity.WrappedPacketInUseEntity;
 import io.github.retrooper.packetevents.packetwrappers.out.entityvelocity.WrappedPacketOutEntityVelocity;
+import io.github.retrooper.packetevents.packetwrappers.out.transaction.WrappedPacketOutTransaction;
 import me.apex.hades.HadesConfig;
 import me.apex.hades.HadesPlugin;
 import me.apex.hades.event.impl.packetevents.*;
@@ -31,6 +33,7 @@ import me.apex.hades.util.text.ChatUtil;
 import me.apex.hades.util.vpn.VPNChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.Random;
 
@@ -69,25 +72,6 @@ public class NetworkListener implements PacketListener {
             //Process Movement
             MovementProcessor.process(user, e);
 
-            //Player Vars
-            if (e.getPacketName().equalsIgnoreCase(PacketType.Client.ENTITY_ACTION)) {
-                WrappedPacketInEntityAction packet = new WrappedPacketInEntityAction(e.getNMSPacket());
-                if (packet.getAction() != null){
-                    if (packet.getAction().equals(PlayerAction.START_SPRINTING)) {
-                        user.setSprinting(true);
-                    }
-                    if (packet.getAction().equals(PlayerAction.STOP_SPRINTING)) {
-                        user.setSprinting(false);
-                    }
-                    if (packet.getAction().equals(PlayerAction.START_SNEAKING)) {
-                        user.setSneaking(true);
-                    }
-                    if (packet.getAction().equals(PlayerAction.STOP_SNEAKING)) {
-                        user.setSneaking(false);
-                    }
-                }
-            }
-
             //Call Checks
             PacketEvent callEvent = e;
             if (e.getPacketName().equalsIgnoreCase(PacketType.Client.ARM_ANIMATION)) {
@@ -119,6 +103,20 @@ public class NetworkListener implements PacketListener {
                 callEvent = new DigEvent(packet.getBlockPosition(), packet.getDirection(), packet.getDigType());
             } else if (e.getPacketName().equalsIgnoreCase(PacketType.Client.ENTITY_ACTION)) {
                 WrappedPacketInEntityAction packet = new WrappedPacketInEntityAction(e.getNMSPacket());
+                if (packet.getAction() != null){
+                    if (packet.getAction().equals(PlayerAction.START_SPRINTING)) {
+                        user.setSprinting(true);
+                    }
+                    if (packet.getAction().equals(PlayerAction.STOP_SPRINTING)) {
+                        user.setSprinting(false);
+                    }
+                    if (packet.getAction().equals(PlayerAction.START_SNEAKING)) {
+                        user.setSneaking(true);
+                    }
+                    if (packet.getAction().equals(PlayerAction.STOP_SNEAKING)) {
+                        user.setSneaking(false);
+                    }
+                }
                 callEvent = new EntityActionEvent(packet.getEntityId(), packet.getEntity(), packet.getJumpBoost(), packet.getAction());
             } else if (PacketUtil.isFlyingPacket(e.getPacketName())) {
                 WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
@@ -129,14 +127,20 @@ public class NetworkListener implements PacketListener {
                         packet.isOnGround());
             } else if (e.getPacketName().equalsIgnoreCase(PacketType.Client.KEEP_ALIVE)) {
                 WrappedPacketInKeepAlive packet = new WrappedPacketInKeepAlive(e.getNMSPacket());
-                if (user.isVerifyingVelocity() && packet.getId() == user.getLastVelocityId()) {
-                    user.setVerifyingVelocity(false);
-                    user.setVelocityTick(user.getTick() + 1);
+                if (user.isVerifyingVelocity()) {
+                    if(packet.getId() == user.getVelocityId()) {
+                        user.setVerifyingVelocity(false);
+                        user.setVelocityTick(user.getTick() + 1);
+                        user.setVelocityVerifications(user.getVelocityVerifications() + 1);
+                        user.setMaxVelocityTicks((int)(user.getLocation().clone().toVector().distance(new Vector(user.getLocation().getX() + user.getVelocityX(), user.getLocation().getY() + user.getVelocityY(), user.getLocation().getZ() + user.getVelocityZ())) * 10));
+                    }
                 }
                 callEvent = new PingEvent();
             } else if (e.getPacketName().equalsIgnoreCase(PacketType.Client.BLOCK_PLACE)) {
                 WrappedPacketInBlockPlace packet = new WrappedPacketInBlockPlace(e.getPlayer(), e.getNMSPacket());
                 callEvent = new PlaceEvent(packet.getBlockPosition(), packet.getItemStack());
+            }else if(e.getPacketName().equalsIgnoreCase(PacketType.Client.TRANSACTION)) {
+                Bukkit.broadcastMessage("transaction?");
             }
             PacketEvent finalCallEvent = callEvent;
             if (!HadesPlugin.getInstance().getConfig().getBoolean("checks.exempt-players") || !user.getPlayer().hasPermission(HadesConfig.BASE_PERMISSION + ".exempt.checks"))
@@ -155,13 +159,14 @@ public class NetworkListener implements PacketListener {
             } else if (e.getPacketName().equalsIgnoreCase(PacketType.Server.ENTITY_VELOCITY)) {
                 WrappedPacketOutEntityVelocity packet = new WrappedPacketOutEntityVelocity(e.getNMSPacket());
                 if (e.getPlayer().getEntityId() == packet.getEntityId()) {
+                    user.setVerifyingVelocity(true);
+                    Random random = new Random();
+                    user.setVelocityId(Math.abs(random.nextInt()));
                     user.setVelocityX(packet.getVelocityX());
                     user.setVelocityY(packet.getVelocityY());
                     user.setVelocityZ(packet.getVelocityZ());
-                    Random random = new Random();
-                    user.setVerifyingVelocity(true);
-                    user.setLastVelocityId(Math.abs(random.nextInt()));
-                    PacketUtil.sendKeepAlive(user, user.getLastVelocityId());
+                    PacketUtil.sendKeepAlive(user, user.getVelocityId());
+                    PacketEvents.getAPI().getPlayerUtilities().sendPacket(user.getPlayer(), new WrappedPacketOutTransaction(user.getVelocityId(), (short)0, false));
                     if (!HadesPlugin.getInstance().getConfig().getBoolean("checks.exempt-players") || !user.getPlayer().hasPermission(HadesConfig.BASE_PERMISSION + ".exempt.checks"))
                         user.getExecutorService().execute(() -> user.getChecks().stream().filter(check -> check.enabled).forEach(check -> check.onHandle(new VelocityEvent(packet.getEntityId(), packet.getVelocityX(), packet.getVelocityY(), packet.getVelocityZ()), user)));
                 }

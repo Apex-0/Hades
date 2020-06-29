@@ -59,7 +59,7 @@ public class HadesPlugin extends JavaPlugin {
 
         //Register PacketEvents
         PacketEvents.start(this);
-        PacketEvents.getEventManager().registerListener(new NetworkListener());
+        PacketEvents.getAPI().getEventManager().registerListener(new NetworkListener());
 
         //Register Lunar Client API
         lunarClientAPI = new LunarClientImplementation(this);

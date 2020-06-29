@@ -56,13 +56,13 @@ public abstract class Check implements Listener {
             String devFormatColor = HadesConfig.DEV_FLAG_FORMAT.replace("&", "§");
 
             //Alert Message
-            TextComponent alertMessage = new TextComponent(alertFormatColor.replace("%prefix%", HadesConfig.PREFIX).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type).replace("%vl%", String.valueOf(vl)).replace("%info%", information).replace("%ping%", user.ping() + "").replace("%tps%", PacketEvents.getCurrentServerTPS() + "") + (dev ? " §7(Exp)" : ""));
+            TextComponent alertMessage = new TextComponent(alertFormatColor.replace("%prefix%", HadesConfig.PREFIX).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type).replace("%vl%", String.valueOf(vl)).replace("%info%", information).replace("%ping%", user.ping() + "").replace("%tps%", PacketEvents.getAPI().getServerUtilities().getCurrentServerTPS() + "") + (dev ? " §7(Exp)" : ""));
             alertMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + user.getPlayer()));
             alertMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + user.getPlayer().getName()));
             alertMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7(Click to teleport)").create()));
 
             //Dev Message
-            TextComponent devMessage = new TextComponent(devFormatColor.replace("%prefix%", HadesConfig.PREFIX).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type).replace("%vl%", String.valueOf(vl)).replace("%info%", information).replace("%ping%", user.ping() + "").replace("%tps%", PacketEvents.getCurrentServerTPS() + "") + (dev ? " §7(Exp)" : ""));
+            TextComponent devMessage = new TextComponent(devFormatColor.replace("%prefix%", HadesConfig.PREFIX).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type).replace("%vl%", String.valueOf(vl)).replace("%info%", information).replace("%ping%", user.ping() + "").replace("%tps%", PacketEvents.getAPI().getServerUtilities().getCurrentServerTPS() + "") + (dev ? " §7(Exp)" : ""));
             devMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + user.getPlayer()));
             devMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + user.getPlayer().getName()));
             devMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7Info:\n§7* §c" + information + "\n§7\n§7(Click to teleport)").create()));

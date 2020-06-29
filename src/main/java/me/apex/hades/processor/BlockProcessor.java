@@ -32,8 +32,7 @@ public class BlockProcessor {
                 user.setSlimeTick(user.getTick());
                 user.setSlimeTicks(user.getSlimeTicks() + 1);
             } else user.setSlimeTicks(0);
-            if (user.getPlayer().getEyeLocation().getBlock().getType().isSolid()
-                    || user.getPlayer().getEyeLocation().getBlock().getRelative(BlockFace.UP).getType().isSolid()) {
+            if (user.isUnderBlock()) {
                 user.setUnderBlockTick(user.getTick());
             }
             if (user.getLocation().getBlock().isLiquid()
