@@ -72,8 +72,13 @@ public class User {
         this.playerUUID = player.getUniqueId();
         this.checks = CheckManager.loadChecks();
         this.timeStamp = System.currentTimeMillis();
+<<<<<<< HEAD
         this.executorService = Executors.newCachedThreadPool();
         if (HadesPlugin.getInstance().getConfig().getBoolean("system.logging.file.enabled")) {
+=======
+        this.executorService = Executors.newSingleThreadExecutor();
+        if (HadesConfig.LOG_TO_FILE) {
+>>>>>>> parent of 4cdaeca... Fixed Logging
             logFile = new LogUtils.TextFile("" + playerUUID, HadesPlugin.getInstance().getConfig().getString("system.logging.file.path"));
         }
 
