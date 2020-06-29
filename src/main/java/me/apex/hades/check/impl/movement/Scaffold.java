@@ -7,18 +7,18 @@ import me.apex.hades.event.impl.bukkitevents.InteractEvent;
 import me.apex.hades.event.impl.packetevents.FlyingEvent;
 import me.apex.hades.event.impl.packetevents.PlaceEvent;
 import me.apex.hades.user.User;
+import me.apex.hades.user.UserManager;
 import me.apex.hades.util.PlayerUtil;
 import me.apex.hades.util.TaskUtil;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.util.Vector;
 
 @CheckInfo(name = "Scaffold")
 public class Scaffold extends Check {
 
     private long lastFlying;
-    private Block block;
 
     private double preVLA, preVLB;
 
@@ -32,18 +32,6 @@ public class Scaffold extends Check {
                     flag(user, "Post","low flying delay, d: " + timeDiff);
                 }
             } else preVLA = 0;
-
-            Vector blockVec = new Vector(((PlaceEvent) e).getBlockPos().x, ((PlaceEvent) e).getBlockPos().y, ((PlaceEvent) e).getBlockPos().z);
-            double dist = user.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toVector().distance(blockVec);
-            double diff = Math.abs(user.getDeltaYaw() - user.getLastDeltaYaw());
-            TaskUtil.task(() -> block = new Location(user.getLocation().getWorld(), ((PlaceEvent) e).getBlockPos().x, ((PlaceEvent) e).getBlockPos().y, ((PlaceEvent) e).getBlockPos().z).getBlock());
-            if (block != null) {
-                if(diff > 100.0 && dist <= 2.0 && block.getType().isSolid()) {
-                    if(++preVLB > 1) {
-                        flag(user, "Rotation","suspicious rotations, r: " + diff + ", d: " + dist);
-                    }
-                }else preVLB = 0;
-            }
         } else if (e instanceof FlyingEvent) {
             lastFlying = time();
         }else if (e instanceof InteractEvent){
@@ -56,12 +44,26 @@ public class Scaffold extends Check {
                     }
                 }
             }else{
-                if (user.getLocation().getBlock().getLocation().clone().subtract(0,1.5,0).getBlock().equals(event.getBlockClicked()) && user.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isSolid()){
+                if (user.getLocation().getBlock().getLocation().clone().subtract(0,2,0).getBlock().equals(event.getBlockClicked()) && user.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isSolid()){
                     if (event.getBlockFace().equals(BlockFace.DOWN)){
                         flag(user, "Invalid","invalid block placement");
                     }
                 }
             }
         }
+    }
+    @EventHandler
+    public void onPlace(BlockPlaceEvent event){
+        TaskUtil.taskAsync(() -> {
+            User user = UserManager.getUser(event.getPlayer());
+            Vector blockVec = event.getBlockPlaced().getLocation().toVector();
+            double dist = user.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toVector().distance(blockVec);
+            double diff = Math.abs(user.getDeltaYaw() - user.getLastDeltaYaw());
+            if(diff > 100.0 && dist <= 2.0 && event.getBlockPlaced().getType().isSolid()) {
+                if(++preVLB > 1) {
+                    flag(user, "Rotation","suspicious rotations, r: " + diff + ", d: " + dist);
+                }
+            }else preVLB = 0;
+        });
     }
 }

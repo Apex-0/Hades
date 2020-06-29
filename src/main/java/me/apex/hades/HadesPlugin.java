@@ -96,4 +96,15 @@ public class HadesPlugin extends JavaPlugin {
         PacketEvents.stop();
         executorService.shutdownNow();
     }
+
+    public boolean reloadPlugin(){
+        try {
+            reloadConfig();
+            HadesConfig.updateSettings();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }
