@@ -29,7 +29,7 @@ public class Scaffold extends Check {
 
             if (timeDiff < 5) {
                 if (++preVLA > 10) {
-                    flag(user, "Post","low flying delay, d: " + timeDiff);
+                    flag(user, "Post","low flying delay, d: " + timeDiff, false);
                 }
             } else preVLA = 0;
         } else if (e instanceof FlyingEvent) {
@@ -40,13 +40,13 @@ public class Scaffold extends Check {
             if(PlayerUtil.isOnGround(user.getPlayer())){
                 if (user.getLocation().getBlock().getLocation().clone().subtract(0,1,0).getBlock().equals(event.getBlockClicked()) && user.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isSolid()){
                     if (event.getBlockFace().equals(BlockFace.DOWN)){
-                        flag(user, "Invalid","invalid block placement");
+                        flag(user, "Invalid","invalid block placement", false);
                     }
                 }
             }else{
                 if (user.getLocation().getBlock().getLocation().clone().subtract(0,2,0).getBlock().equals(event.getBlockClicked()) && user.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isSolid()){
                     if (event.getBlockFace().equals(BlockFace.DOWN)){
-                        flag(user, "Invalid","invalid block placement");
+                        flag(user, "Invalid","invalid block placement", false);
                     }
                 }
             }
@@ -61,7 +61,7 @@ public class Scaffold extends Check {
             double diff = Math.abs(user.getDeltaYaw() - user.getLastDeltaYaw());
             if(diff > 100.0 && dist <= 2.0 && event.getBlockPlaced().getType().isSolid()) {
                 if(++preVLB > 1) {
-                    flag(user, "Rotation","suspicious rotations, r: " + diff + ", d: " + dist);
+                    flag(user, "Rotation","suspicious rotations, r: " + diff + ", d: " + dist, false);
                 }
             }else preVLB = 0;
         });

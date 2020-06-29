@@ -24,7 +24,7 @@ public class Motion extends Check {
                 double max = 0.7 + PlayerUtil.getPotionEffectLevel(user.getPlayer(), PotionEffectType.JUMP) * 0.1;
                 if (user.getDeltaY() > max && user.getPlayer().getVelocity().getY() < -0.075
                         && elapsed(user.getTick(), user.getVelocityTick()) > 20) {
-                    flag(user, "InstantY","accelerating faster than possible on Y axis. d: " + user.getDeltaY());
+                    flag(user, "InstantY","accelerating faster than possible on Y axis. d: " + user.getDeltaY(), false);
                 }
             }
 
@@ -32,7 +32,7 @@ public class Motion extends Check {
                 double accel = Math.abs(user.getDeltaXZ() - user.getLastDeltaXZ());
                 if (accel < 0.027) {
                     if (++preVLA >= 7) {
-                        flag(user, "KeepSprint","invalid acceleration, a: " + accel);
+                        flag(user, "KeepSprint","invalid acceleration, a: " + accel, false);
                     }
                 } else preVLB = 0;
             }
@@ -40,7 +40,7 @@ public class Motion extends Check {
             if (!user.isUnderBlock() && !user.getLocation().clone().subtract(0,0.2,0).getBlock().getType().equals(Material.SLIME_BLOCK)) {
                 if (user.getDeltaY() == -user.getLastDeltaY() && user.getDeltaY() != 0 && elapsed(user.getTick(), user.getTeleportTick()) > 0) {
                     if (++preVLB > 1) {
-                        flag(user, "SmallHop","repetitive vertical motions, m: " + user.getDeltaY());
+                        flag(user, "SmallHop","repetitive vertical motions, m: " + user.getDeltaY(), false);
                     }
                 } else preVLB = 0;
             }

@@ -22,7 +22,7 @@ public class Speed extends Check {
                     && elapsed(user.getTick(), user.getFlyingTick()) > 40
                     && elapsed(user.getTick(), user.getVelocityTick()) > 100
                     && elapsed(user.getTick(), user.getTeleportTick()) > 20) {
-                flag(user, "Consistency","consistent speed, diff: " + diff);
+                flag(user, "Consistency","consistent speed, diff: " + diff, false);
             }
 
             if (elapsed(user.getTick(), user.getIceTick()) < 40 || elapsed(user.getTick(), user.getSlimeTick()) < 40)
@@ -34,7 +34,7 @@ public class Speed extends Check {
                     && elapsed(user.getTick(), user.getTeleportTick()) > 40
                     && elapsed(user.getTick(), user.getFlyingTick()) > 40) {
                 if (++preVLA > 7) {
-                    flag(user, "Limit","breached limit, s: " + user.getDeltaXZ());
+                    flag(user, "Limit","breached limit, s: " + user.getDeltaXZ(), false);
                 }
             } else preVLA *= 0.75;
 
@@ -50,7 +50,7 @@ public class Speed extends Check {
                     && elapsed(user.getTick(), user.getFlyingTick()) > 40
                     && elapsed(user.getTick(), user.getVelocityTick()) > 100) {
                 if (++preVLB > 2) {
-                    flag(user, "Friction","invalid predicted dist, d: " + diff);
+                    flag(user, "Friction","invalid predicted dist, d: " + diff, false);
                 }
             } else preVLB *= 0.75;
 
@@ -58,7 +58,7 @@ public class Speed extends Check {
 
             if (diff > MathUtil.getBaseSpeed(user.getPlayer())
                     && elapsed(user.getTick(), user.getVelocityTick()) > 100 && elapsed(user.getTick(), user.getTeleportTick()) > 20 && !user.getPlayer().isInsideVehicle() && elapsed(user.getTick(), user.getFlyingTick()) > 40) {
-                flag(user, "Acceleration","invalid acceleration, a: " + diff);
+                flag(user, "Acceleration","invalid acceleration, a: " + diff, false);
             }
         }
     }

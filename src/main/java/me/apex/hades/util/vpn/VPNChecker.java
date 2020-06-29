@@ -1,5 +1,6 @@
 package me.apex.hades.util.vpn;
 
+import me.apex.hades.HadesConfig;
 import me.apex.hades.HadesPlugin;
 import me.apex.hades.user.User;
 import me.apex.hades.util.json.JSONObject;
@@ -15,7 +16,7 @@ public enum VPNChecker {
     private final HashMap<String, Boolean> ips = new HashMap<>();
 
     public boolean checkUser(User user) {
-        if (!HadesPlugin.getInstance().getConfig().getBoolean("anti-vpn.enabled") || user.getPlayer().hasPermission(HadesPlugin.getInstance().getBasePermission() + ".exempt.antivpn"))
+        if (!HadesPlugin.getInstance().getConfig().getBoolean("anti-vpn.enabled") || user.getPlayer().hasPermission(HadesConfig.BASE_PERMISSION + ".exempt.antivpn"))
             return false;
         if (ips.containsKey(user.address())) {
             return ips.get(user.address());

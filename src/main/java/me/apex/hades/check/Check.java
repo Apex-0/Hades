@@ -20,7 +20,7 @@ public abstract class Check implements Listener {
     //Check Data
     public long lastFlag;
     public double vl, maxVL;
-    public boolean enabled, punishable, dev;
+    public boolean enabled, punishable;
 
     public Check() {
         Bukkit.getServer().getPluginManager().registerEvents(this, HadesPlugin.getInstance());
@@ -44,6 +44,10 @@ public abstract class Check implements Listener {
     public abstract void onHandle(PacketEvent e, User user);
 
     protected void flag(User user, String type, String information) {
+        this.flag(user, type, information, false);
+    }
+
+    protected void flag(User user, String type, String information, boolean dev) {
         assert user != null;
         vl++;
         lastFlag = time();

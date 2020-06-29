@@ -10,11 +10,6 @@ import me.apex.hades.user.User;
 @CheckInfo(name = "Velocity")
 public class Velocity extends Check {
 
-    @Override
-    public void init() {
-        dev = true;
-    }
-
     private double preVLA;
 
     @Override
@@ -28,7 +23,7 @@ public class Velocity extends Check {
                         && !user.isInWeb()) {
                     if(++preVLA >= 6) {
                         preVLA = 0;
-                        flag(user, "Vertical","didnt take expected velocity, d: " + user.getDeltaY() + ", v: " + (user.getVelocityY() * 0.99));
+                        flag(user, "Vertical","didnt take expected velocity, d: " + user.getDeltaY() + ", v: " + (user.getVelocityY() * 0.99), true);
                     }
                 }else preVLA = 0;
             }

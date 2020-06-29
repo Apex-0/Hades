@@ -22,7 +22,7 @@ public class NoFall extends Check {
 
             if (((FlyingEvent) e).isOnGround() && !onGround && !lastOnGround && !lastLastOnGround) {
                 if (++preVLA > 2) {
-                    flag(user, "GroundSpoof","spoofed ground, g: " + !PlayerUtil.isOnGround(user.getPlayer()));
+                    flag(user, "GroundSpoof","spoofed ground, g: " + !PlayerUtil.isOnGround(user.getPlayer()), false);
                 }
             } else preVLA = 0;
 

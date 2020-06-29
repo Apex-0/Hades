@@ -31,7 +31,7 @@ public class Pattern extends Check {
 
                 if (average < 5) {
                     if (++preVLA > 2) {
-                        flag(user, "Jitter","low average deviation, a: " + average);
+                        flag(user, "Jitter","low average deviation, a: " + average, false);
                     }
                 } else preVLA *= 0.75;
 

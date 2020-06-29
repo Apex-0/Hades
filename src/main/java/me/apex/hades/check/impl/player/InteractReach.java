@@ -22,7 +22,7 @@ public class InteractReach extends Check {
                 double dist = user.getPlayer().getEyeLocation().toVector().distance(packet.getBlockClicked().getLocation().toVector());
                 if (dist > 6) {
                     if (++preVLA > 1) {
-                        flag(user, "Distance","interacted block farther than possible. d: " + dist);
+                        flag(user, "Distance","interacted block farther than possible. d: " + dist, false);
                     }
                 } else preVLA = 0;
             }
@@ -35,7 +35,7 @@ public class InteractReach extends Check {
         double dist = user.getPlayer().getEyeLocation().toVector().distance(event.getBlockPlaced().getLocation().toVector());
         if (dist > 4.8) {
             if (++preVLB > 1) {
-                flag(user, "Distance","placed block farther than possible. d: " + dist);
+                flag(user, "Distance","placed block farther than possible. d: " + dist, false);
             }
         } else preVLB = 0;
     }

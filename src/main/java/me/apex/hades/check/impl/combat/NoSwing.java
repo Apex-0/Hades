@@ -19,7 +19,7 @@ public class NoSwing extends Check {
         if (e instanceof AttackEvent) {
             if (!lastWasArm) {
                 if (preVLA++ > 1)
-                    flag(user, "Packet","swung = " + lastWasArm);
+                    flag(user, "Packet","swung = " + lastWasArm, false);
             } else preVLA = 0;
         } else if (e instanceof SwingEvent) {
             lastWasArm = true;

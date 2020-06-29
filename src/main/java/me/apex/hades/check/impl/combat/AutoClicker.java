@@ -15,11 +15,6 @@ import java.util.LinkedList;
 @CheckInfo(name = "AutoClicker")
 public class AutoClicker extends Check {
 
-    @Override
-    public void init() {
-        dev = true;
-    }
-
     private final Deque<Long> ticks = new LinkedList<>();
     private double lastDeviation;
 
@@ -41,7 +36,7 @@ public class AutoClicker extends Check {
 
                 if (diff < 10) {
                     if (++preVLA > 4) {
-                        flag(user, "Consistency","low deviation difference, d: " + diff);
+                        flag(user, "Consistency","low deviation difference, d: " + diff,false);
                     }
                 } else preVLA *= 0.75;
 
@@ -57,7 +52,7 @@ public class AutoClicker extends Check {
             clicksPerSecond = ((clicksPerSecond * 19) + speed) / 20;
 
             if(clicksPerSecond > HadesPlugin.getInstance().getConfig().getInt("Max-CPS")) {
-                flag(user, "ClickSpeed","CPS: " + clicksPerSecond);
+                flag(user, "ClickSpeed","CPS: " + clicksPerSecond, false);
             }
 
             flyingTicks = 0;

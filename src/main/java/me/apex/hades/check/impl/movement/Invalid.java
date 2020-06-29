@@ -13,7 +13,7 @@ public class Invalid extends Check {
     public void onHandle(PacketEvent e, User user) {
         if (e instanceof FlyingEvent) {
             if (Math.abs(((FlyingEvent) e).getPitch()) > 90.0F) {
-                flag(user, "Pitch","invalid pitch, p: " + ((FlyingEvent) e).getPitch());
+                flag(user, "Pitch","invalid pitch, p: " + ((FlyingEvent) e).getPitch(), false);
             }
         }
     }

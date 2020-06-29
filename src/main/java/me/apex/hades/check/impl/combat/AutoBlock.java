@@ -7,7 +7,6 @@ import me.apex.hades.event.impl.packetevents.AttackEvent;
 import me.apex.hades.event.impl.packetevents.FlyingEvent;
 import me.apex.hades.event.impl.packetevents.PlaceEvent;
 import me.apex.hades.user.User;
-import me.apex.hades.util.PacketUtil;
 
 @CheckInfo(name = "AutoBlock")
 public class AutoBlock extends Check {
@@ -22,7 +21,7 @@ public class AutoBlock extends Check {
         }if(e instanceof PlaceEvent) {
             if(attacked) {
                 if(ticks < 2) {
-                    flag(user, "FastBlock","low tick delay, t: " + ticks);
+                    flag(user, "FastBlock","low tick delay, t: " + ticks, false);
                 }
                 attacked = false;
             }

@@ -15,18 +15,14 @@ public class HadesCommand extends CommandAdapter {
     @Override
     public boolean onCommand(Player player, UserInput input) {
         User user = UserManager.getUser(player);
-        if(user == null) Bukkit.broadcastMessage("User is null!");
-        if(player == null) Bukkit.broadcastMessage("Player is null!");
-        if (input.label().equalsIgnoreCase("hades")){
-            if (player.hasPermission("hades.command")){
+        if (input.label().equalsIgnoreCase(HadesConfig.BASE_COMMAND)){
+            if (player.hasPermission(HadesConfig.BASE_PERMISSION + ".command")){
                 if(input.args().length <= 0){
                     user.sendMessage("&8&m----------------------------------------");
-                    user.sendMessage(HadesConfig.BASE_MESSAGE_COLOR + "&lHelp for Command /hades" + ":");
-                    user.sendMessage(" ");
-                    user.sendMessage(HadesConfig.BASE_MESSAGE_COLOR + "/hades" + " &fgui : " + "&7View control panel");
-                    user.sendMessage(HadesConfig.BASE_MESSAGE_COLOR + "/hades" + " &finfo <player> : " + "&7View information of a player");
-                    user.sendMessage(HadesConfig.BASE_MESSAGE_COLOR + "/hades" + " &freload : " + "&7Reload entire anticheat and configuration");
-                    user.sendMessage(HadesConfig.BASE_MESSAGE_COLOR + "/hades" + " &falerts : " + "&7Enable or disable anticheat alerts");
+                    user.sendMessage(HadesConfig.BASE_MESSAGE_COLOR + "/" + HadesConfig.BASE_COMMAND + " &fgui : " + "&7View control panel");
+                    user.sendMessage(HadesConfig.BASE_MESSAGE_COLOR + "/" + HadesConfig.BASE_COMMAND + " &finfo <player> : " + "&7View information of a player");
+                    user.sendMessage(HadesConfig.BASE_MESSAGE_COLOR + "/" + HadesConfig.BASE_COMMAND + " &freload : " + "&7Reload entire anticheat and configuration");
+                    user.sendMessage(HadesConfig.BASE_MESSAGE_COLOR + "/" + HadesConfig.BASE_COMMAND + " &falerts : " + "&7Enable or disable anticheat alerts");
                     user.sendMessage("&8&m----------------------------------------");
                 }else if (input.args().length >= 0){
                     if (input.args()[0].equalsIgnoreCase("info")){
@@ -54,7 +50,7 @@ public class HadesCommand extends CommandAdapter {
                     }else if (input.args()[0].equalsIgnoreCase("gui")){
                         //TODO Implement gui and run it here
                     }else if (input.args()[0].equalsIgnoreCase("alerts")) {
-                        if (player.hasPermission("hades.alerts")) {
+                        if (player.hasPermission(HadesConfig.BASE_PERMISSION + ".alerts")) {
                             if(input.args().length > 1) {
                                 try{
                                     int flagDelay = Integer.valueOf(input.args()[0]);

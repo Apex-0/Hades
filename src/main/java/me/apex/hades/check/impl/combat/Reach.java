@@ -16,11 +16,6 @@ import org.bukkit.entity.Player;
 @CheckInfo(name = "Reach")
 public class Reach extends Check {
 
-    @Override
-    public void init() {
-        dev = true;
-    }
-
     //idea from sim0n
     //improved by LIWK / Johannes
     //Raytrace by Tecnio / undersquire
@@ -53,7 +48,7 @@ public class Reach extends Check {
                     Bukkit.broadcastMessage(user.getPlayer().getName() + " > range=§c" + range + " §f> dist=§c" + dist);
                     if (range >= HadesPlugin.getInstance().getConfig().getDouble("Max-Reach")) {
                         if (++preVLA > 2) {
-                            flag(user, "Distance","hitting farther than possible. r: " + range + ", d: " + dist);
+                            flag(user, "Distance","hitting farther than possible. r: " + range + ", d: " + dist, true);
                         }
                     } else preVLA = 0;
                 } else Bukkit.broadcastMessage("rLoc=" + UserManager.getUser(target).getReachLoc() + " lastRLoc" + UserManager.getUser(target).getLastReachLoc());

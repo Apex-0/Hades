@@ -29,8 +29,8 @@ public class FastUse extends Check {
             }
         } else if (e instanceof ItemConsumeEvent) {
             long diff = time() - startEat;
-            if (diff <= 1400) {
-                flag(user, "Speed","ate food faster, t: " + diff);
+            if (diff <= 1000) {
+                flag(user, "Speed","ate food faster, t: " + diff, false);
             }
         }
     }

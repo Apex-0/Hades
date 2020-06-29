@@ -25,12 +25,12 @@ public class Killaura extends Check {
 
             if (timeDiff < 5) {
                 if (++preVLA > 10) {
-                    flag(user, "Post","low flying delay, d: " + timeDiff);
+                    flag(user, "Post","low flying delay, d: " + timeDiff, false);
                 }
             } else preVLA = 0;
 
             if (ticks++ > 1) {
-                flag(user, "Multi","too many attacks in tick, t: " + ticks);
+                flag(user, "Multi","too many attacks in tick, t: " + ticks, false);
             }
 
             Entity target = ((AttackEvent) e).getEntity();
@@ -40,7 +40,7 @@ public class Killaura extends Check {
             if (target != lastTarget) {
                 if (flyingTicks < 2) {
                     if (++preVLB > 2) {
-                        flag(user, "Switch","invalid attack pattern, t: " + flyingTicks);
+                        flag(user, "Switch","invalid attack pattern, t: " + flyingTicks, false);
                     }
                 } else preVLB *= 0.75;
             }
@@ -54,7 +54,7 @@ public class Killaura extends Check {
 
             if (dist < 0.7 && rotation > 2) {
                 if (preVLC++ > 1)
-                    flag(user, "Lockview","angle = " + dist + ", rotation = " + rotation);
+                    flag(user, "Lockview","angle = " + dist + ", rotation = " + rotation, false);
             } else preVLC = 0;
         } else if (e instanceof FlyingEvent) {
             lastFlying = time();

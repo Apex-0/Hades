@@ -31,8 +31,6 @@ public class HadesPlugin extends JavaPlugin {
 
     private LunarClientAPI lunarClientAPI;
 
-    private String basePermission;
-
     @Override
     public void onEnable() {
         //Register Instance

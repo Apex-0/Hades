@@ -28,7 +28,7 @@ public class Timer extends Check {
 
                 if (deviation <= 710 && (Math.abs(deviation - lastDeviation) < 20)) {
                     if (preVLA++ > 1)
-                        flag(user, "Consistency","deviation = " + deviation);
+                        flag(user, "Consistency","deviation = " + deviation, false);
                 } else preVLA = 0;
                 this.lastDeviation = deviation;
                 flyingDeque.clear();

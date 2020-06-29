@@ -21,6 +21,7 @@ public class HadesConfig {
     public static String DISABLE_ALERTS_MESSAGE;
 
     //System Settings
+    public static String BASE_COMMAND;
     public static String BASE_PERMISSION;
     public static String LOG_FORMAT;
     public static boolean LOG_TO_FILE;
@@ -55,6 +56,7 @@ public class HadesConfig {
             ENABLE_ALERTS_MESSAGE = ChatUtil.color(HadesPlugin.getInstance().getConfig().getString("lang.enable-alerts-message"));
             DISABLE_ALERTS_MESSAGE = ChatUtil.color(HadesPlugin.getInstance().getConfig().getString("lang.disable-alerts-message"));
 
+            BASE_COMMAND = "hades";
             BASE_PERMISSION = "hades";
             LOG_FORMAT = HadesPlugin.getInstance().getConfig().getString("system.logging.log-format");
             LOG_TO_FILE = HadesPlugin.getInstance().getConfig().getBoolean("system.logging.log-to-file");

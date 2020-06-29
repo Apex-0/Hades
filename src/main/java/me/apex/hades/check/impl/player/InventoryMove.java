@@ -31,7 +31,7 @@ public class InventoryMove extends Check implements Listener {
 
                 if (user.isOnGround() && user.getDeltaXZ() > 0.1) {
                     if (++preVLA > 2) {
-                        flag(user, "Invalid","player used inventory while moving.");
+                        flag(user, "Invalid","player used inventory while moving.", false);
                     }
                 } else preVLA = 0;
             }

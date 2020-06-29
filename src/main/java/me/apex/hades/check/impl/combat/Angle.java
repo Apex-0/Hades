@@ -29,7 +29,7 @@ public class Angle extends Check {
 
             if(angle > 1.0 && user.getPlayer().getLocation().toVector().setY(0.0).distance(entity.getLocation().toVector().setY(0.0)) > 1.0) {
                 if(++preVLA > 2) {
-                    flag(user, "NoLook","invalid attack angle, a: " + angle);
+                    flag(user, "NoLook","invalid attack angle, a: " + angle, false);
                 }
             }else preVLA *= 0.75;
 
@@ -44,7 +44,7 @@ public class Angle extends Check {
 
                 if(swung && elapsed(user.getTick(), attackTick) < 5) {
                     swung = false;
-                    flag(user, "Miss-hit","swung at entity without attacking, a: " + this.angle + ", d: " + this.dist);
+                    flag(user, "Miss-hit","swung at entity without attacking, a: " + this.angle + ", d: " + this.dist, true);
                 }else lastEntity = null;
 
                 if(angle < 0.5 && dist <= 2.0) {

@@ -23,7 +23,7 @@ public class Criticals extends Check {
                 if (user.getLocation().getY() % 1.0D == 0.0D) {
                     if (user.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isSolid()) {
                         if (preVLA++ >= 2) {
-                            flag(user, "Ground","tried to hit critical on ground!");
+                            flag(user, "Ground","tried to hit critical on ground!", false);
                         }
                     }
                 } else preVLA = 0;
