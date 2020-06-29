@@ -23,8 +23,6 @@ lang:
 
 #System Configuration
 system:
-  #Example Permission: 'basepermission'.exempt.checks
-  base-permission: 'hades'
   logging:
     log-format: '[%time%] %player% failed %check% (%checktype%) VL:(%vl%) INFO:(%info%)'
     log-to-file: true

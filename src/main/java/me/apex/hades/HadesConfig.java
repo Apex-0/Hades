@@ -2,7 +2,7 @@ package me.apex.hades;
 
 import me.apex.hades.check.CheckManager;
 import me.apex.hades.command.CommandManager;
-import me.apex.hades.command.impl.AlertCommand;
+import me.apex.hades.command.impl.HadesCommand;
 import me.apex.hades.util.text.ChatUtil;
 
 import java.util.HashMap;
@@ -55,7 +55,7 @@ public class HadesConfig {
             ENABLE_ALERTS_MESSAGE = ChatUtil.color(HadesPlugin.getInstance().getConfig().getString("lang.enable-alerts-message"));
             DISABLE_ALERTS_MESSAGE = ChatUtil.color(HadesPlugin.getInstance().getConfig().getString("lang.disable-alerts-message"));
 
-            BASE_PERMISSION = HadesPlugin.getInstance().getConfig().getString("system.base-permission");
+            BASE_PERMISSION = "hades";
             LOG_FORMAT = HadesPlugin.getInstance().getConfig().getString("system.logging.log-format");
             LOG_TO_FILE = HadesPlugin.getInstance().getConfig().getBoolean("system.logging.log-to-file");
             LOG_TO_CONSOLE = HadesPlugin.getInstance().getConfig().getBoolean("system.logging.log-to-console");
@@ -92,7 +92,7 @@ public class HadesConfig {
             }
 
             CommandManager.getAdapters().clear();
-            CommandManager.register(new AlertCommand());
+            CommandManager.register(new HadesCommand());
         }catch (Exception e) {
             e.printStackTrace();
         }

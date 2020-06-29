@@ -19,10 +19,10 @@ public class Sprint extends Check {
         if (e instanceof FlyingEvent) {
             if (user.getTick() > 10 && elapsed(user.getTick(), user.getFlyingTick()) > 20) {
                 Vector move = new Vector(user.getLocation().getX() - user.getLastLocation().getX(), 0, user.getLocation().getZ() - user.getLastLocation().getZ());
-                double predictedDelta = move.distanceSquared(user.getDirection());
-                if (predictedDelta >= .23 && PlayerUtil.isOnGround(user.getPlayer()) && user.isSprinting() && user.getDeltaXZ() > 0.1 && !user.isInLiquid() && !user.isInWeb()) {
+                double delta = move.distanceSquared(user.getDirection());
+                if (delta >= .23 && PlayerUtil.isOnGround(user.getPlayer()) && user.isSprinting() && user.getDeltaXZ() > 0.1 && !user.isInLiquid() && !user.isInWeb()) {
                     if (++preVLA > 4) {
-                        flag(user, "Multidirectional","multidirectional sprint, p: " + predictedDelta);
+                        flag(user, "Multidirectional","multidirectional sprint, p: " + delta);
                     }
                 } else preVLA = 0;
             }

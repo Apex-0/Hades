@@ -56,7 +56,7 @@ public class Scaffold extends Check {
                     }
                 }
             }else{
-                if (user.getLocation().getBlock().getLocation().clone().subtract(0,1.5,0).getBlock().equals(event.getBlockClicked()) && user.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isSolid()){
+                if (user.getLocation().getBlock().getLocation().clone().subtract(0,2,0).getBlock().equals(event.getBlockClicked()) && user.getLocation().getBlock().getRelative(BlockFace.DOWN).getType().isSolid()){
                     if (event.getBlockFace().equals(BlockFace.DOWN)){
                         flag(user, "Invalid","invalid block placement");
                     }

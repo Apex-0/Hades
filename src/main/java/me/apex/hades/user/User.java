@@ -71,7 +71,7 @@ public class User {
         this.playerUUID = player.getUniqueId();
         this.checks = CheckManager.loadChecks();
         this.timeStamp = System.currentTimeMillis();
-        this.executorService = Executors.newSingleThreadExecutor();
+        this.executorService = Executors.newCachedThreadPool();
         if (HadesConfig.LOG_TO_FILE) {
             logFile = new LogUtils.TextFile("" + playerUUID, "\\\\logs");
         }
