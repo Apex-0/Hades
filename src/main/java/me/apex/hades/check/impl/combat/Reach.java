@@ -9,8 +9,6 @@ import me.apex.hades.user.User;
 @CheckInfo(name = "Reach")
 public class Reach extends Check {
 
-    private double preVLA;
-
     @Override
     public void onHandle(PacketEvent e, User user) {
         if(e instanceof AttackEvent) {
