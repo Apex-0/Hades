@@ -27,11 +27,6 @@ public class Reach extends Check {
         if (e instanceof FlyingEvent) {
             if(e.getTimestamp() - user.getLastAttackPacket() < 3L && user.getLastTarget() != null) {
                 Player target = user.getLastTarget();
-                Ray ray = Ray.from(user);
-                double dist = AABB.from(target).collidesD(ray, 0, 10);
-                if (dist == -1) {
-                    return;
-                }
 
                 ReachUtil currentLocation = user.getReachLoc();
                 ReachUtil previousLocation = user.getLastReachLoc();
@@ -45,10 +40,10 @@ public class Reach extends Check {
                         return Math.sqrt(distanceX * distanceX + distanceZ * distanceZ);
                     }).min().orElse(0.0);
 
-                    Bukkit.broadcastMessage(user.getPlayer().getName() + " > range=§c" + range + " §f> dist=§c" + dist);
-                    if (range >= HadesPlugin.getInstance().getConfig().getDouble("Max-Reach")) {
+                    Bukkit.broadcastMessage(user.getPlayer().getName() + " > range=§c" + range);
+                    if (range >= 3.075D) {
                         if (++preVLA > 2) {
-                            flag(user, "Distance","hitting farther than possible. r: " + range + ", d: " + dist, true);
+                            flag(user, "Distance","hitting farther than possible. r: " + range, true);
                         }
                     } else preVLA = 0;
                 } else Bukkit.broadcastMessage("rLoc=" + UserManager.getUser(target).getReachLoc() + " lastRLoc" + UserManager.getUser(target).getLastReachLoc());
