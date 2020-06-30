@@ -5,7 +5,6 @@ import io.github.retrooper.packetevents.packet.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.in.flying.WrappedPacketInFlying;
 import me.apex.hades.user.User;
 import me.apex.hades.util.PacketUtil;
-import me.apex.hades.util.ReachUtil;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -94,7 +93,7 @@ public class MovementProcessor {
             user.setDeltaPitch(deltaPitch);
 
             //Update Flying
-            if (user.getPlayer().isFlying()) user.setFlyingTick(user.getTick());
+            if (user.getPlayer().getAllowFlight()) user.setFlyingTick(user.getTick());
 
             //Update Block Check
             BlockProcessor.process(user);
@@ -140,7 +139,7 @@ public class MovementProcessor {
             user.setDeltaPitch(deltaPitch);
 
             //Update Flying
-            if (user.getPlayer().isFlying()) user.setFlyingTick(user.getTick());
+            if (user.getPlayer().getAllowFlight()) user.setFlyingTick(user.getTick());
 
             //Update Block Check
             BlockProcessor.process(user);
@@ -151,28 +150,12 @@ public class MovementProcessor {
             user.setDeltaAngle(Math.abs(user.getDeltaYaw()) + Math.abs(user.getDeltaPitch()));
 
             user.setDirection(new Vector(-Math.sin(user.getPlayer().getEyeLocation().getYaw() * 3.1415927F / 180.0F) * (float) 1 * 0.5F, 0, Math.cos(user.getPlayer().getEyeLocation().getYaw() * 3.1415927F / 180.0F) * (float) 1 * 0.5F));
-        } else if (PacketUtil.isFlyingPacket(e.getPacketName())) {
+        } else if (PacketType.Util.isInstanceOfFlyingPacket(e.getNMSPacket())) {
             if (user.isSprinting()) {
                 user.setSprintingTicks(user.getSprintingTicks() + 1);
             } else if (!user.isSprinting()) {
                 user.setSprintingTicks(0);
             }
-
-            if (user.getLocations().size() >= 20){
-                user.getLocations().remove(0);
-            }
-            user.getLocations().add(user.getLocation());
-        } else if(PacketType.Util.isInstanceOfFlyingPacket(e.getNMSPacket())) {
-            WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
-            ReachUtil lastReachloc = user.getReachLoc();
-            if(packet.isPosition()) {
-                user.reachQueue.add(new ReachUtil(packet.getX(), packet.getY(), packet.getZ()));
-                user.setReachLoc(new ReachUtil(packet.getX(), packet.getY(), packet.getZ()));
-            }
-            if(packet.isLook()) {
-                user.setLastReachLoc(lastReachloc);
-            }
-
         }
     }
 

@@ -1,28 +1,9 @@
 package me.apex.hades.check;
 
-import me.apex.hades.check.impl.combat.Angle;
-import me.apex.hades.check.impl.combat.Killaura;
-import me.apex.hades.check.impl.combat.AutoBlock;
-import me.apex.hades.check.impl.combat.AutoClicker;
-import me.apex.hades.check.impl.combat.Pattern;
-import me.apex.hades.check.impl.combat.Criticals;
-import me.apex.hades.check.impl.combat.NoSwing;
-import me.apex.hades.check.impl.combat.Reach;
-import me.apex.hades.check.impl.combat.Velocity;
-import me.apex.hades.check.impl.movement.FastLadder;
-import me.apex.hades.check.impl.movement.Flight;
-import me.apex.hades.check.impl.movement.Invalid;
-import me.apex.hades.check.impl.movement.Motion;
-import me.apex.hades.check.impl.movement.NoSlow;
-import me.apex.hades.check.impl.movement.Scaffold;
-import me.apex.hades.check.impl.movement.Speed;
-import me.apex.hades.check.impl.movement.Sprint;
+import me.apex.hades.check.impl.combat.*;
+import me.apex.hades.check.impl.movement.*;
 import me.apex.hades.check.impl.other.Client;
-import me.apex.hades.check.impl.player.FastUse;
-import me.apex.hades.check.impl.player.InteractReach;
-import me.apex.hades.check.impl.player.InventoryMove;
-import me.apex.hades.check.impl.player.NoFall;
-import me.apex.hades.check.impl.player.Timer;
+import me.apex.hades.check.impl.player.*;
 
 import java.util.ArrayList;
 import java.util.List;

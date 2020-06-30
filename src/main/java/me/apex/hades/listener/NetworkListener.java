@@ -108,7 +108,7 @@ public class NetworkListener implements PacketListener {
                     }
                 }
                 callEvent = new EntityActionEvent(packet.getEntityId(), packet.getEntity(), packet.getJumpBoost(), packet.getAction());
-            } else if (PacketUtil.isFlyingPacket(e.getPacketName())) {
+            } else if (PacketType.Util.isInstanceOfFlyingPacket(e.getNMSPacket())) {
                 WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
                 user.setTick(user.getTick() + 1);
                 callEvent = new FlyingEvent(packet.getX(), packet.getY(), packet.getZ(), packet.getYaw(), packet.getPitch(),

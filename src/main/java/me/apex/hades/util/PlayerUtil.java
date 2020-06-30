@@ -58,6 +58,21 @@ public class PlayerUtil {
         return false;
     }
 
+    public static boolean nearWall(Player player) {
+        double expand = 0.6;
+        for (double x = -expand; x <= expand; x += expand) {
+            for (double z = -expand; z <= expand; z += expand) {
+                if (player.getLocation().clone().add(z, 0.1, x).getBlock().getType() != Material.AIR) {
+                    return true;
+                }
+                if (player.getEyeLocation().clone().add(z, 0, x).getBlock().getType() != Material.AIR) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public static boolean isInWeb(Player player) {
         return player.getLocation().getBlock().getType() == Material.WEB
                 || player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.WEB

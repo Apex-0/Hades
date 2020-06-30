@@ -43,7 +43,7 @@ public class User {
     private Player lastTarget;
     private long lastAttackPacket;
     //Ticks
-    private int flagDelay, tick, digTick, iceTick, iceTicks, slimeTick, slimeTicks, velocityTick, velocityId, maxVelocityTicks, underBlockTick, teleportTick, liquidTick, liquidTicks, airTick, airTicks, groundTick, groundTicks, totalBlockUpdates, solidLiquidTicks, climbableTick, climbableTicks, serverGroundTick, optifineTick, flyingTick, sprintingTicks = 0, velocityVerifications;
+    private int flagDelay, tick, digTick, iceTick, iceTicks, slimeTick, slimeTicks, velocityTick, velocityId, maxVelocityTicks, underBlockTick, nearWallTick, teleportTick, liquidTick, liquidTicks, airTick, airTicks, groundTick, groundTicks, totalBlockUpdates, solidLiquidTicks, climbableTick, climbableTicks, serverGroundTick, optifineTick, flyingTick, sprintingTicks = 0, velocityVerifications;
     //Deltas
     private double deltaY, lastDeltaY, deltaXZ, lastDeltaXZ, mouseSensitivity;
     private float deltaYaw, lastDeltaYaw, deltaPitch, lastDeltaPitch, deltaAngle;
@@ -71,7 +71,7 @@ public class User {
         this.playerUUID = player.getUniqueId();
         this.checks = CheckManager.loadChecks();
         this.timeStamp = System.currentTimeMillis();
-        this.executorService = Executors.newCachedThreadPool();
+        this.executorService = Executors.newSingleThreadExecutor();
         if (HadesConfig.LOG_TO_FILE) {
             logFile = new LogUtils.TextFile("" + playerUUID, "\\\\logs");
         }
@@ -99,6 +99,46 @@ public class User {
 
     public boolean isUnderBlock() {
         return PlayerUtil.blockNearHead(player);
+    }
+
+    public boolean isNearWall() {
+        return PlayerUtil.nearWall(player);
+    }
+
+    public int airTicks() {
+        return Math.abs(tick - airTick);
+    }
+
+    public int groundTicks() {
+        return Math.abs(tick - groundTick);
+    }
+
+    public int iceTicks() {
+        return Math.abs(tick - iceTick);
+    }
+
+    public int slimeTicks() {
+        return Math.abs(tick - slimeTick);
+    }
+
+    public int liquidTicks() {
+        return Math.abs(tick - liquidTick);
+    }
+
+    public int climbableTicks() {
+        return Math.abs(tick - climbableTick);
+    }
+
+    public int underBlockTicks() {
+        return Math.abs(tick - underBlockTick);
+    }
+
+    public int nearWallTicks() {
+        return Math.abs(tick - nearWallTick);
+    }
+
+    public int velocityTicks() {
+        return Math.abs(tick - velocityTick);
     }
 
     //Cant do this without reflection!

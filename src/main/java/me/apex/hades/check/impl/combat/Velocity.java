@@ -6,39 +6,77 @@ import me.apex.hades.check.CheckInfo;
 import me.apex.hades.event.impl.packetevents.FlyingEvent;
 import me.apex.hades.user.User;
 
-//Credits to Jonhan for original check idea!
+import java.util.ArrayList;
+import java.util.List;
+
 @CheckInfo(name = "Velocity")
 public class Velocity extends Check {
 
-    private double preVLA;
-    private boolean tookVelocity;
+    private List<Double> verticals = new ArrayList<>(), horizontalX = new ArrayList<>(), horizontalZ = new ArrayList<>();
+    private double preVLA, preVLB;
 
     @Override
     public void onHandle(PacketEvent e, User user) {
         if(e instanceof FlyingEvent) {
-            if(user.isVerifyingVelocity()) {
-                if(user.getVelocityY() > 0.2
-                        && user.getDeltaY() <= user.getVelocityY() * 0.99
-                        && elapsed(user.getTick(), user.getUnderBlockTick()) > 20
-                        && elapsed(user.getTick(), user.getLiquidTick()) > 20
-                        && !user.isInWeb()) {
-                    tookVelocity = false;
-                }else tookVelocity = true;
+            if(user.isVerifyingVelocity() || elapsed(user.getTick(), user.getVelocityTick()) < 6) {
+                verticals.add(user.getDeltaY());
             }else {
-                if(elapsed(user.getTick(), user.getVelocityTick()) < 6) {
-                    if(!tookVelocity) {
-                        if(user.getVelocityY() > 0.2
-                                && user.getDeltaY() <= user.getVelocityY() * 0.99
-                                && elapsed(user.getTick(), user.getUnderBlockTick()) > 20
-                                && elapsed(user.getTick(), user.getLiquidTick()) > 20
-                                && !user.isInWeb()) {
-                            if(++preVLA >= 6) {
-                                preVLA = 0;
-                                flag(user, "Vertical","didnt take expected velocity, d: " + user.getDeltaY() + ", v: " + (user.getVelocityY() * 0.99) + ", t: " + (elapsed(user.getTick(), user.getVelocityTick())));
-                            }
-                        }else preVLA = 0;
+                if(verticals.size() > 0) {
+                    double max = verticals.stream().mapToDouble(d -> d).max().getAsDouble();
+                    double min = user.getVelocityY() * 0.99F;
+
+                    if(max <= min
+                            && user.liquidTicks() > 20
+                            && user.nearWallTicks() > 20
+                            && user.climbableTicks() > 20
+                            && user.underBlockTicks() > 20) {
+                        flag(user, "Vertical", "max = " + max + ", min = " + min);
                     }
-                }else tookVelocity = false;
+
+                    verticals.clear();
+                }
+            }
+
+            if(user.isVerifyingVelocity() || elapsed(user.getTick(), user.getVelocityTick()) < user.getMaxVelocityTicks()) {
+                horizontalX.add(Math.abs(user.getLocation().getX() - user.getLastLocation().getX()));
+            }else {
+                if(horizontalX.size() > 0) {
+                    double max = horizontalX.stream().mapToDouble(d -> d).max().getAsDouble();
+                    double min = Math.abs(user.getVelocityX()) * 0.99;
+
+                    if(max <= min
+                            && user.liquidTicks() > 20
+                            && user.nearWallTicks() > 20
+                            && user.climbableTicks() > 20
+                            && user.underBlockTicks() > 20) {
+                        if(++preVLA > 2) {
+                            flag(user, "HorizontalX", "max = " + max + ", min = " + min, true);
+                        }
+                    }else preVLA *= 0.75;
+
+                    horizontalX.clear();
+                }
+            }
+
+            if(user.isVerifyingVelocity() || elapsed(user.getTick(), user.getVelocityTick()) < user.getMaxVelocityTicks()) {
+                horizontalZ.add(Math.abs(user.getLocation().getZ() - user.getLastLocation().getZ()));
+            }else {
+                if(horizontalZ.size() > 0) {
+                    double max = horizontalZ.stream().mapToDouble(d -> d).max().getAsDouble();
+                    double min = Math.abs(user.getVelocityZ()) * 0.99;
+
+                    if(max <= min
+                            && user.liquidTicks() > 20
+                            && user.nearWallTicks() > 20
+                            && user.climbableTicks() > 20
+                            && user.underBlockTicks() > 20) {
+                        if(++preVLB > 2) {
+                            flag(user, "HorizontalZ", "max = " + max + ", min = " + min, true);
+                        }
+                    }else preVLB *= 0.75;
+
+                    horizontalZ.clear();
+                }
             }
         }
     }

@@ -53,9 +53,9 @@ public class Killaura extends Check {
             double dist = MathUtil.getDistanceBetweenAngles360(user.getLocation().getYaw(), dir);
 
             if (dist < 0.7 && rotation > 2) {
-                if (preVLC++ > 1)
+                if (preVLC++ > 4)
                     flag(user, "Lockview","angle = " + dist + ", rotation = " + rotation, false);
-            } else preVLC = 0;
+            } else preVLC *= 0.75;
         } else if (e instanceof FlyingEvent) {
             lastFlying = time();
             ticks = 0;flyingTicks++;

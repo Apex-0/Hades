@@ -33,7 +33,7 @@ public class Motion extends Check {
 
             if (user.isSprinting() && ++hits <= 2) {
                 double accel = Math.abs(user.getDeltaXZ() - user.getLastDeltaXZ());
-                if (accel < 0.027) {
+                if (accel < 0.0001) {
                     if (++preVLA >= 7) {
                         flag(user, "KeepSprint","invalid acceleration, a: " + accel, false);
                     }
@@ -52,6 +52,7 @@ public class Motion extends Check {
                 startMotion = user.getDeltaY();
             }
             if(!user.isUnderBlock()
+                    && elapsed(user.getTick(), user.getLiquidTick()) > 20
                     && elapsed(user.getTick(), user.getClimbableTick()) > 20
                     && elapsed(user.getTick(), user.getVelocityTick()) > user.getMaxVelocityTicks()
                     && !user.getLocation().clone().subtract(0,0.2,0).getBlock().getRelative(BlockFace.DOWN).getType().equals(Material.SLIME_BLOCK)) {

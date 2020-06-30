@@ -37,7 +37,7 @@ public class Angle extends Check {
             lastEntity = ((AttackEvent) e).getEntity();
             attackTick = user.getTick();
         }else if(e instanceof SwingEvent) {
-            if(lastEntity == null) {
+            if(lastEntity != null) {
                 Vector vec = lastEntity.getLocation().clone().toVector().setY(0.0).subtract(user.getPlayer().getEyeLocation().clone().toVector().setY(0.0));
                 float angle = user.getPlayer().getEyeLocation().getDirection().angle(vec);
                 double dist = user.getPlayer().getLocation().toVector().setY(0.0).distance(lastEntity.getLocation().toVector().setY(0.0));

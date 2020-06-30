@@ -12,15 +12,13 @@ import me.apex.hades.user.User;
 public class NoSwing extends Check {
 
     private boolean lastWasArm;
-    private double preVLA;
 
     @Override
     public void onHandle(PacketEvent e, User user) {
         if (e instanceof AttackEvent) {
             if (!lastWasArm) {
-                if (preVLA++ > 1)
-                    flag(user, "Packet","swung = " + lastWasArm, false);
-            } else preVLA = 0;
+                flag(user, "*", "swung = " + lastWasArm);
+            }
         } else if (e instanceof SwingEvent) {
             lastWasArm = true;
         } else if (e instanceof FlyingEvent) {

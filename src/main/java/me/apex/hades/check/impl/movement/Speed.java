@@ -28,7 +28,7 @@ public class Speed extends Check {
             if (elapsed(user.getTick(), user.getIceTick()) < 40 || elapsed(user.getTick(), user.getSlimeTick()) < 40)
                 limit += 0.34;
             if (elapsed(user.getTick(), user.getUnderBlockTick()) < 40) limit += 0.91;
-            if (elapsed(user.getTick(), user.getVelocityTick()) > user.getMaxVelocityTicks()) limit += Math.abs(user.getVelocityX() + user.getVelocityZ());
+            if (elapsed(user.getTick(), user.getVelocityTick()) < user.getMaxVelocityTicks()) limit += Math.abs(user.getVelocityX() + user.getVelocityZ());
 
             if (user.getDeltaXZ() > limit
                     && elapsed(user.getTick(), user.getTeleportTick()) > 40

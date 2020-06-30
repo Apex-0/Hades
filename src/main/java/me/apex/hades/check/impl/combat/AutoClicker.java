@@ -35,8 +35,8 @@ public class AutoClicker extends Check {
                 double diff = Math.abs(deviation - lastDeviation);
 
                 if (diff < 10) {
-                    if (++preVLA > 4) {
-                        flag(user, "Consistency","low deviation difference, d: " + diff,false);
+                    if (++preVLA > 5) {
+                        flag(user, "Consistency","low deviation difference, d: " + diff);
                     }
                 } else preVLA *= 0.75;
 
@@ -50,9 +50,8 @@ public class AutoClicker extends Check {
                 clicksPerSecond = ((clicksPerSecond * 19) + speed) / 20;
 
                 if(clicksPerSecond > HadesConfig.MAX_CPS) {
-                    flag(user, "ClickSpeed","CPS: " + clicksPerSecond, false);
+                    flag(user, "ClickSpeed","cps = " + clicksPerSecond);
                 }
-
                 flyingTicks = 0;
             }
         }else if(e instanceof FlyingEvent) {

@@ -35,6 +35,9 @@ public class BlockProcessor {
             if (user.isUnderBlock()) {
                 user.setUnderBlockTick(user.getTick());
             }
+            if(user.isNearWall()) {
+                user.setNearWallTick(user.getTick());
+            }
             if (user.getLocation().getBlock().isLiquid()
                     || user.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).isLiquid()
                     || user.getPlayer().getEyeLocation().getBlock().isLiquid()

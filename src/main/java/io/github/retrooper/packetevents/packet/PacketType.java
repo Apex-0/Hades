@@ -152,6 +152,7 @@ public final class PacketType {
         public static final String ABILITIES = s + "Abilities";
         public static final String ENTITY_METADATA = s + "EntityMetadata";
         public static final String ENTITY_VELOCITY = s + "EntityVelocity";
+        public static final String ENTITY_TELEPORT = s + "EntityTeleport";
         public static final String ENTITY_DESTROY = s + "EntityDestroy";
         public static final String ENTITY_HEAD_ROTATION = s + "EntityHeadRotation";
         public static final String BLOCK_CHANGE = s + "BlockChange";
