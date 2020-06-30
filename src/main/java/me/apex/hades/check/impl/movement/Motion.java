@@ -14,8 +14,8 @@ import org.bukkit.potion.PotionEffectType;
 
 @CheckInfo(name = "Motion")
 public class Motion extends Check {
-    private int hits;
 
+    private boolean attacked;
     private double preVLA, preVLB;
     private double startMotion;
 
@@ -31,13 +31,17 @@ public class Motion extends Check {
                 }
             }
 
-            if (user.isSprinting() && ++hits <= 2) {
-                double accel = Math.abs(user.getDeltaXZ() - user.getLastDeltaXZ());
-                if (accel < 0.0001) {
-                    if (++preVLA >= 7) {
-                        flag(user, "KeepSprint","invalid acceleration, a: " + accel, false);
+            if(attacked) {
+                double prediction = user.getLastDeltaXZ() * 0.36;
+                double diff = user.getDeltaXZ() - prediction;
+
+                if(diff > 0.16) {
+                    if(++preVLA > 1) {
+                        flag(user, "AttackAcceleration", "diff = " + diff);
                     }
-                } else preVLB = 0;
+                }else preVLA = 0;
+
+                attacked = false;
             }
 
             if (!user.isUnderBlock() && !user.getLocation().clone().subtract(0,0.2,0).getBlock().getType().equals(Material.SLIME_BLOCK)) {
@@ -62,7 +66,7 @@ public class Motion extends Check {
             }
         }else if(e instanceof AttackEvent) {
             if (((AttackEvent) e).getEntity() instanceof Player) {
-                hits = 0;
+                attacked = true;
             }
         }
     }

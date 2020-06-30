@@ -5,6 +5,7 @@ import me.apex.hades.check.Check;
 import me.apex.hades.check.CheckInfo;
 import me.apex.hades.event.impl.packetevents.FlyingEvent;
 import me.apex.hades.user.User;
+import me.apex.hades.util.MathUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public class Velocity extends Check {
 
     private List<Double> verticals = new ArrayList<>(), horizontalX = new ArrayList<>(), horizontalZ = new ArrayList<>();
-    private double preVLA, preVLB;
+    private double preVLA, preVLB, preVLC;
 
     @Override
     public void onHandle(PacketEvent e, User user) {
@@ -31,6 +32,22 @@ public class Velocity extends Check {
                             && user.climbableTicks() > 20
                             && user.underBlockTicks() > 20) {
                         flag(user, "Vertical", "max = " + max + ", min = " + min);
+                    }
+
+                    double lastVertical = -999;
+                    for(double vertical : verticals) {
+                        if(lastVertical != -999) {
+                            if(!MathUtil.isRoughlyEqual(vertical, lastVertical * 0.6F, 0.1)
+                                    && user.liquidTicks() > 20
+                                    && user.nearWallTicks() > 20
+                                    && user.climbableTicks() > 20
+                                    && user.underBlockTicks() > 20) {
+                                if(++preVLC > 1) {
+                                    flag(user, "InvalidY", "d = " + vertical + ", ld = " + lastVertical);
+                                }
+                            }else preVLC = 0;
+                            lastVertical = vertical;
+                        }else lastVertical = vertical;
                     }
 
                     verticals.clear();
