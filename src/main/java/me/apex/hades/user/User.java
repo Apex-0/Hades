@@ -48,7 +48,7 @@ public class User {
     private double deltaY, lastDeltaY, deltaXZ, lastDeltaXZ, mouseSensitivity;
     private float deltaYaw, lastDeltaYaw, deltaPitch, lastDeltaPitch, deltaAngle;
     //Ints
-    private int CPS;
+    private int CPS, reports;
     //Interact
     private boolean rightClickingBlock, rightClickingAir, leftClickingBlock, leftClickingAir;
     private Block interactedBlock;
@@ -62,6 +62,8 @@ public class User {
     private long joinTime;
     //Direction
     private Vector direction;
+    //Long
+    private Long lastReport;
 
     List<Location>locations = new ArrayList<>();
 

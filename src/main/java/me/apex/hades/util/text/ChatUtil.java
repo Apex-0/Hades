@@ -1,5 +1,6 @@
 package me.apex.hades.util.text;
 
+import me.apex.hades.HadesConfig;
 import me.apex.hades.user.UserManager;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -15,4 +16,7 @@ public class ChatUtil {
         UserManager.users.stream().filter(user -> user.isAlerts() && user.getFlagDelay() == 0).forEach(user -> user.getPlayer().spigot().sendMessage(dev));
     }
 
+    public static void sendMsgToStaff(String message){
+        UserManager.users.stream().filter(user -> user.isAlerts()).forEach(user -> user.sendMessage(HadesConfig.PREFIX + " " + color(message)));
+    }
 }

@@ -3,6 +3,7 @@ package me.apex.hades;
 import me.apex.hades.check.CheckManager;
 import me.apex.hades.command.CommandManager;
 import me.apex.hades.command.impl.HadesCommand;
+import me.apex.hades.command.impl.ReportCommand;
 import me.apex.hades.util.text.ChatUtil;
 
 import java.util.HashMap;
@@ -26,6 +27,9 @@ public class HadesConfig {
     public static String LOG_FORMAT;
     public static boolean LOG_TO_FILE;
     public static boolean LOG_TO_CONSOLE;
+
+    //Report
+    public static boolean REPORT_ENABLED;
 
     //Anti-VPN
     public static boolean ANTIVPN_ENABLED;
@@ -62,6 +66,8 @@ public class HadesConfig {
             LOG_TO_FILE = HadesPlugin.getInstance().getConfig().getBoolean("system.logging.log-to-file");
             LOG_TO_CONSOLE = HadesPlugin.getInstance().getConfig().getBoolean("system.logging.log-to-console");
 
+            REPORT_ENABLED = HadesPlugin.getInstance().getConfig().getBoolean("report.enabled");
+
             ANTIVPN_ENABLED = HadesPlugin.getInstance().getConfig().getBoolean("anti-vpn.enabled");
             ANTIVPN_PUNISH_COMMAND = ChatUtil.color(HadesPlugin.getInstance().getConfig().getString("anti-vpn.punish-command"));
 
@@ -95,6 +101,7 @@ public class HadesConfig {
 
             CommandManager.getAdapters().clear();
             CommandManager.register(new HadesCommand());
+            CommandManager.register(new ReportCommand());
         }catch (Exception e) {
             e.printStackTrace();
         }

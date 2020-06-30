@@ -28,6 +28,9 @@ system:
     log-to-file: true
     log-to-console: false
 
+report:
+  enabled: true
+
 #VPN Protection
 anti-vpn:
   enabled: true
