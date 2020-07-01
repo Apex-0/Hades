@@ -20,7 +20,7 @@ public class Angle extends Check {
             Vector vec = entity.getLocation().clone().toVector().setY(0.0).subtract(user.getPlayer().getEyeLocation().clone().toVector().setY(0.0));
             float angle = user.getPlayer().getEyeLocation().getDirection().angle(vec);
 
-            if(angle > 3 && user.getPlayer().getLocation().toVector().setY(0.0).distance(entity.getLocation().toVector().setY(0.0)) > 1.0) {
+            if(angle > 1 && user.getPlayer().getLocation().toVector().setY(0.0).distance(entity.getLocation().toVector().setY(0.0)) > 1.0) {
                 if(++preVLA > 2) {
                     flag(user, "NoLook","invalid attack angle, a: " + angle, false);
                 }

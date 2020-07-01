@@ -1,6 +1,5 @@
 package me.apex.hades.user;
 
-import com.google.common.collect.EvictingQueue;
 import lombok.Getter;
 import lombok.Setter;
 import me.apex.hades.HadesConfig;
@@ -18,7 +17,6 @@ import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -38,7 +36,6 @@ public class User {
     //Location
     private Location location, lastLocation, lastOnGroundLocation;
     //Reach
-    public final Queue<ReachUtil> reachQueue = EvictingQueue.create(10);
     private ReachUtil reachLoc, lastReachLoc;
     private Player lastTarget;
     private long lastAttackPacket, lastTransction;

@@ -13,19 +13,18 @@ import java.util.List;
 public class Velocity extends Check {
 
     private List<Double> verticals = new ArrayList<>(), horizontalX = new ArrayList<>(), horizontalZ = new ArrayList<>();
-    private double preVLA, preVLB, preVLC;
 
     @Override
     public void onHandle(PacketEvent e, User user) {
-        if(e instanceof FlyingEvent) {
-            if(user.isVerifyingVelocity() || elapsed(user.getTick(), user.getVelocityTick()) < 6) {
+        if (e instanceof FlyingEvent) {
+            if (user.isVerifyingVelocity() || elapsed(user.getTick(), user.getVelocityTick()) < 6) {
                 verticals.add(user.getDeltaY());
-            }else {
-                if(verticals.size() > 0) {
+            } else {
+                if (verticals.size() > 0) {
                     double max = verticals.stream().mapToDouble(d -> d).max().getAsDouble();
                     double min = user.getVelocityY() * 0.99F;
 
-                    if(max <= min
+                    if (max <= min
                             && user.liquidTicks() > 20
                             && user.nearWallTicks() > 20
                             && user.climbableTicks() > 20
@@ -37,50 +36,43 @@ public class Velocity extends Check {
                 }
             }
 
-            if(user.isVerifyingVelocity() || elapsed(user.getTick(), user.getVelocityTick()) < user.getMaxVelocityTicks()) {
+            if (user.isVerifyingVelocity() || elapsed(user.getTick(), user.getVelocityTick()) < user.getMaxVelocityTicks()) {
                 horizontalX.add(Math.abs(user.getLocation().getX() - user.getLastLocation().getX()));
-            }else {
-                if(horizontalX.size() > 0) {
+            } else {
+                if (horizontalX.size() > 0) {
                     double max = horizontalX.stream().mapToDouble(d -> d).max().getAsDouble();
                     double min = Math.abs(user.getVelocityX()) * 0.99;
 
-                    if(max <= min
+                    if (max <= min
                             && user.liquidTicks() > 20
                             && user.nearWallTicks() > 20
                             && user.climbableTicks() > 20
-                            && user.underBlockTicks() > 20
-                            && !user.isNearWall()) {
-                        if(++preVLA > 4) {
-                            flag(user, "HorizontalX", "max = " + max + ", min = " + min, true);
-                        }
-                    }else preVLA *= 0.75;
+                            && user.underBlockTicks() > 20) {
+                        flag(user, "Horizontal", "maxX = " + max + ", minX = " + min, true);
+                    }
 
                     horizontalX.clear();
                 }
             }
 
-            if(user.isVerifyingVelocity() || elapsed(user.getTick(), user.getVelocityTick()) < user.getMaxVelocityTicks()) {
+            if (user.isVerifyingVelocity() || elapsed(user.getTick(), user.getVelocityTick()) < user.getMaxVelocityTicks()) {
                 horizontalZ.add(Math.abs(user.getLocation().getZ() - user.getLastLocation().getZ()));
-            }else {
-                if(horizontalZ.size() > 0) {
+            } else {
+                if (horizontalZ.size() > 0) {
                     double max = horizontalZ.stream().mapToDouble(d -> d).max().getAsDouble();
                     double min = Math.abs(user.getVelocityZ()) * 0.99;
 
-                    if(max <= min
+                    if (max <= min
                             && user.liquidTicks() > 20
                             && user.nearWallTicks() > 20
                             && user.climbableTicks() > 20
-                            && user.underBlockTicks() > 20
-                            && !user.isNearWall()) {
-                        if(++preVLB > 4) {
-                            flag(user, "HorizontalZ", "max = " + max + ", min = " + min, true);
-                        }
-                    }else preVLB *= 0.75;
-
-                    horizontalZ.clear();
+                            && user.underBlockTicks() > 20) {
+                        flag(user, "Horizontal", "maxZ = " + max + ", minZ = " + min, true);
+                    }
                 }
+
+                horizontalZ.clear();
             }
         }
     }
-
 }

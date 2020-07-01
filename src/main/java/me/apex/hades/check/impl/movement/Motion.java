@@ -35,7 +35,7 @@ public class Motion extends Check {
                 double prediction = user.getLastDeltaXZ() * 0.36;
                 double diff = user.getDeltaXZ() - prediction;
 
-                if(diff > 0.16) {
+                if(diff > 0.16D) {
                     if(++preVLA > 1) {
                         flag(user, "AttackAcceleration", "diff = " + diff);
                     }
