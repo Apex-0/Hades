@@ -42,7 +42,7 @@ public class Velocity extends Check {
                                     && user.nearWallTicks() > 20
                                     && user.climbableTicks() > 20
                                     && user.underBlockTicks() > 20) {
-                                if(++preVLC > 1) {
+                                if(++preVLC > 2) {
                                     flag(user, "InvalidY", "d = " + vertical + ", ld = " + lastVertical);
                                 }
                             }else preVLC = 0;
@@ -66,7 +66,7 @@ public class Velocity extends Check {
                             && user.nearWallTicks() > 20
                             && user.climbableTicks() > 20
                             && user.underBlockTicks() > 20) {
-                        if(++preVLA > 2) {
+                        if(++preVLA > 4) {
                             flag(user, "HorizontalX", "max = " + max + ", min = " + min, true);
                         }
                     }else preVLA *= 0.75;
@@ -87,7 +87,7 @@ public class Velocity extends Check {
                             && user.nearWallTicks() > 20
                             && user.climbableTicks() > 20
                             && user.underBlockTicks() > 20) {
-                        if(++preVLB > 2) {
+                        if(++preVLB > 4) {
                             flag(user, "HorizontalZ", "max = " + max + ", min = " + min, true);
                         }
                     }else preVLB *= 0.75;
