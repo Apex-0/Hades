@@ -51,38 +51,36 @@ public abstract class Check implements Listener {
         assert user != null;
         vl++;
         lastFlag = time();
-        TaskUtil.task(() -> {
-            String alertFormatColor = HadesConfig.FLAG_FORMAT.replace("&", "§");
-            String devFormatColor = HadesConfig.DEV_FLAG_FORMAT.replace("&", "§");
+        String alertFormatColor = HadesConfig.FLAG_FORMAT.replace("&", "§");
+        String devFormatColor = HadesConfig.DEV_FLAG_FORMAT.replace("&", "§");
 
-            //Alert Message
-            TextComponent alertMessage = new TextComponent(alertFormatColor.replace("%prefix%", HadesConfig.PREFIX).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type).replace("%vl%", String.valueOf(vl)).replace("%info%", information).replace("%ping%", user.ping() + "").replace("%tps%", PacketEvents.getAPI().getServerUtilities().getCurrentServerTPS() + "") + (dev ? " §7(Exp)" : ""));
-            alertMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + user.getPlayer().getName()));
-            alertMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7(Click to teleport)").create()));
+        //Alert Message
+        TextComponent alertMessage = new TextComponent(alertFormatColor.replace("%prefix%", HadesConfig.PREFIX).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type).replace("%vl%", String.valueOf(vl)).replace("%info%", information).replace("%ping%", user.ping() + "").replace("%tps%", PacketEvents.getAPI().getServerUtilities().getCurrentServerTPS() + "") + (dev ? " §7(Exp)" : ""));
+        alertMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + user.getPlayer().getName()));
+        alertMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7(Click to teleport)").create()));
 
-            //Dev Message
-            TextComponent devMessage = new TextComponent(devFormatColor.replace("%prefix%", HadesConfig.PREFIX).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type).replace("%vl%", String.valueOf(vl)).replace("%info%", information).replace("%ping%", user.ping() + "").replace("%tps%", PacketEvents.getAPI().getServerUtilities().getCurrentServerTPS() + "") + (dev ? " §7(Exp)" : ""));
-            devMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + user.getPlayer().getName()));
-            devMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7Info:\n§7* §c" + information + "\n§7\n§7(Click to teleport)").create()));
+        //Dev Message
+        TextComponent devMessage = new TextComponent(devFormatColor.replace("%prefix%", HadesConfig.PREFIX).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type).replace("%vl%", String.valueOf(vl)).replace("%info%", information).replace("%ping%", user.ping() + "").replace("%tps%", PacketEvents.getAPI().getServerUtilities().getCurrentServerTPS() + "") + (dev ? " §7(Exp)" : ""));
+        devMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + user.getPlayer().getName()));
+        devMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7Info:\n§7* §c" + information + "\n§7\n§7(Click to teleport)").create()));
 
-            ChatUtil.informStaff(alertMessage, devMessage, (int)vl);
+        ChatUtil.informStaff(alertMessage, devMessage, (int)vl);
 
-            if (HadesConfig.LOG_TO_FILE)
-                LogUtils.logToFile(user.getLogFile(), HadesConfig.LOG_FORMAT.replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type).replace("%vl%", String.valueOf(vl)).replace("%info%", information));
-            if (HadesConfig.LOG_TO_CONSOLE) {
-                Bukkit.getLogger().info("(!) " + HadesConfig.LOG_FORMAT.replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type).replace("%vl%", String.valueOf(vl)).replace("%info%", information).replace("[%time%]", ""));
+        if (HadesConfig.LOG_TO_FILE)
+            LogUtils.logToFile(user.getLogFile(), HadesConfig.LOG_FORMAT.replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type).replace("%vl%", String.valueOf(vl)).replace("%info%", information));
+        if (HadesConfig.LOG_TO_CONSOLE) {
+            Bukkit.getLogger().info("(!) " + HadesConfig.LOG_FORMAT.replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type).replace("%vl%", String.valueOf(vl)).replace("%info%", information).replace("[%time%]", ""));
+        }
+        if (vl >= maxVL) {
+            if (punishable && !HadesConfig.TEST_MODE) {
+                if (HadesConfig.LOG_TO_FILE)
+                    LogUtils.logToFile(user.getLogFile(), "%time% > [ACTION] " + HadesConfig.PUNISH_COMMANDS.get(this.getClass().getSimpleName()).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type));
+                if (HadesConfig.BROADCAST_PUNISHMENTS)
+                    Bukkit.broadcastMessage(ChatUtil.color(HadesConfig.PUNISHMENT_BROADCAST_MESSAGE.replace("%prefix%", HadesConfig.PREFIX).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%newline%", "\n")));
+                TaskUtil.task(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), HadesConfig.PUNISH_COMMANDS.get(this.getClass().getSimpleName()).replace("%prefix%", HadesConfig.PREFIX).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type)));
+                vl = 0;
             }
-            if (vl >= maxVL) {
-                if (punishable && !HadesConfig.TEST_MODE) {
-                    if (HadesConfig.LOG_TO_FILE)
-                        LogUtils.logToFile(user.getLogFile(), "%time% > [ACTION] " + HadesConfig.PUNISH_COMMANDS.get(this.getClass().getSimpleName()).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type));
-                    if (HadesConfig.BROADCAST_PUNISHMENTS)
-                        Bukkit.broadcastMessage(ChatUtil.color(HadesConfig.PUNISHMENT_BROADCAST_MESSAGE.replace("%prefix%", HadesConfig.PREFIX).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%newline%", "\n")));
-                    TaskUtil.task(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), HadesConfig.PUNISH_COMMANDS.get(this.getClass().getSimpleName()).replace("%prefix%", HadesConfig.PREFIX).replace("%player%", user.getPlayer().getName()).replace("%check%", getName()).replace("%checktype%", type)));
-                    vl = 0;
-                }
-            }
-        });
+        }
     }
 
     //Time Util

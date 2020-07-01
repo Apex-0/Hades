@@ -6,7 +6,6 @@ import me.apex.hades.HadesConfig;
 import me.apex.hades.check.Check;
 import me.apex.hades.check.CheckManager;
 import me.apex.hades.util.PlayerUtil;
-import me.apex.hades.util.ReachUtil;
 import me.apex.hades.util.reflection.ReflectionUtil;
 import me.apex.hades.util.text.ChatUtil;
 import me.apex.hades.util.text.LogUtils;
@@ -32,13 +31,9 @@ public class User {
     //Checks
     private final List<Check> checks;
     //Booleans
-    private boolean alerts, usingLunarClient, onGround, collidedGround, digging, isSprinting, isSneaking, chunkLoaded, verifyingVelocity;
+    private boolean alerts, usingLunarClient, onGround, onGroundServerSide, collidedGround, digging, isSprinting, isSneaking, chunkLoaded, verifyingVelocity;
     //Location
     private Location location, lastLocation, lastOnGroundLocation;
-    //Reach
-    private ReachUtil reachLoc, lastReachLoc;
-    private Player lastTarget;
-    private long lastAttackPacket, lastTransction;
     //Ticks
     private int flagDelay, tick, digTick, iceTick, iceTicks, slimeTick, slimeTicks, velocityTick, velocityId, maxVelocityTicks, underBlockTick, nearWallTick, teleportTick, liquidTick, liquidTicks, airTick, airTicks, groundTick, groundTicks, totalBlockUpdates, solidLiquidTicks, climbableTick, climbableTicks, serverGroundTick, optifineTick, flyingTick, sprintingTicks = 0, velocityVerifications;
     //Deltas

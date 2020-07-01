@@ -6,8 +6,8 @@ import me.apex.hades.check.CheckInfo;
 import me.apex.hades.event.impl.packetevents.AttackEvent;
 import me.apex.hades.event.impl.packetevents.FlyingEvent;
 import me.apex.hades.user.User;
-import me.apex.hades.util.MathUtil;
 import org.bukkit.entity.Entity;
+import org.bukkit.util.Vector;
 
 @CheckInfo(name = "Killaura")
 public class Killaura extends Check {
@@ -15,6 +15,7 @@ public class Killaura extends Check {
     private int ticks, flyingTicks;
     private long lastFlying;
     private Entity lastTarget;
+    private float lastAngle;
 
     private double preVLA, preVLB, preVLC;
 
@@ -49,13 +50,18 @@ public class Killaura extends Check {
             Entity entity = ((AttackEvent) e).getEntity();
             double rotation = Math.abs(user.getDeltaYaw());
 
-            double dir = MathUtil.getDirection(user.getLocation(), entity.getLocation());
-            double dist = MathUtil.getDistanceBetweenAngles360(user.getLocation().getYaw(), dir);
+            Vector vec = entity.getLocation().clone().toVector().setY(0.0).subtract(user.getPlayer().getEyeLocation().clone().toVector().setY(0.0));
+            float angle = user.getPlayer().getEyeLocation().getDirection().angle(vec);
 
-            if (dist < 0.7 && rotation > 2) {
-                if (preVLC++ > 4)
-                    flag(user, "Lockview","angle = " + dist + ", rotation = " + rotation, false);
-            } else preVLC *= 0.75;
+            float diff = Math.abs(angle - lastAngle);
+
+            if(diff < 0.01 && rotation > 5) {
+                if(++preVLC > 6) {
+                    flag(user, "LockView", "diff = " + diff + ", rotation = " + rotation, true);
+                }
+            }else preVLC *= 0.75;
+
+            lastAngle = angle;
         } else if (e instanceof FlyingEvent) {
             lastFlying = time();
             ticks = 0;flyingTicks++;

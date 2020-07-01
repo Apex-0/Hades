@@ -27,6 +27,7 @@ public class MathUtil {
     private static final double field_181163_d;
     private static final double[] field_181164_e;
     private static final double[] field_181165_f;
+    public static final double GCD_OFFSET;
 
     static {
         for (int i = 0; i < 65536; ++i) {
@@ -37,6 +38,7 @@ public class MathUtil {
         field_181163_d = Double.longBitsToDouble(4805340802404319232L);
         field_181164_e = new double[257];
         field_181165_f = new double[257];
+        GCD_OFFSET = Math.pow(2, 24);
 
         for (int j = 0; j < 257; ++j) {
             double d0 = (double) j / 256.0D;

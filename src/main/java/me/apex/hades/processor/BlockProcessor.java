@@ -9,8 +9,9 @@ public class BlockProcessor {
 
     public static void process(User user) {
         if (PlayerUtil.isOnGround(user.getPlayer())) {
+            user.setOnGroundServerSide(true);
             user.setServerGroundTick(user.getTick());
-        }
+        }else user.setOnGroundServerSide(false);
 
         if (user.isOnGround()) {
             user.setAirTicks(0);

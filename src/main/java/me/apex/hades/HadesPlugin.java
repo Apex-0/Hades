@@ -7,6 +7,7 @@ import me.apex.hades.listener.BukkitListener;
 import me.apex.hades.listener.NetworkListener;
 import me.apex.hades.util.lunar.BufferUtils;
 import me.apex.hades.util.lunar.implementation.LunarClientImplementation;
+import me.apex.hades.util.reflection.ReflectionUtil;
 import me.apex.hades.util.reflection.VersionUtil;
 import net.mineaus.lunar.api.LunarClientAPI;
 import net.mineaus.lunar.api.event.impl.AuthenticateEvent;
@@ -43,6 +44,7 @@ public class HadesPlugin extends JavaPlugin {
         executorService = Executors.newSingleThreadScheduledExecutor();
 
         //Utils
+        new ReflectionUtil();
         versionUtil = new VersionUtil();
 
         //Save Config
