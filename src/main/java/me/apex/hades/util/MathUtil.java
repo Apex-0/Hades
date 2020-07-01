@@ -76,6 +76,15 @@ public class MathUtil {
         return Math.abs(d1 - d2) < seperator; //0.001, 0.125, 0.35
     }
 
+    public static float getAngleDiff(float a, float b) {
+        float diff = Math.abs(a - b);
+        float altDiff = b + 360 - a;
+        float altAltDiff = a + 360 - b;
+        if(altDiff < diff) diff = altDiff;
+        if(altAltDiff < diff) diff = altAltDiff;
+        return diff;
+    }
+
     private static long absGCD(long a, long b) {
         while (b > 0) {
             long temp = b;

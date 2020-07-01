@@ -8,6 +8,7 @@ import me.apex.hades.event.impl.packetevents.FlyingEvent;
 import me.apex.hades.event.impl.packetevents.PlaceEvent;
 import me.apex.hades.user.User;
 import me.apex.hades.user.UserManager;
+import me.apex.hades.util.MathUtil;
 import me.apex.hades.util.PlayerUtil;
 import me.apex.hades.util.TaskUtil;
 import org.bukkit.block.BlockFace;
@@ -52,15 +53,18 @@ public class Scaffold extends Check {
             }
         }
     }
+
+
+
     @EventHandler
     public void onPlace(BlockPlaceEvent event){
         TaskUtil.taskAsync(() -> {
             User user = UserManager.getUser(event.getPlayer());
             Vector blockVec = event.getBlockPlaced().getLocation().toVector();
             double dist = user.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toVector().distance(blockVec);
-            double diff = Math.abs(user.getDeltaYaw() - user.getLastDeltaYaw());
-            if(diff > 100.0 && dist <= 2.0 && event.getBlockPlaced().getType().isSolid()) {
-                if(++preVLB > 1) {
+            double diff = Math.abs(MathUtil.getAngleDiff(user.getLocation().getYaw(), user.getLastLocation().getYaw()));
+            if(diff > 100 && dist <= 2.0 && event.getBlockPlaced().getType().isSolid()) {
+                if(++preVLB > 4) {
                     flag(user, "Rotation","suspicious rotations, r: " + diff + ", d: " + dist, false);
                 }
             }else preVLB = 0;

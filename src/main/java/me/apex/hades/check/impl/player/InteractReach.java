@@ -33,7 +33,7 @@ public class InteractReach extends Check {
     public void onPlace(BlockPlaceEvent event) {
         User user = UserManager.getUser(event.getPlayer());
         double dist = user.getPlayer().getEyeLocation().toVector().distance(event.getBlockPlaced().getLocation().toVector());
-        if (dist > 4.8) {
+        if (dist > 5) {
             if (++preVLB > 1) {
                 flag(user, "Distance","placed block farther than possible. d: " + dist, false);
             }
