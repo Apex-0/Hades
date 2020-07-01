@@ -56,6 +56,7 @@ public class Motion extends Check {
                 startMotion = user.getDeltaY();
             }
             if(!user.isUnderBlock()
+                    && !PlayerUtil.blockNearHeadExpanded(user.getPlayer())
                     && elapsed(user.getTick(), user.getLiquidTick()) > 20
                     && elapsed(user.getTick(), user.getClimbableTick()) > 20
                     && elapsed(user.getTick(), user.getVelocityTick()) > user.getMaxVelocityTicks()

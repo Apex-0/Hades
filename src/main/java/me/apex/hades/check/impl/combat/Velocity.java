@@ -5,7 +5,6 @@ import me.apex.hades.check.Check;
 import me.apex.hades.check.CheckInfo;
 import me.apex.hades.event.impl.packetevents.FlyingEvent;
 import me.apex.hades.user.User;
-import me.apex.hades.util.MathUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,22 +33,6 @@ public class Velocity extends Check {
                         flag(user, "Vertical", "max = " + max + ", min = " + min);
                     }
 
-                    double lastVertical = -999;
-                    for(double vertical : verticals) {
-                        if(lastVertical != -999) {
-                            if(!MathUtil.isRoughlyEqual(vertical, lastVertical * 0.6F, 0.1)
-                                    && user.liquidTicks() > 20
-                                    && user.nearWallTicks() > 20
-                                    && user.climbableTicks() > 20
-                                    && user.underBlockTicks() > 20) {
-                                if(++preVLC > 2) {
-                                    flag(user, "InvalidY", "d = " + vertical + ", ld = " + lastVertical);
-                                }
-                            }else preVLC = 0;
-                            lastVertical = vertical;
-                        }else lastVertical = vertical;
-                    }
-
                     verticals.clear();
                 }
             }
@@ -65,7 +48,8 @@ public class Velocity extends Check {
                             && user.liquidTicks() > 20
                             && user.nearWallTicks() > 20
                             && user.climbableTicks() > 20
-                            && user.underBlockTicks() > 20) {
+                            && user.underBlockTicks() > 20
+                            && !user.isNearWall()) {
                         if(++preVLA > 4) {
                             flag(user, "HorizontalX", "max = " + max + ", min = " + min, true);
                         }
@@ -86,7 +70,8 @@ public class Velocity extends Check {
                             && user.liquidTicks() > 20
                             && user.nearWallTicks() > 20
                             && user.climbableTicks() > 20
-                            && user.underBlockTicks() > 20) {
+                            && user.underBlockTicks() > 20
+                            && !user.isNearWall()) {
                         if(++preVLB > 4) {
                             flag(user, "HorizontalZ", "max = " + max + ", min = " + min, true);
                         }
