@@ -50,8 +50,8 @@ public class PacketTypeClasses {
                 try {
                     BLOCK_PLACE = NMSUtils.getNMSClass(c + "UseItem");
                 }
-                catch(ClassNotFoundException ex) {
-                    ex.printStackTrace();
+                catch(ClassNotFoundException e) {
+                    e.printStackTrace();
                 }
             }
         }
