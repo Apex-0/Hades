@@ -47,7 +47,11 @@ public class MovementProcessor {
             user.setDeltaPitch(deltaPitch);
 
             //Update Flying
-            if (user.getPlayer().getAllowFlight()) user.setFlyingTick(user.getTick());
+            if (user.getPlayer().isFlying()) user.setFlyingTick(user.getTick());
+
+            if(user.getPlayer().isFlying() && (user.isOnGroundServerSide() || user.isCollidedGround())) {
+                user.getPlayer().setFlying(false);
+            }
 
             //Update Block Check
             BlockProcessor.process(user);
@@ -101,7 +105,11 @@ public class MovementProcessor {
             user.setDeltaPitch(deltaPitch);
 
             //Update Flying
-            if (user.getPlayer().getAllowFlight()) user.setFlyingTick(user.getTick());
+            if (user.getPlayer().isFlying()) user.setFlyingTick(user.getTick());
+
+            if(user.getPlayer().isFlying() && (user.isOnGroundServerSide() || user.isCollidedGround())) {
+                user.getPlayer().setFlying(false);
+            }
 
             //Update Block Check
             BlockProcessor.process(user);
@@ -148,7 +156,11 @@ public class MovementProcessor {
             user.setDeltaPitch(deltaPitch);
 
             //Update Flying
-            if (user.getPlayer().getAllowFlight()) user.setFlyingTick(user.getTick());
+            if (user.getPlayer().isFlying()) user.setFlyingTick(user.getTick());
+
+            if(user.getPlayer().isFlying() && (user.isOnGroundServerSide() || user.isCollidedGround())) {
+                user.getPlayer().setFlying(false);
+            }
 
             //Update Block Check
             BlockProcessor.process(user);
