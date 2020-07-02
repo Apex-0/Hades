@@ -21,7 +21,11 @@ public class Killaura extends Check {
 
     @Override
     public void onHandle(PacketEvent e, User user) {
-        if (e instanceof AttackEvent) {
+         if (e instanceof FlyingEvent) {
+            lastFlying = time();
+            ticks = 0;flyingTicks++;
+
+        } else if (e instanceof AttackEvent) {
             long timeDiff = time() - lastFlying;
 
             if (timeDiff < 5) {
@@ -62,9 +66,6 @@ public class Killaura extends Check {
             }else preVLC *= 0.75;
 
             lastAngle = angle;
-        } else if (e instanceof FlyingEvent) {
-            lastFlying = time();
-            ticks = 0;flyingTicks++;
         }
     }
 

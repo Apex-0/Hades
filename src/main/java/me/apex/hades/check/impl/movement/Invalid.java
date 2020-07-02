@@ -5,6 +5,8 @@ import me.apex.hades.check.Check;
 import me.apex.hades.check.CheckInfo;
 import me.apex.hades.event.impl.packetevents.FlyingEvent;
 import me.apex.hades.user.User;
+import me.apex.hades.util.PlayerUtil;
+import org.bukkit.potion.PotionEffectType;
 
 @CheckInfo(name = "Invalid")
 public class Invalid extends Check {

@@ -307,6 +307,18 @@ public class MathUtil {
         return Math.sqrt(deviation / length);
     }
 
+    public static double getStandardDeviation(List<Double> numberArray) {
+        double sum = 0.0, deviation = 0.0;
+        int length = numberArray.size();
+        for (double num : numberArray)
+            sum += num;
+        double mean = sum / length;
+        for (double num : numberArray)
+            deviation += Math.pow(num - mean, 2);
+
+        return Math.sqrt(deviation / length);
+    }
+
     private float getMouseDelta(float rotation) {
         return ((float) Math.cbrt((rotation / 0.01875F)) - 0.2F) / 0.6F;
     }
