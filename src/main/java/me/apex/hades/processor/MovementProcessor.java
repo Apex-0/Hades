@@ -59,6 +59,12 @@ public class MovementProcessor {
             user.setDeltaAngle(Math.abs(user.getDeltaYaw()) + Math.abs(user.getDeltaPitch()));
 
             user.setDirection(new Vector(-Math.sin(user.getPlayer().getEyeLocation().getYaw() * 3.1415927F / 180.0F) * (float) 1 * 0.5F, 0, Math.cos(user.getPlayer().getEyeLocation().getYaw() * 3.1415927F / 180.0F) * (float) 1 * 0.5F));
+
+            if (user.isSprinting()) {
+                user.setSprintingTicks(user.getSprintingTicks() + 1);
+            } else if (!user.isSprinting()) {
+                user.setSprintingTicks(0);
+            }
         } else if (PacketUtil.isRotationPacket(e.getPacketName())) {
             WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
             user.setOnGround(packet.isOnGround());
@@ -154,12 +160,6 @@ public class MovementProcessor {
             user.setDeltaAngle(Math.abs(user.getDeltaYaw()) + Math.abs(user.getDeltaPitch()));
 
             user.setDirection(new Vector(-Math.sin(user.getPlayer().getEyeLocation().getYaw() * 3.1415927F / 180.0F) * (float) 1 * 0.5F, 0, Math.cos(user.getPlayer().getEyeLocation().getYaw() * 3.1415927F / 180.0F) * (float) 1 * 0.5F));
-        } else if (PacketType.Util.isInstanceOfFlyingPacket(e.getNMSPacket())) {
-            if (user.isSprinting()) {
-                user.setSprintingTicks(user.getSprintingTicks() + 1);
-            } else if (!user.isSprinting()) {
-                user.setSprintingTicks(0);
-            }
         }
     }
 

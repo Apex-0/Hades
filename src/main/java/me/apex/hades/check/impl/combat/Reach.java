@@ -12,7 +12,6 @@ public class Reach extends Check {
     @Override
     public void onHandle(PacketEvent e, User user) {
         if(e instanceof AttackEvent) {
-
         }
     }
 }
