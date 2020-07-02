@@ -28,7 +28,8 @@ public class Velocity extends Check {
                             && user.liquidTicks() > 20
                             && user.nearWallTicks() > 20
                             && user.climbableTicks() > 20
-                            && user.underBlockTicks() > 20) {
+                            && user.underBlockTicks() > 20
+                            && elapsed(user.getTick(), user.getTeleportTick()) > 20) {
                         flag(user, "Vertical", "max = " + max + ", min = " + min);
                     }
 

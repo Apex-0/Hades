@@ -20,7 +20,7 @@ public class Sprint extends Check {
             if (user.getTick() > 10 && elapsed(user.getTick(), user.getFlyingTick()) > 20) {
                 Vector move = new Vector(user.getLocation().getX() - user.getLastLocation().getX(), 0, user.getLocation().getZ() - user.getLastLocation().getZ());
                 double delta = move.distanceSquared(user.getDirection());
-                if (delta >= .23 && PlayerUtil.isOnGround(user.getPlayer()) && user.isSprinting() && user.getDeltaXZ() > 0.1 && !user.isInLiquid() && !user.isInWeb()) {
+                if (delta >= (user.getPlayer().getWalkSpeed() > 0.2f ? .23 * 1 + ((user.getPlayer().getWalkSpeed() / 0.2f) * 0.36) : 0.23) && PlayerUtil.isOnGround(user.getPlayer()) && user.isSprinting() && user.getDeltaXZ() > 0.1 && !user.isInLiquid() && !user.isInWeb()) {
                     if (++preVLA > 4) {
                         flag(user, "Multidirectional","multidirectional sprint, p: " + delta, false);
                     }
