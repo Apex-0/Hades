@@ -10,7 +10,7 @@ public class BlockUtil {
         Material type = block.getType();
 
         return type.equals(Material.WATER) || type.equals(Material.STATIONARY_LAVA)
-                || type.equals(Material.LAVA) || type.equals(Material.STATIONARY_LAVA);
+                || type.equals(Material.LAVA);
     }
 
     public static boolean isClimbableBlock(Block block) {
