@@ -36,44 +36,6 @@ public class Velocity extends Check {
                     verticals.clear();
                 }
             }
-
-            if (user.isVerifyingVelocity() || elapsed(user.getTick(), user.getVelocityTick()) < user.getMaxVelocityTicks()) {
-                horizontalX.add(Math.abs(user.getLocation().getX() - user.getLastLocation().getX()));
-            } else {
-                if (horizontalX.size() > 0) {
-                    double max = horizontalX.stream().mapToDouble(d -> d).max().getAsDouble();
-                    double min = Math.abs(user.getVelocityX()) * 0.99;
-
-                    if (max <= min
-                            && user.liquidTicks() > 20
-                            && user.nearWallTicks() > 20
-                            && user.climbableTicks() > 20
-                            && user.underBlockTicks() > 20) {
-                        flag(user, "Horizontal", "maxX = " + max + ", minX = " + min, true);
-                    }
-
-                    horizontalX.clear();
-                }
-            }
-
-            if (user.isVerifyingVelocity() || elapsed(user.getTick(), user.getVelocityTick()) < user.getMaxVelocityTicks()) {
-                horizontalZ.add(Math.abs(user.getLocation().getZ() - user.getLastLocation().getZ()));
-            } else {
-                if (horizontalZ.size() > 0) {
-                    double max = horizontalZ.stream().mapToDouble(d -> d).max().getAsDouble();
-                    double min = Math.abs(user.getVelocityZ()) * 0.99;
-
-                    if (max <= min
-                            && user.liquidTicks() > 20
-                            && user.nearWallTicks() > 20
-                            && user.climbableTicks() > 20
-                            && user.underBlockTicks() > 20) {
-                        flag(user, "Horizontal", "maxZ = " + max + ", minZ = " + min, true);
-                    }
-                }
-
-                horizontalZ.clear();
-            }
         }
     }
 }
