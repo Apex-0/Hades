@@ -90,8 +90,7 @@ public class PlayerUtil {
     public static boolean isInWeb(Player player) {
         return player.getLocation().getBlock().getType() == Material.WEB
                 || player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.WEB
-                || player.getEyeLocation().getBlock().getType() == Material.WEB
-                || player.getEyeLocation().getBlock().getRelative(BlockFace.UP).getType() == Material.WEB;
+                || player.getEyeLocation().getBlock().getType() == Material.WEB;
     }
 
     //Credits to funkemunky :)
