@@ -6,9 +6,9 @@ Hades is an advanced anticheat with many checks designed to patch various cheats
 
 **LICENSE**
 
-Hades is licensed under the GPL2 License.
+Hades is licensed under the GPL3 License.
 
-[![](https://img.shields.io/badge/License-GPLv2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0)
+[![](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 **SUPPORT**
 
