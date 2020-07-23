@@ -20,7 +20,7 @@ public class AutoBlock extends Check {
             attacked = true;
         }if(e instanceof PlaceEvent) {
             if(attacked) {
-                if(ticks < 2) {
+                if(ticks <= 2 && ticks != 0) {
                     flag(user, "FastBlock","low tick delay, t: " + ticks, false);
                 }
                 attacked = false;
