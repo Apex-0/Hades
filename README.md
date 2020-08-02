@@ -12,11 +12,11 @@ Hades is licensed under the GPL3 License.
 
 **SUPPORT**
 
-Please join the official Hades discord server (https://discord.me/hadesanticheat) for faster support! It is almost guaranteed that one of the Hades developers will be on!
+Please report your issues at the issues page.
 
 **FEATURES**
 
-Hades is 100% async, and utilizes multiple threads. This allows Hades to run checks against hundreds of users with very little lag on the main server thread. This means that Hades should not cause your server to lag and should not drop TPS.
+Hades runs its checks on a seperate thread. This allows Hades to run checks against hundreds of users with very little lag on the main server thread. This means that Hades should not cause your server to lag and should not drop TPS.
 
 Hades detections are advanced and constantly tested and updated. All of our checks go through extensive testing before being released in an official build. We want to make sure that your legit playerbase is not affected while still actively punishing cheaters.
 
