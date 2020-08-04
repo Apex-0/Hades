@@ -2,6 +2,7 @@ package me.apex.hades;
 
 import io.github.retrooper.packetevents.PacketEvents;
 import lombok.Getter;
+import me.apex.hades.check.CheckManager;
 import me.apex.hades.command.CommandManager;
 import me.apex.hades.listener.BukkitListener;
 import me.apex.hades.listener.NetworkListener;
@@ -58,6 +59,9 @@ public class HadesPlugin extends JavaPlugin {
 
         //Register Listeners
         Bukkit.getPluginManager().registerEvents(new BukkitListener(), this);
+
+        //Register Checks
+        CheckManager.registerChecks();
 
         //Register PacketEvents
         PacketEvents.start(this);
