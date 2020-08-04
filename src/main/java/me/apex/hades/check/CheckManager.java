@@ -5,6 +5,7 @@ import me.apex.hades.check.impl.movement.*;
 import me.apex.hades.check.impl.other.Client;
 import me.apex.hades.check.impl.player.*;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,11 +37,23 @@ public class CheckManager {
             Timer.class,
     };
 
-    public static List<Check> loadChecks() {
-        final List<Check> checklist = new ArrayList<>();
+    public static final List<Constructor<?>> CONSTRUCTORS = new ArrayList<>();
+
+    public static void registerChecks() {
         for(Class clazz : CHECKS) {
             try {
-                checklist.add((Check) clazz.getConstructor().newInstance());
+                CONSTRUCTORS.add(clazz.getConstructor());
+            } catch (NoSuchMethodException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    public static List<Check> loadChecks() {
+        final List<Check> checklist = new ArrayList<>();
+        for(Constructor<?> constructor : CONSTRUCTORS) {
+            try {
+                checklist.add((Check)constructor.newInstance());
             } catch (Exception e) {
                 e.printStackTrace();
             }
