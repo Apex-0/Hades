@@ -12,7 +12,7 @@ import java.util.List;
 @CheckInfo(name = "Velocity")
 public class Velocity extends Check {
 
-    private List<Double> verticals = new ArrayList<>(), horizontalX = new ArrayList<>(), horizontalZ = new ArrayList<>();
+    private List<Double> verticals = new ArrayList<>();
 
     @Override
     public void onHandle(PacketEvent e, User user) {

@@ -8,16 +8,12 @@ import java.lang.reflect.Constructor;
 
 public class PacketUtil {
 
-    public static boolean isFlyingPacket(String packetName) {
-        return packetName.equalsIgnoreCase(PacketType.Client.LOOK) || packetName.equalsIgnoreCase(PacketType.Client.FLYING) || packetName.equalsIgnoreCase(PacketType.Client.POSITION) || packetName.equalsIgnoreCase(PacketType.Client.POSITION_LOOK);
+    public static boolean isPositionPacket(Byte packetName) {
+        return packetName == (PacketType.Client.POSITION) || packetName == (PacketType.Client.POSITION_LOOK);
     }
 
-    public static boolean isPositionPacket(String packetName) {
-        return packetName.equalsIgnoreCase(PacketType.Client.POSITION) || packetName.equalsIgnoreCase(PacketType.Client.POSITION_LOOK);
-    }
-
-    public static boolean isRotationPacket(String packetName) {
-        return packetName.equalsIgnoreCase(PacketType.Client.LOOK);
+    public static boolean isRotationPacket(Byte packetName) {
+        return packetName == (PacketType.Client.LOOK) || packetName == PacketType.Client.POSITION_LOOK;
     }
 
     public static boolean isBlockPacket(String type) {

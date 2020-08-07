@@ -13,6 +13,7 @@ import org.bukkit.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalDouble;
 
 @CheckInfo(name = "Reach")
 public class Reach extends Check {
@@ -43,12 +44,8 @@ public class Reach extends Check {
                     }
 
                     if (reachs.size() >= 5) {
-                        double total = 0;
-                        double avgReach = 0;
-                        for (int i = 0; i < reachs.size(); i++) {
-                            total += reachs.get(i);
-                            avgReach = total / reachs.size();
-                        }
+                        OptionalDouble optionalDouble = reachs.stream().mapToDouble(value -> value).average();
+                        double avgReach = optionalDouble.isPresent() ? optionalDouble.getAsDouble() : 3;
 
                         if (avgReach >= HadesConfig.MAX_REACH && dist >= 3.2) {
                             if (++preVL > 1) {

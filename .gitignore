@@ -1,8 +1,0 @@
-.idea/*
-*.iml
-target/*
-/target/
-.classpath
-.settings/org.eclipse.core.resources.prefs
-*.prefs
-.project

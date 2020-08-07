@@ -12,7 +12,7 @@ import org.bukkit.util.Vector;
 public class MovementProcessor {
 
     public static void process(User user, PacketReceiveEvent e) {
-        if (PacketUtil.isPositionPacket(e.getPacketName())) {
+        if (PacketUtil.isPositionPacket(e.getPacketId())) {
             WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
             user.setOnGround(packet.isOnGround());
 
@@ -69,7 +69,7 @@ public class MovementProcessor {
             } else if (!user.isSprinting()) {
                 user.setSprintingTicks(0);
             }
-        } else if (PacketUtil.isRotationPacket(e.getPacketName())) {
+        } else if (PacketUtil.isRotationPacket(e.getPacketId())) {
             WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
             user.setOnGround(packet.isOnGround());
 
@@ -121,7 +121,7 @@ public class MovementProcessor {
             user.setDeltaAngle(Math.abs(user.getDeltaYaw()) + Math.abs(user.getDeltaPitch()));
 
             user.setDirection(new Vector(-Math.sin(user.getPlayer().getEyeLocation().getYaw() * 3.1415927F / 180.0F) * (float) 1 * 0.5F, 0, Math.cos(user.getPlayer().getEyeLocation().getYaw() * 3.1415927F / 180.0F) * (float) 1 * 0.5F));
-        } else if (e.getPacketName().equalsIgnoreCase(PacketType.Client.FLYING)) {
+        } else if (e.getPacketId() == PacketType.Client.FLYING) {
             WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
             user.setOnGround(packet.isOnGround());
 

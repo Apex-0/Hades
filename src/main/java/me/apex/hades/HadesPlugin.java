@@ -64,6 +64,7 @@ public class HadesPlugin extends JavaPlugin {
         CheckManager.registerChecks();
 
         //Register PacketEvents
+        PacketEvents.getSettings().setIdentifier("hades_handler");
         PacketEvents.start(this);
         PacketEvents.getAPI().getEventManager().registerListener(new NetworkListener());
 

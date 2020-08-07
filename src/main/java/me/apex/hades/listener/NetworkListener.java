@@ -72,9 +72,9 @@ public class NetworkListener implements PacketListener {
 
             //Call Checks
             PacketEvent callEvent = e;
-            if (e.getPacketName().equalsIgnoreCase(PacketType.Client.ARM_ANIMATION)) {
+            if (e.getPacketId() == PacketType.Client.ARM_ANIMATION) {
                 callEvent = new SwingEvent();
-            } else if (e.getPacketName().equalsIgnoreCase(PacketType.Client.USE_ENTITY)) {
+            } else if (e.getPacketId() == PacketType.Client.USE_ENTITY) {
                 WrappedPacketInUseEntity packet = new WrappedPacketInUseEntity(e.getNMSPacket());
                 if (packet.getAction() == EntityUseAction.ATTACK) {
                     callEvent = new AttackEvent(packet.getEntityId(), packet.getEntity());
@@ -82,17 +82,17 @@ public class NetworkListener implements PacketListener {
                         || packet.getAction() == EntityUseAction.INTERACT_AT) {
                     callEvent = new EntityInteractEvent(packet.getEntityId(), packet.getEntity());
                 } else callEvent = e;
-            } else if (e.getPacketName().equalsIgnoreCase(PacketType.Client.CHAT)) {
+            } else if (e.getPacketId() == PacketType.Client.CHAT) {
                 WrappedPacketInChat packet = new WrappedPacketInChat(e.getNMSPacket());
                 callEvent = new ChatEvent(packet.getMessage());
-            } else if (e.getPacketName().equalsIgnoreCase(PacketType.Client.BLOCK_DIG)) {
+            } else if (e.getPacketId() == PacketType.Client.BLOCK_DIG) {
                 WrappedPacketInBlockDig packet = new WrappedPacketInBlockDig(e.getNMSPacket());
                 user.setDigTick(user.getTick());
                 if (packet.getDigType() == PlayerDigType.START_DESTROY_BLOCK) user.setDigging(true);
                 else if (packet.getDigType() == PlayerDigType.STOP_DESTROY_BLOCK
                         || packet.getDigType() == PlayerDigType.ABORT_DESTROY_BLOCK) user.setDigging(false);
                 callEvent = new DigEvent(packet.getBlockPosition(), packet.getDirection(), packet.getDigType());
-            } else if (e.getPacketName().equalsIgnoreCase(PacketType.Client.ENTITY_ACTION)) {
+            } else if (e.getPacketId() == PacketType.Client.ENTITY_ACTION) {
                 WrappedPacketInEntityAction packet = new WrappedPacketInEntityAction(e.getNMSPacket());
                 if (packet.getAction() != null){
                     if (packet.getAction().equals(PlayerAction.START_SPRINTING)) {
@@ -109,19 +109,19 @@ public class NetworkListener implements PacketListener {
                     }
                 }
                 callEvent = new EntityActionEvent(packet.getEntityId(), packet.getEntity(), packet.getJumpBoost(), packet.getAction());
-            } else if (PacketType.Util.isInstanceOfFlyingPacket(e.getNMSPacket())) {
+            } else if (PacketType.Client.Util.isInstanceOfFlying(e.getPacketId())) {
                 WrappedPacketInFlying packet = new WrappedPacketInFlying(e.getNMSPacket());
                 user.setTick(user.getTick() + 1);
                 callEvent = new FlyingEvent(packet.getX(), packet.getY(), packet.getZ(), packet.getYaw(), packet.getPitch(),
                         packet.isPosition(),
                         packet.isLook(),
                         packet.isOnGround());
-            } else if (e.getPacketName().equalsIgnoreCase(PacketType.Client.KEEP_ALIVE)) {
+            } else if (e.getPacketId() == PacketType.Client.KEEP_ALIVE) {
                 callEvent = new PingEvent();
-            } else if (e.getPacketName().equalsIgnoreCase(PacketType.Client.BLOCK_PLACE)) {
+            } else if (e.getPacketId() == PacketType.Client.BLOCK_PLACE) {
                 WrappedPacketInBlockPlace packet = new WrappedPacketInBlockPlace(e.getPlayer(), e.getNMSPacket());
                 callEvent = new PlaceEvent(packet.getBlockPosition(), packet.getItemStack());
-            }else if(e.getPacketName().equalsIgnoreCase(PacketType.Client.TRANSACTION)) {
+            }else if(e.getPacketId() == PacketType.Client.TRANSACTION) {
                 WrappedPacketInTransaction packet = new WrappedPacketInTransaction(e.getNMSPacket());
                 if (user.isVerifyingVelocity()) {
                     if(packet.getActionNumber() == user.getVelocityId()) {
@@ -142,11 +142,11 @@ public class NetworkListener implements PacketListener {
     public void onPacketSend(PacketSendEvent e) {
         User user = UserManager.getUser(e.getPlayer());
         if (user != null) {
-            if (e.getPacketName().equalsIgnoreCase(PacketType.Server.POSITION)) {
+            if (e.getPacketId() == PacketType.Server.POSITION) {
                 user.setTeleportTick(user.getTick());
                 if (!HadesPlugin.getInstance().getConfig().getBoolean("checks.exempt-players") || !user.getPlayer().hasPermission(HadesConfig.BASE_PERMISSION + ".exempt.checks"))
                     user.getExecutorService().execute(() -> user.getChecks().stream().filter(check -> check.enabled).forEach(check -> check.onHandle(new TeleportEvent(-1, -1, -1, -1, -1), user)));
-            } else if (e.getPacketName().equalsIgnoreCase(PacketType.Server.ENTITY_VELOCITY)) {
+            } else if (e.getPacketId() == PacketType.Server.ENTITY_VELOCITY) {
                 WrappedPacketOutEntityVelocity packet = new WrappedPacketOutEntityVelocity(e.getNMSPacket());
                 if (e.getPlayer().getEntityId() == packet.getEntityId()) {
                     user.setVerifyingVelocity(true);
@@ -155,7 +155,7 @@ public class NetworkListener implements PacketListener {
                     user.setVelocityX(packet.getVelocityX());
                     user.setVelocityY(packet.getVelocityY());
                     user.setVelocityZ(packet.getVelocityZ());
-                    PacketEvents.getAPI().getPlayerUtilities().sendPacket(user.getPlayer(), new WrappedPacketOutTransaction(0, (short)user.getVelocityId(), false));
+                    PacketEvents.getAPI().getPlayerUtils().sendPacket(user.getPlayer(), new WrappedPacketOutTransaction(0, (short)user.getVelocityId(), false));
                     if (!HadesPlugin.getInstance().getConfig().getBoolean("checks.exempt-players") || !user.getPlayer().hasPermission(HadesConfig.BASE_PERMISSION + ".exempt.checks"))
                         user.getExecutorService().execute(() -> user.getChecks().stream().filter(check -> check.enabled).forEach(check -> check.onHandle(new VelocityEvent(packet.getEntityId(), packet.getVelocityX(), packet.getVelocityY(), packet.getVelocityZ()), user)));
                 }

@@ -31,7 +31,7 @@ public class Motion extends Check {
                 }
             }
 
-            if(attacked) {
+            if(attacked && user.isSprinting()) {
                 double prediction = user.getLastDeltaXZ() * 0.36;
                 double diff = user.getDeltaXZ() - prediction;
 
