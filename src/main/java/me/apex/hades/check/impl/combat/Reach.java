@@ -48,10 +48,8 @@ public class Reach extends Check {
                         double avgReach = optionalDouble.isPresent() ? optionalDouble.getAsDouble() : 3;
 
                         if (avgReach >= HadesConfig.MAX_REACH && dist >= 3.2) {
-                            if (++preVL > 1) {
-                                flag(user, "RayTrace","hitting farther than possbile. Dist: " + avgReach, true);
-                            }
-                        } else preVL = 0;
+                            flag(user, "RayTrace","hitting farther than possbile. Dist: " + avgReach, true);
+                        }
                     }
                 }
             }
