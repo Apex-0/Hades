@@ -197,16 +197,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.ProtocolSupport</groupId>
-            <artifactId>ProtocolSupport</artifactId>
-            <version>b8516a242a</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.MylesIsCool.ViaVersion</groupId>
-            <artifactId>viaversion</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.5.0</version>
