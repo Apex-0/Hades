@@ -6,14 +6,18 @@ import me.apex.hades.check.CheckInfo;
 import me.apex.hades.event.impl.packetevents.FlyingEvent;
 import me.apex.hades.user.User;
 import me.apex.hades.util.MathUtil;
+import me.apex.hades.util.PlayerUtil;
+import org.bukkit.potion.PotionEffectType;
 
 @CheckInfo(name = "Flight")
 public class Flight extends Check {
     @Override
     public void onHandle(PacketEvent e, User user) {
         if (e instanceof FlyingEvent) {
+            double limit = 6;
+            if (user.getPlayer().hasPotionEffect(PotionEffectType.JUMP)) limit += (PlayerUtil.getPotionEffectLevel(user.getPlayer(), PotionEffectType.JUMP) * 2);
             if (user.getDeltaY() >= 0.0
-                    && user.getAirTicks() > 6
+                    && user.getAirTicks() > limit
                     && user.getPlayer().getVelocity().getY() < -0.075
                     && elapsed(user.getTick(), user.getFlyingTick()) > 40
                     && elapsed(user.getTick(), user.getLiquidTick()) > 20

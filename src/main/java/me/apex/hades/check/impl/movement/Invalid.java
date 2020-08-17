@@ -16,7 +16,7 @@ public class Invalid extends Check {
     @Override
     public void onHandle(PacketEvent e, User user) {
         if (e instanceof FlyingEvent) {
-            if (Math.abs(((FlyingEvent) e).getPitch()) > 90.0F) {
+            if (Math.abs(((FlyingEvent) e).getPitch()) > (user.isOnClimbableBlock() ? 91.11 : 90.0)) {
                 flag(user, "Pitch","invalid pitch, p: " + ((FlyingEvent) e).getPitch(), false);
             }
 

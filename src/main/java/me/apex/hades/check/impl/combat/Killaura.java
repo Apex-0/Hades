@@ -64,7 +64,7 @@ public class Killaura extends Check {
                 }
             } else preVLA = 0;
 
-            if (ticks++ > 1) {
+            if (++ticks > 1) {
                 flag(user, "Multi","too many attacks in tick, t: " + ticks, false);
             }
 

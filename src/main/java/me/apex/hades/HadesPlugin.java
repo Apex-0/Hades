@@ -34,6 +34,9 @@ public class HadesPlugin extends JavaPlugin {
     private LunarClientAPI lunarClientAPI;
 
     @Override
+    public void onLoad() { PacketEvents.load(); }
+
+    @Override
     public void onEnable() {
         //Register Instance
         instance = this;

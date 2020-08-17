@@ -22,7 +22,7 @@ public class Sprint extends Check {
                 double delta = move.distanceSquared(user.getDirection());
                 if (delta >= (user.getPlayer().getWalkSpeed() > 0.2f ? .23 * 1 + ((user.getPlayer().getWalkSpeed() / 0.2f) * 0.36) : 0.23) && PlayerUtil.isOnGround(user.getPlayer()) && user.isSprinting() && user.getDeltaXZ() > 0.1 && !user.isInLiquid() && !user.isInWeb()) {
                     if (++preVLA > 4) {
-                        flag(user, "Multidirectional","multidirectional sprint, p: " + delta, false);
+                        flag(user, "OmniDirectional","omnidirectional sprint, p: " + delta, false);
                     }
                 } else preVLA = 0;
             }

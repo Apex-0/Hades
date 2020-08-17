@@ -29,7 +29,7 @@ public class Pattern extends Check {
 
                 average = ((average * 19) + deviation) / 20;
 
-                if (average < 5) {
+                if (average < 7) {
                     if (++preVLA > 2) {
                         flag(user, "Jitter","low average deviation, a: " + average, false);
                     }
