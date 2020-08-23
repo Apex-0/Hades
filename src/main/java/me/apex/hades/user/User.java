@@ -76,7 +76,7 @@ public class User {
     }
 
     public boolean hasBlocksAround() {
-        return PlayerUtil.hasBlocksAround(location) && PlayerUtil.hasBlocksAround(location.add(0, 1, 0));
+        return PlayerUtil.hasBlocksAround(location) || PlayerUtil.hasBlocksAround(location.add(0, 1, 0));
     }
 
     public boolean isOnClimbableBlock() {
