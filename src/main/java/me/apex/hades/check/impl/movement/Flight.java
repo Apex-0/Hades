@@ -15,7 +15,7 @@ public class Flight extends Check {
     public void onHandle(PacketEvent e, User user) {
         if (e instanceof FlyingEvent) {
             double limit = 6;
-            if (user.getPlayer().hasPotionEffect(PotionEffectType.JUMP)) limit += (PlayerUtil.getPotionEffectLevel(user.getPlayer(), PotionEffectType.JUMP) * 2);
+            if (user.getPlayer().hasPotionEffect(PotionEffectType.JUMP)) limit += PlayerUtil.getPotionEffectLevel(user.getPlayer(), PotionEffectType.JUMP);
             if (user.getDeltaY() >= 0.0
                     && user.getAirTicks() > limit
                     && user.getPlayer().getVelocity().getY() < -0.075
